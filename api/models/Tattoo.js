@@ -15,16 +15,10 @@ module.exports = {
       unique: true
     },
     element: {
-      type: 'string',
-      size: 40
+      model: "element"
     },
-    style: {
-      type: 'string',
-      size: 40
-    },
-    bodyPart:{
-      type: 'string',
-      size: 40
+    partes:{
+      model: 'bodypart'
     },
     dimensionsX: {
       type: 'float',
@@ -38,8 +32,11 @@ module.exports = {
       type: 'string',
       size: 40
     },
-    tatuaje: {
+    tipotatuaje: {
       model: 'typetattoo'
+    },
+    publicate: {
+      type: 'boolean'
     }
   }
 };
