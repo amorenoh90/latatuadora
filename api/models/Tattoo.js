@@ -38,9 +38,8 @@ module.exports = {
       type: 'string',
       size: 40
     },
-    typeTattoos: {
-      collection: "TypeTattoo",
-      via: "typetattoo_id"
+    tatuaje: {
+      model: 'typetattoo'
     }
   }
 };
