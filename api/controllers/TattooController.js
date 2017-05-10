@@ -7,7 +7,7 @@
 
 module.exports = {
   add: function (req, res) {
-    Tattoo.create({tatuaje: 1, bodyPart: 'Pie', element:'Tierra', dimensionsX:12.5, dimensionsY:10.5}).exec(function (err, records) {
+    Tattoo.create({tipotatuaje: 1, partes: 1, element:1, dimensionsX:12.5, dimensionsY:10.5}).exec(function (err, records) {
       if (err) {
         res.send(500, 'Error');
       } else {
@@ -17,8 +17,7 @@ module.exports = {
     });
   },
   allTattoos: function (req, res) {
-    Tattoo.find()
-      .populate('tatuaje')
+    Tattoo.find().populate('partes').populate('tipotatuaje').populate('element')
       .exec(function(err, tattoos) {
         if(err) {
           res.send('error');
