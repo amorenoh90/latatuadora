@@ -17,9 +17,9 @@ module.exports = {
       type: 'string',
       size: 40
     },
-    typetattoo_id: {
-      model: "Tattoo",
-      columnName: "typetattoo_id"
+    tattoos: {
+      collection: 'tattoo',
+      via: 'tatuaje'
     }
   }
 };
