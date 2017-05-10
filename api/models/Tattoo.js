@@ -17,7 +17,7 @@ module.exports = {
     element: {
       model: "element"
     },
-    partes:{
+    partbody:{
       model: 'bodypart'
     },
     dimensionsX: {
@@ -32,7 +32,7 @@ module.exports = {
       type: 'string',
       size: 40
     },
-    tipotatuaje: {
+    tattootype: {
       model: 'typetattoo'
     },
     publicate: {
