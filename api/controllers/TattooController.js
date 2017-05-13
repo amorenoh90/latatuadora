@@ -7,11 +7,25 @@
 
 module.exports = {
   add: function (req, res) {
-    Tattoo.create({tattootype: 1, partbody: 1, element:1, dimensionsX:12.5, dimensionsY:10.5}).exec(function (err, records) {
+    var type= req.body.tattootype;
+    var partbody= req.body.partbody;
+    var element= req.body.element;
+    var dimensionsX = req.body.dimensionsX;
+    var dimensionsY = req.body.dimensionsY;
+    var publicate = req.body.publicate;
+    var newtattoo={
+      tattootype: type,
+      partbody: partbody,
+      element: element,
+      dimensionsX: dimensionsX,
+      dimensionsY: dimensionsY,
+      publicate: publicate
+    }
+
+    Tattoo.create(newtattoo).exec(function (err, records){
       if (err) {
         res.send(500, 'Error');
       } else {
-        console.log(records, 'enriquelc-----');
         res.send(200, 'nice');
       }
     });
