@@ -1,7 +1,8 @@
 /**
  * Created by edwin on 10/05/17.
  */
-var request = require('supertest');
+var request = require('supertest'),
+  assert = require('assert');
 
 describe('TattooController', function() {
   describe('CRUD tattoo', function () {
@@ -26,9 +27,16 @@ describe('TattooController', function() {
     it('should get tattoo', function (done) {
 
       Tattoo.find(mockTattoo, function (err, res) {
-        sails.log(":v",res, err);
-        // res.length.should.not.be.eql(0);
-        res.to.have.property('id').to.not.equal('null')
+        //verify the element get an id
+        assert.notEqual(res[0].hasOwnProperty('id'), null);
+        assert.equal(res[0].name, mockTattoo.name);
+        assert.equal(res[0].tattootype, mockTattoo.tattootype);
+        assert.equal(res[0].partbody, mockTattoo.partbody);
+        assert.equal(res[0].element, mockTattoo.element);
+        assert.equal(res[0].dimensionsY, mockTattoo.dimensionsY);
+        assert.equal(res[0].dimensionsX, mockTattoo.dimensionsX);
+        assert.equal(res[0].publicate, mockTattoo.publicate);
+        assert.equal(res[0].image, mockTattoo.image);
         done();
       });
     });
