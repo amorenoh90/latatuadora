@@ -32,11 +32,16 @@ module.exports = {
       type: 'string',
       size: 40
     },
+    name: {
+      type: 'string',
+      size: 40
+    },
     tattootype: {
       model: 'typetattoo'
     },
     publicate: {
-      type: 'boolean'
+      type: 'boolean',
+      default: 'false'
     }
   }
 };
