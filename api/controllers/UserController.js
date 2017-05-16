@@ -12,18 +12,21 @@ module.exports = {
   bye: function (req, res) {
     return res.redirect(200, '/');
   },
+
   add: function (req, res) {
-    var user = {
+    var newuser = {
       name: req.body.name,
-      certCofepris: req.body.certCofepris
+      certCofepris: req.body.certCofepris,
     };
-    console.log('user', user)
-    User.create(user).exec(function (err, records) {
-      if(err) {
+    User.create(newuser).exec(function (err, user){
+      if (err) {
         res.send(500, 'Error');
-      } else {
-        console.log(records, 'enriquelc-----');
-        res.send(200, 'nice');
+      } else { // For check new User in DB
+        User.findOne(newuser).exec(function (err, record) {
+          if(err) res.send(500, 'Error');
+          if(!record) res.send(404, "Could not find User")
+          else res.send(200, 'nice');
+        })
       }
     });
   }
