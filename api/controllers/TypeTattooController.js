@@ -7,12 +7,19 @@
 
 module.exports = {
 	add: function (req, res) {
-    TypeTattoo.create({type: 'Acuarela'}).exec(function (err, records) {
+	  var newtypetattoo={
+	    type: req.body.typetattoo
+    }
+    TypeTattoo.create(newtypetattoo).exec(function (err, records) {
       if (err) {
         res.send(500, 'Error');
-      } else {
-        console.log(records, 'enriquelc-----');
-        res.send(200, 'nice');
+      }
+      else {
+        TypeTattoo.findOne(newtypetattoo).exec(function (err, record) { //For check new TypeTattoo in DB
+          if(err) res.send(500, 'Error');
+          if(!record) res.send(404, "Could not find TypeTattoo")
+          else res.send(200, 'nice');
+        })
       }
     });
   }
