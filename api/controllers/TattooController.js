@@ -7,29 +7,32 @@
 
 module.exports = {
   add: function (req, res) {
-    var type= req.body.tattootype;
-    var partbody= req.body.partbody;
-    var element= req.body.element;
-    var dimensionsX = req.body.dimensionsX;
-    var dimensionsY = req.body.dimensionsY;
-    var publicate = req.body.publicate;
+
     var newtattoo={
-      tattootype: type,
-      partbody: partbody,
-      element: element,
-      dimensionsX: dimensionsX,
-      dimensionsY: dimensionsY,
-      publicate: publicate
+      name: req.body.name,
+      image:req.body.image,
+      tattootype:req.body.tattootype,
+      partbody: req.body.partbody,
+      element: req.body.element,
+      dimensionsX: req.body.dimensionsX,
+      dimensionsY: req.body.dimensionsY,
+      publicate: req.body.publicate
     }
 
     Tattoo.create(newtattoo).exec(function (err, records){
       if (err) {
-        res.send(500, 'Error');
-      } else {
-        res.send(200, 'nice');
+        res.send(500, 'Error'); sails.log(err)
+      } else { // For check new Tattoo in DB
+        Tattoo.findOne(newtattoo).exec(function (err, record) {
+          if(err)  sails.log("2");
+          if(!record) res.send(404, "Could not find Tattoo")
+          else res.send(200, 'nice');
+        })
       }
     });
+
   },
+
   allTattoos: function (req, res) {
     Tattoo.find().populate('partbody').populate('tattootype').populate('element')
       .exec(function(err, tattoos) {
