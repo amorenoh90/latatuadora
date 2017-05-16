@@ -47,10 +47,35 @@ module.exports.routes = {
   ***************************************************************************/
 
 
-  //>Routes Tattoo
 
-    'post /tattoo/add': 'TattooController.add'
+  //>Routes User
+
+   'post /user/add': 'UserController.add',
+
+  //<Routes User
+
+  //>Routes Tattoo
+    'get /tattoo': {view: 'tattoo'},
+    'post /tattoo/add': 'TattooController.add',
 
   //<Routes Tattoo
+
+  //>Routes TypeTattoo
+
+    'post /typetattoo/add': 'TypeTattooController.add',
+
+  //<Routes TypeTattoo
+
+  //>Routes BodyPart
+
+    'post /bodypart/add': 'BodyPartController.add',
+
+  //<Routes BodyPart
+  //>Routes Element
+
+  'post /element/add': 'ElementController.add'
+
+  //<Routes BodyPart
+
 
 };
