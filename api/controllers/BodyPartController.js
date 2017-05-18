@@ -22,6 +22,52 @@ module.exports = {
             })
       }
     });
+  },
+  get: function (req, res) {
+    BodyPart.find().exec(function(err, parts) {
+        if(err) {
+          res.send('error');
+        }
+        res.send(200, parts);
+       
+      });
+  },
+  update: function (req, res) { 
+    var id= req.body.id;
+    var updatedpart=  { 
+      part: req.body.part
+    }
+    BodyPart.update({"id": id}, updatedpart)
+      .exec(function (err, updated) {
+        if(err) {
+          res.send('error');
+        }
+        res.send(200, updated[0]);
+       
+      });
+  },
+  getOne: function (req, res) { 
+    var id= req.body.id;
+    BodyPart.findOne({id: id})
+      .exec(function(err, part) {
+        if(err) {
+          res.send('error');
+        }
+        else{
+          res.send(200, part);  
+        }
+        
+       
+      });
+  },
+  delete: function(req, res){
+    var id = req.body.id;
+    BodyPart.destroy({id:id}).exec(function (err, deleted){
+      if (err) { return res.negotiate(err); }
+      else{
+       res.send(200, deleted); 
+      }
+    });
   }
 
 };
