@@ -57,23 +57,40 @@ module.exports.routes = {
   //>Routes Tattoo
     'get /tattoo': {view: 'tattoo'},
     'post /tattoo/add': 'TattooController.add',
-
+    'get /tattoo/get': 'TattooController.get',
+    'post /tattoo/getOne': 'TattooController.getOne',
+    'post /tattoo/update': 'TattooController.update',
+    'delete /tattoo/delete': 'TattooController.delete',
   //<Routes Tattoo
 
   //>Routes TypeTattoo
 
     'post /typetattoo/add': 'TypeTattooController.add',
+    'get /typetattoo/get': 'TypeTattooController.get',
+    'post /typetattoo/getOne': 'TypeTattooController.getOne',
+    'post /typetattoo/update': 'TypeTattooController.update',
+    'delete /typetattoo/delete': 'TypeTattooController.delete',
 
   //<Routes TypeTattoo
 
   //>Routes BodyPart
 
     'post /bodypart/add': 'BodyPartController.add',
+    'get /bodypart/get': 'BodyPartController.get',
+    'post /bodypart/getOne': 'BodyPartController.getOne',
+    'post /bodypart/update': 'BodyPartController.update',
+    'delete /bodypart/delete': 'BodyPartController.delete',
+
 
   //<Routes BodyPart
   //>Routes Element
 
-  'post /element/add': 'ElementController.add'
+    'post /element/add': 'ElementController.add',
+    'get /element/get': 'ElementController.get',
+    'post /element/getOne': 'ElementController.getOne',
+    'post /element/update': 'ElementController.update',
+    'delete /element/delete': 'ElementController.delete',
+
 
   //<Routes BodyPart
 
