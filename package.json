@@ -24,7 +24,7 @@
     "sails-disk": "~0.10.9",
     "sails-mysql": "0.11.5",
     "supertest": "3.0.0",
-    "bcrypt": "0.8.7"
+    "bcryptjs": "2.4.3"
   },
   "scripts": {
     "debug": "node debug app.js",
