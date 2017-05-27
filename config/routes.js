@@ -34,7 +34,7 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -45,5 +45,19 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+
+
+
+  //>Routes Quotation
+
+  'put /quotation/references/:id': 'QuotationController.uploadReferences',
+  'put /quotation/user/:id': 'QuotationController.createUser',
+     
+  //<Routes Quotation
+
+  //>User login
+  'post /logup': 'UserController.logup',
+  'post /login': 'UserController.login'
+  //<User login
 
 };
