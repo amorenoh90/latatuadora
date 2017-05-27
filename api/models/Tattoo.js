@@ -45,6 +45,9 @@ module.exports = {
     },
     style:{
       model: 'style'
+    },
+    artistId:{
+      model:'artist'
     }
   }
 };
