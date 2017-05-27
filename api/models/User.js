@@ -29,10 +29,6 @@ module.exports = {
       type: "string",
       minLength: 8
     },
-    certCofepris: {
-      type: 'boolean',
-      defaultsTo: false
-    },
     id: {
       autoIncrement: true,
       type: 'integer',
@@ -43,9 +39,6 @@ module.exports = {
       type: "integer",
       maxLength: 10,
       minLength: 8
-    },
-    city:{
-      type: "string"
     },
     userType:{
       model: "usertype"
@@ -67,6 +60,26 @@ module.exports = {
     else{
       cb();
     }
+  },
+  signUp: function (values, cb) {
+    User.create(values).exec(cb);
+  },
+  attemptLogin: function (values, cb) {
+    User.findOne({ email: values.email }).exec(function (err, user){
+      if (err) {
+        return cb(err);
+      }
+      if (!user) {
+        return cb();
+      }
+      else{
+        bcrypt.compare(values.password, user.password, function (err, res) {
+          if(res){
+            cb(null, user);
+          }
+        })
+      }
+    });
   }
 };
 
