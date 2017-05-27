@@ -28,7 +28,7 @@ module.exports = {
   	},
   	completeTattoos: {
       collection: 'tattoo',
-      via: 'element'
+      via: 'artistId'
     },
   	styles:{
   		collection: "artiststyle",
