@@ -4,12 +4,13 @@ var request = require('supertest'),
 describe('StyleController', function() {
 
   describe('CRUD Style ', function () {
-  	var id,mockStyleInsert = {
-  		name: "Aqua"
-  	},
-  		mockStyleUpdate = {
-  			name: "milenial"
-  		}
+  	var id,
+        mockStyleInsert = {
+  		    name: "Aqua"
+        },
+  		  mockStyleUpdate = {
+  			 name: "milenial"
+  		  }
     it('should to add a new Style ', function (done) {
     	Style.create({name:'Shurado'}).exec(function (err, res, style){});
       request(sails.hooks.http.app)
