@@ -32,8 +32,9 @@ module.exports = {
       collection: 'quotationreferences',
       via: 'quotation'
     }
+
   },
-  beforeUpdate: function (values, cb) { 
+  beforeCreate: function (values, cb) { 
     if(values.style){
       Style.findOne({ id: values.style }).exec(function (err, style){
         if (err) {
