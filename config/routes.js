@@ -50,8 +50,7 @@ module.exports.routes = {
 
   //>Routes Quotation
 
-  'put /quotation/references/:id': 'QuotationController.uploadReferences',
-  'put /quotation/user/:id': 'QuotationController.createUser',
+  'post /quotation': 'QuotationController.createQuotation',
      
   //<Routes Quotation
 
