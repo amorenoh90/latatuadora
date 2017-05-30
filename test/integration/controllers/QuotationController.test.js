@@ -19,7 +19,7 @@ describe('QuotationController', function() {
       },
       step4={
         name: "Pepito",
-        email: "blick@blick.com",
+        email: "blick@b.com",
         city: "CDMX",
         userType: 5,
         id: 1,
@@ -72,7 +72,6 @@ describe('QuotationController', function() {
         assert.equal(res.body.userId.name, step4.name);
         assert.equal(res.body.userId.email, step4.email);
         assert.equal(res.body.userId.telephone, step4.telephone);
-        assert.equal(res.body.userId.city, step4.city);
       })
       .expect(200, done);
     });
