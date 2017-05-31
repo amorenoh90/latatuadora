@@ -6,37 +6,54 @@ var request = require('supertest'),
 
 describe('QuotationController', function() {
 
-  it("should add Style", function (done) {
-    Style.create({name:'Religioso'}).exec(function (err, style){});
+  it("should add Style, BodyPart", function (done) {
+    Style.create({name:'Shurado'}).exec(function (err, style){});
+    BodyPart.create({name:'Pierna'}).exec(function (err, style){});
     done();
   })
 
   var id,
       quotation = {
-        dimensionsX: 8,
-        dimensionsY: 10,
+        dimensionsX: 4,
+        dimensionsY: 4,
         style: 1,
         comments: "False comment to quote a tattoo",
         name: "Pepito",
         email: "blick@blick.com",
         city: "CDMX",
-        telephone: 92050923
+        telephone: 92050923,
+        bodypart: 1
+      },
+      quotation2 = {
+        dimensionsX: 5,
+        dimensionsY: 5,
+        style: 1,
+        comments: "False comment to quote a tattoo",
+        name: "Pepito",
+        email: "blick@blick.com",
+        city: "CDMX",
+        telephone: 92050923,
+        bodypart: 1
       }
 
-    it("should add new Quotation", function (done) {
+    it("should add new Quotation with one match", function (done) {
       request(sails.hooks.http.app)
       .post('/quotation')
       .send(quotation)
       .expect(function(res) {
-        assert.notEqual(res.body.id, null);
-        assert.equal(res.body.dimensionsY, quotation.dimensionsY);
-        assert.equal(res.body.dimensionsX, quotation.dimensionsX);
-        assert.equal(res.body.style.id, quotation.style);
-        assert.equal(res.body.comments, quotation.comments);
-        assert.equal(res.body.userId.name, quotation.name);
-        assert.equal(res.body.userId.email, quotation.email);
-        assert.equal(res.body.userId.city, quotation.city);
-        assert.equal(res.body.userId.telephone, quotation.telephone);
+        assert.equal(res.body.minAmount, 600);
+        assert.equal(res.body.maxAmount, 800)
+      })
+      .expect(200, done);    
+    });
+
+    it("should add new Quotation with two matches", function (done) {
+      request(sails.hooks.http.app)
+      .post('/quotation')
+      .send(quotation2)
+      .expect(function(res) {
+        assert.equal(res.body.minAmount, 900);
+        assert.equal(res.body.maxAmount, 1100)
       })
       .expect(200, done);    
     });
