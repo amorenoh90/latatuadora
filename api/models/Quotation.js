@@ -18,7 +18,7 @@ module.exports = {
       size: 5,
       required: true
     },
-    style:{
+    styleId:{
       model: 'style'
     },
     comments:{
@@ -31,6 +31,12 @@ module.exports = {
     references: {
       collection: 'quotationreferences',
       via: 'quotation'
+    },
+    bodypartId:{
+      model: 'bodypart'
+    },
+    studioId:{
+      model: 'studio'
     }
 
   },
