@@ -1,6 +1,7 @@
 /**
  * QuotationController
  */
+var usertype = require('../UserTypeConstants');
 
 module.exports = {
   
@@ -14,17 +15,21 @@ module.exports = {
       email: req.body.email,
       city: req.body.city,
       telephone: req.body.telephone,
-      userType: 5
+      userType: usertype.quotient
     }
 
-    User.create(newuser).exec(function (err, user){
-      if (err) res.serverError(err)
+    User.findOrCreate(newuser).exec(function (err, user){
+      if (err){
+        res.serverError(err);
+      }
         else{
         var  quotation = {
           dimensionsY : req.body.dimensionsY,
           dimensionsX : req.body.dimensionsX,
           comments: req.body.comments,
-          style: req.body.style,
+          styleId: req.body.style,
+          bodypartId: req.body.bodypart,
+          studioId: req.body.studio,
           userId: user.id
         }
 
@@ -33,7 +38,6 @@ module.exports = {
             res.serverError(err);
           }  
           else{ 
-
             req.file('reference').upload({
               maxBytes: 10000000,
               dirname: require('path').resolve(sails.config.appPath, 'assets/references/images')
@@ -50,14 +54,15 @@ module.exports = {
               }
             });
 
-            Quotation.findOne({id: quotation.id}).populate('userId').populate('style').populate('references').exec(function (err, quotation){
-              if (err) {
-                return res.serverError(err);
-              }
-              else{
-                res.send(200, quotation);
-              }
-            });
+            if(!quotation.studioId){
+              Quotient.calculate(quotation, function (err, calculated) {
+                if(err) res.negotiate(err);
+                else res.send(200, calculated);
+              });
+            }
+            else{
+              res.ok("Are you quoting with study");
+            }
           }
         });
       }
