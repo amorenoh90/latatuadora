@@ -28,9 +28,9 @@ describe('StyleController', function() {
         .get('/style')
         .set('Accept', 'application/json')
         .expect(function(res) {
-          assert.equal(res.body.length, 3);
-          assert.notEqual(res.body[2].hasOwnProperty('id'), null);
-          assert.equal(res.body[2].name, mockStyleInsert.name);
+          assert.equal(res.body.length, 4);
+          assert.notEqual(res.body[3].hasOwnProperty('id'), null);
+          assert.equal(res.body[3].name, mockStyleInsert.name);
         })
         .expect(200, done);
     });
