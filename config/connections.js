@@ -29,7 +29,8 @@ module.exports.connections = {
   *                                                                          *
   ***************************************************************************/
   localDiskDb: {
-    adapter: 'sails-disk'
+    adapter: 'sails-disk',
+    schema: true
   },
 
   /***************************************************************************
@@ -43,9 +44,9 @@ module.exports.connections = {
   latatuadoraMysqlServer: {
      adapter: 'sails-mysql',
      host: 'localhost',
-     user: 'root', //optional
-     password: 'n0m3l0s3', //optional
-     database: 'core_latatuadora' //optional
+     user: 'latatuadora', //optional
+     password: 'latatuadora', //optional
+     database: 'latatuadora_core' //optional
   },
 
   /***************************************************************************
