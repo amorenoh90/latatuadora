@@ -20,7 +20,7 @@ module.exports = {
     },
     tattoos: {
       collection: 'tattoo',
-      via: 'tattootype'
+      via: 'style'
     }
   }
 };
