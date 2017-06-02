@@ -57,7 +57,10 @@ module.exports.routes = {
 
   //>User login
   'post /logup': 'UserController.logup',
-  'post /login': 'UserController.login'
+  'post /login': 'UserController.login',
+  //<User login
+  //>User login
+  'post /tattoo': 'TattooController.add'
   //<User login
 
 };
