@@ -13,7 +13,8 @@ module.exports = {
   		required: true
   	},
   	published:{
-  		type: "string"
+  		type: "string",
+      default: false
   	},
   	about:{
   		type: "string",
@@ -32,8 +33,31 @@ module.exports = {
   	artist:{
   		collection: "artist",
   		via: "freelancerId"
-  	}
+  	},
+    canGoHome:{
+      type: "boolean"
+    }
 
+  },
+  addProfileImg: function (image, freelancer, cb) { 
+    image('profileImg').upload({
+      maxBytes: 10000000,
+      dirname: require('path').resolve(sails.config.appPath, 'assets/Freelancer/images')
+    },function (err, uploadedFiles) {
+      if (err)
+        cb(err);
+      else{
+        Freelancer.update({id: freelancer},{profileImgUrl: uploadedFiles[0].fd})
+          .exec(function (err, updated){
+            if (err) { 
+              return cb(err); 
+            }
+            else{
+              return cb();
+            }
+        });
+      }
+    });
   }
 };
 
