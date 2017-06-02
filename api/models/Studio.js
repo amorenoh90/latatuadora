@@ -53,7 +53,31 @@ module.exports = {
     status:{
       model:"studiostatus"
     }
-
+  },
+  addProfileImg: function (image, studio, cb) { 
+    image('profileImg').upload({
+      maxBytes: 10000000,
+      dirname: require('path').resolve(sails.config.appPath, 'assets/Studio/images')
+    },function (err, uploadedFiles) {
+      if (err)
+        return cb(err);
+      else{
+        if(uploadedFiles.length === 0){
+          return cb();
+        }
+        else{
+          Studio.update({id: studio},{profileImgUrl: uploadedFiles[0].fd})
+            .exec(function (err, updated){
+              if (err) { 
+                return cb(err); 
+              }
+              else{
+                return cb(null, updated);
+              }
+          });
+        }
+      }
+    });
   }
 };
 
