@@ -6,7 +6,8 @@ describe('UserController', function() {
   var mockuser={
         name: "Pepito",
         email: "blick@blick.com",
-        password: "password"
+        password: "password",
+        form: "user"
       }
 
     it("should logup a normal User", function (done) {
