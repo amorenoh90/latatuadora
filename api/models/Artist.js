@@ -9,33 +9,30 @@ module.exports = {
 
   attributes: {
 
-  	userId:{
-  		model: "user",
-  		required: true
-  	},
-  	avatarUrl:{
-  		type: "string"
-  	},
-  	description:{
-  		type: "string",
-  		maxLength: 100
-  	},
-  	rating:{
-  		type: "string"
-  	},
-  	responseTime:{
-  		type: "string"
-  	},
-  	completeTattoos: {
+    userId:{
+      model: "user",
+      required: true
+    },
+    avatarUrl:{
+      type: "string"
+    },
+    description:{
+      type: "string",
+      maxLength: 100
+    },
+    rating:{
+      type: "string"
+    },
+    responseTime:{
+      type: "string"
+    },
+    completeTattoos: {
       collection: 'tattoo',
       via: 'element'
     },
-  	//styles:{
-  	//	model: "artiststyles"
-  	//},
-  	votes:{
-  		type: "string"
-  	},
+    votes:{
+      type: "string"
+    },
     studioId:{
       model: "studio"
     }
