@@ -14,7 +14,7 @@ module.exports = {
       type: "integer",
       primaryKey: true
     },
-    element: {
+    name: {
       type: 'string',
       size: 40
     },
