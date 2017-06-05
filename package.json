@@ -35,7 +35,7 @@
     "type": "git",
     "url": "git://github.com/enriquelc/latatuadora.git"
   },
-  "author": "enriquelc",
+  "author": "blick",
   "license": "",
   "devDependencies": {
     "mocha": "^3.3.0",
