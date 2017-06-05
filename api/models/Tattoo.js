@@ -45,6 +45,9 @@ module.exports = {
     artistId:{
       model:'artist'
     },
+    freelancerId:{
+      model: 'freelancer'
+    },
     votes:{
       type: 'integer'
     }
