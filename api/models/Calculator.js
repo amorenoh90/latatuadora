@@ -7,19 +7,19 @@ module.exports = {
             model: 'bodypart'
         },
         minAmount: {
-            type: 'integer'
+            type: 'float'
         },
         maxAmount: {
-            type: 'integer'
+            type: 'float'
         },
         studioId: {
             model: 'studio'
         },
         minRange: {
-            type: "integer"
+            type: "float"
         },
         maxRange: {
-            type: "integer"
+            type: "float"
         }
     }
 };

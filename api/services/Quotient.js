@@ -17,8 +17,16 @@ module.exports = {
             sumin = sumin + records[i].minAmount;
             sumax = sumax + records[i].maxAmount;
           }
-          results.minAmount = sumin/records.length;
-          results.maxAmount = sumax/records.length;
+          var minprom = sumin/records.length;
+          var maxprom = sumax/records.length;
+          if(minprom>maxprom){
+            results.minAmount = maxprom;
+            results.maxAmount = minprom;
+          }
+          else{
+            results.minAmount = maxprom;
+            results.maxAmount = minprom;
+          }
           done(null, results);
         }
         if(records.length == 1){
@@ -27,7 +35,7 @@ module.exports = {
           done(null, results);
         }
         if(records.length == 0){
-          done(null,"no data for your quotation");
+          done(null,{message: "no data for your quotation"});
         }
       }
     });    
