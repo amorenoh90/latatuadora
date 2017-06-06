@@ -26,8 +26,8 @@ module.exports = {
           results.maxAmount = records[0].maxAmount;
           done(null, results);
         }
-        if(!records){
-          done();
+        if(records.length == 0){
+          done(null,"no data for your quotation");
         }
       }
     });    
