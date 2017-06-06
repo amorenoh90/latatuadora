@@ -35,7 +35,7 @@ module.exports = {
           done(null, results);
         }
         if(records.length == 0){
-          done(null,"no data for your quotation");
+          done(null,{message: "no data for your quotation"});
         }
       }
     });    
