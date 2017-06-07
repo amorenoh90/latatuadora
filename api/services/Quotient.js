@@ -4,7 +4,9 @@ module.exports = {
             minAmount: '', 
             maxAmount: ''
         },
-        area = quotation.dimensionsX * quotation.dimensionsY;
+    area = quotation.dimensionsX * quotation.dimensionsY;
+
+    if(area > 20) area = 20; //provicional
 
     Calculator.find({styleId: quotation.styleId, minRange:{'<=': area}, maxRange:{'>=': area} }).exec(function (err, records){
       if (err) {
@@ -17,8 +19,8 @@ module.exports = {
             sumin = sumin + records[i].minAmount;
             sumax = sumax + records[i].maxAmount;
           }
-          var minprom = sumin/records.length;
-          var maxprom = sumax/records.length;
+          var minprom = (sumin/records.length).toFixed(2);
+          var maxprom = (sumax/records.length).toFixed(2);
           if(minprom>maxprom){
             results.minAmount = maxprom;
             results.maxAmount = minprom;
