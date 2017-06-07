@@ -60,7 +60,7 @@ module.exports = {
               });
             }
             else{
-              res.ok("Are you quoting with study");
+              res.ok({message: "Are you quoting with study"});
             }
           }
         });
