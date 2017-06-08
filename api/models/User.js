@@ -38,9 +38,7 @@ module.exports = {
       primaryKey: true
     },
     telephone:{
-      type: "integer",
-      maxLength: 16,
-      minLength: 8
+      type: "string",      
     },
     city:{
       type: "string"
