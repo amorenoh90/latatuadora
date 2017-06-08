@@ -8,7 +8,7 @@ module.exports = {
 
     if(area > 20) area = 20; //provicional
 
-    Calculator.find({styleId: quotation.styleId}).exec(function (err, records){
+    Calculator.find({styleId: quotation.styleId, minRange:{'<=': area}, maxRange:{'>=': area}}).exec(function (err, records){
       if (err) {
         done(err);
       }
