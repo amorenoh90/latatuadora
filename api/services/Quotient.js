@@ -19,14 +19,13 @@ module.exports = {
           return;
         }
         minAmount = records[0].minAmount;
-        maxAmount = records[0].maxAmount;
-        var sumin=0, sumax=0;
+        maxAmount = records[0].minAmount;        
         for(i in records){
           if(minAmount > records[i].minAmount) {
               minAmount = records[i].minAmount;
           } 
-          if(maxAmount > records[i].maxAmount) {
-              maxAmount = records[i].maxAmount;
+          if(maxAmount < records[i].minAmount) {
+              maxAmount = records[i].minAmount;
           }
         }
         results.minAmount = minAmount;
