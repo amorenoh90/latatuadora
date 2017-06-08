@@ -22,10 +22,10 @@ module.exports = {
         maxAmount = records[0].maxAmount;
         var sumin=0, sumax=0;
         for(i in records){
-          if(minAmount > records[0].minAmount) {
+          if(minAmount > records[i].minAmount) {
               minAmount = records[i].minAmount;
           } 
-          if(maxAmount > records[0].maxAmount) {
+          if(maxAmount > records[i].maxAmount) {
               maxAmount = records[i].maxAmount;
           }
         }
