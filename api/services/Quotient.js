@@ -13,24 +13,24 @@ module.exports = {
         done(err);
       }
       else{
-        var minAmmount, maxAmmount;        
+        var minAmount, maxAmount;        
         if(records.length == 0){
           done(null,{message: "no data for your quotation"});
           return;
         }
-        minAmmount = records[0].minAmount;
-        maxAmmount = records[0].maxAmount;
+        minAmount = records[0].minAmount;
+        maxAmount = records[0].maxAmount;
         var sumin=0, sumax=0;
         for(i in records){
           if(minAmount > records[0].minAmount) {
-              minAmmount = records[i].minAmount;
+              minAmount = records[i].minAmount;
           } 
           if(maxAmount > records[0].maxAmount) {
-              maxAmmount = records[i].maxAmount;
+              maxAmount = records[i].maxAmount;
           }
         }
-        results.minAmount = minAmmount;
-        results.maxAmount = maxAmmount;
+        results.minAmount = minAmount;
+        results.maxAmount = maxAmount;
         done(null, results);                 
       }
     });    
