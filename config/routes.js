@@ -54,4 +54,10 @@ module.exports.routes = {
      
   //<Routes Quotation
 
+  //Routes Conekta
+  'get /conekta':{
+    view: 'pagoconekta'
+  },
+  'post /conekta': 'PaymentsController.conekta'
+  //<Routes Conekta
 };
