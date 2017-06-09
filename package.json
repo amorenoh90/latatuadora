@@ -24,7 +24,8 @@
     "sails-disk": "~0.10.9",
     "sails-mysql": "0.11.5",
     "bcryptjs": "2.4.3",
-    "conekta": "2.2.0"
+    "conekta": "2.2.0",
+    "paypal-rest-sdk": "1.7.1"
   },
   "scripts": {
     "debug": "node debug app.js",
