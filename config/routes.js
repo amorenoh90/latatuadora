@@ -58,6 +58,17 @@ module.exports.routes = {
   'get /conekta':{
     view: 'pagoconekta'
   },
-  'post /conekta': 'PaymentsController.conekta'
+  'post /conekta': 'PaymentsController.conekta',
   //<Routes Conekta
+  //Routes PayPal
+  'get /paypal':{
+    view: 'pagopaypal'
+  },
+  'post /paypal': 'PaymentsController.paypalIntent',
+  'get /paypalreturn':{
+    view: 'paypalreturn'
+  },
+  'get /paypalexecute': 'PaymentsController.paypalExecute',
+  'get /paypalcancel': 'PaymentsController.paypalCancel'
+  //<Routes PayPal
 };
