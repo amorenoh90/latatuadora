@@ -13,6 +13,8 @@ paypal.configure({
   'client_id': 'AWCKGzQv2c29C-zyzlEFpAz5GljvGPbXqSptzJw7V4BuEQFMle3j54kYPFQLM-z-ug-IycznJvdngzns',
   'client_secret': 'EKOvENrICZilSHCE44wTyVZZQbwDsBoY5Hzk_UTbAW4LG3WLOtC79zbMZz7UTCLzAPnL7lNDvUGhmMZH'
 });
+var request = require('request');
+var comprapagotoken = 'sk_test_4327294905c54c2065';
 module.exports = {
     conekta: function(req, res) {
         conekta.Customer.create({
@@ -88,8 +90,8 @@ module.exports = {
                 description: "This is the payment description."
             }]
         }
-        paypal.payment.create(payment, function (error, payment) {
-          if (error) {
+        paypal.payment.create(payment, function (err, payment) {
+          if (err) {
             res.serverError(err);
           } else {
             if(payment.payer.payment_method === 'paypal') {
@@ -128,6 +130,74 @@ module.exports = {
     },
     paypalCancel: function (req, res) {
         res.send({message: "The payment got canceled"});
+    },
+    compropagoOptions: function (req, res) {
+        var headers = {
+            'Accept': 'application/compropago',
+            'Content-type': 'application/json'
+        };
+
+        var dataString = '{"order_total": "+req.body.price+"}';
+
+        var options = {
+            url: 'https://api.compropago.com/v1/providers',
+            headers: headers,
+            body: dataString,
+            auth: {
+                'user': comprapagotoken,
+                 'pass': ''
+            }
+        };  
+        function callback(err, response, body) {
+            if(err){
+                res.serverError(err);
+            }
+            if(!err && response.statusCode == 200) {
+                res.send({points: body});
+            }
+            else{
+                res.send({message: body});
+            }
+        }
+        request.get(options, callback);
+    },
+    compropagoCharge: function (req, res) {
+
+        var headers = {
+            'Accept': 'application/compropago',
+            'Content-type': 'application/json'
+        };
+
+        var dataString = '{"order_id": "SMGCURL1","order_price": '+ req.body.price +',"order_name": "'+ req.body.item +'","customer_name": "'+ req.body.name +'","customer_email": "noreply@compropago.com","payment_type":"'+ req.body.payment_type +'","currency": "MXN"}';
+
+        var options = {
+            url: 'https://api.compropago.com/v1/charges',
+            headers: headers,
+            body: dataString,
+            auth: {
+                'user': comprapagotoken,
+                'pass': ''
+            }
+        };
+        function callback(err, response, body) {
+            if(err){
+                res.serverError(err);
+            }
+            if (!err && response.statusCode == 200) {
+                resp = JSON.parse(body);
+                var responsetosend = {
+                    status: resp.status,
+                    instructions: resp.instructions,
+                    amount: resp.order_info.order_price,
+                    item: resp.order_info.item
+                };
+                res.send(responsetosend);
+            }
+            else{
+                console.log(response);
+            }
+        }
+        request.post(options, callback);
     }
 };
 
