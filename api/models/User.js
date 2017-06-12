@@ -12,13 +12,11 @@ module.exports = {
   attributes: {
     name: {
       type: 'string',
-      maxLength: 40,
-      alphanumeric: true, 
+      maxLength: 40,      
       required: true
     },
     lastname: {
-      type: "string",
-      alphanumeric: true
+      type: "string",      
     },
     email:{
       type: 'email',
@@ -36,9 +34,7 @@ module.exports = {
       primaryKey: true
     },
     telephone:{
-      type: "integer",
-      maxLength: 10,
-      minLength: 8
+      type: "integer",      
     },
     userType:{
       model: "usertype"
