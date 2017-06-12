@@ -30,7 +30,7 @@ describe('QuotationController', function() {
         style: 1,
         comments: "False comment to quote a tattoo",
         name: "Pepito",
-        email: "blick@blick.com",
+        email: "blick@b.com",
         city: "CDMX",
         telephone: 92050923,
         bodypart: 1
@@ -57,6 +57,16 @@ describe('QuotationController', function() {
       })
       .expect(200, done);    
     });
-
+    it("should add User info (step4)", function (done) {
+      request(sails.hooks.http.app)
+      .put('/quotation/user/'+id)
+      .send(step4)
+      .expect(function (res) {
+        assert.equal(res.body.userId.name, step4.name);
+        assert.equal(res.body.userId.email, step4.email);
+        assert.equal(res.body.userId.telephone, step4.telephone);
+      })
+      .expect(200, done);
+    });
 
 });

@@ -23,10 +23,10 @@ module.exports = {
   	long:{
   		type: "string"
   	},
-  	state:{
+  	stateId:{
   		model: "state"
   	},
-  	suburb:{
+  	suburbId:{
   		model: "suburb"
   	},
   	zc:{
