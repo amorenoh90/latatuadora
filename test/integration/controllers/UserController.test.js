@@ -5,7 +5,7 @@ describe('UserController', function() {
 
   var mockuser={
         name: "Pepito",
-        email: "blick@blick.com",
+        email: "blick@blck.com",
         password: "password",
         form: "user"
       }
