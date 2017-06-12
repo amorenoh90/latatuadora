@@ -30,13 +30,13 @@ module.exports = {
       collection: 'tattoo',
       via: 'artistId'
     },
-  	styles:{
-  		collection: "artiststyle",
+    styles:{
+      collection: "artiststyle",
       via : "artistId"
-  	},
-  	votes:{
-  		type: "string"
-  	},
+    },
+    votes:{
+      type: "string"
+    },
     studioId:{
       model: "studio"
     },
