@@ -19,7 +19,7 @@ module.exports = {
               }
               else{
                 if(done === null){
-                  return res.send(tattoo)
+                  return res.send([tattoo])
                 }
                 else{
                   return res.send(done)
