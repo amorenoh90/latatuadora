@@ -13,7 +13,6 @@ module.exports = {
             email: req.body.email,
             password: req.body.password
         }
-
         if(loginuser.email && loginuser.password){
             User.attemptLogin(loginuser, function (err, user) {
                 if(!err){
