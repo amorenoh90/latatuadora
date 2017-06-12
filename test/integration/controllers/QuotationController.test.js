@@ -30,7 +30,7 @@ describe('QuotationController', function() {
         style: 1,
         comments: "False comment to quote a tattoo",
         name: "Pepito",
-        email: "blick@b.com",
+        email: "blick@blick.com",
         city: "CDMX",
         telephone: 92050923,
         bodypart: 1
@@ -42,7 +42,7 @@ describe('QuotationController', function() {
       .send(quotation)
       .expect(function(res) {
         assert.equal(res.body.minAmount, 600);
-        assert.equal(res.body.maxAmount, 800)
+        assert.equal(res.body.maxAmount, 600);
       })
       .expect(200, done);    
     });
@@ -52,21 +52,11 @@ describe('QuotationController', function() {
       .post('/quotation')
       .send(quotation2)
       .expect(function(res) {
-        assert.equal(res.body.minAmount, 900);
-        assert.equal(res.body.maxAmount, 1100)
+        assert.equal(res.body.minAmount, 600);
+        assert.equal(res.body.maxAmount, 1000)
       })
       .expect(200, done);    
     });
-    it("should add User info (step4)", function (done) {
-      request(sails.hooks.http.app)
-      .put('/quotation/user/'+id)
-      .send(step4)
-      .expect(function (res) {
-        assert.equal(res.body.userId.name, step4.name);
-        assert.equal(res.body.userId.email, step4.email);
-        assert.equal(res.body.userId.telephone, step4.telephone);
-      })
-      .expect(200, done);
-    });
+
 
 });
