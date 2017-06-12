@@ -12,7 +12,7 @@ describe('FlashController', function() {
         styleId: 1,
         elementId: 2
       };
-    it("2", function (done) {
+    it("add Prerequisites", function (done) {
       Style.create({name:'Finn'}).exec(function (err, finn){
         if (err) { return res.serverError(err); }
       });
