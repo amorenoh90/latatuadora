@@ -16,8 +16,7 @@ describe('TattooController', function() {
     it("should create a new Tattoo", function (done) {
       request(sails.hooks.http.app)
       .post('/tattoo')
-      .attach('image', '/home/edwin/Escritorio/Blick/latatuadora/assets/Tattoo/images/c22bf97b-ef64-4d3a-a841-c46f19771a4b.jpg')
-      .field(mocktattoo)
+      .send(mocktattoo)
       .expect(function(res) {
         assert.notEqual(res.body[0].id, null);
         assert.equal(res.body[0].dimensionsY, mocktattoo.dimensionsY);
