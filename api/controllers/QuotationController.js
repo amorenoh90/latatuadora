@@ -55,7 +55,18 @@ module.exports = {
               Quotient.calculate(quotation, function (err, calculated) {
                 if(err) res.negotiate(err);
                 else {
-                  res.send(200, calculated);
+                  Style.findOne({id:quotation.styleId}).exec(function (err, style){
+                    if (err) {
+                      return res.serverError(err);
+                    }
+                    if (!style) {
+                      return res.notFound('Could not find Style, sorry.');
+                    }
+                    else{
+                      calculated.styleText = style.calculatorText;
+                      res.send(200, calculated); 
+                    }
+                  });
                 }
               });
             }

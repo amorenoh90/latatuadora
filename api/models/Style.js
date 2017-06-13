@@ -15,12 +15,18 @@ module.exports = {
       alphanumeric: true,
       maxLength: 40,
     },
-    imgUrl:{
-      type: "string"
-    },
     tattoos: {
       collection: 'tattoo',
       via: 'style'
+    calculatorText: {
+    	 type: "string"
+    },
+    quotation: {
+    	type: "boolean",
+    	defaultsTo: false
+    },
+    imgUrl : {
+    	type: "string"
     }
   }
 };
