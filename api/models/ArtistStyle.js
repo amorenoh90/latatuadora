@@ -8,12 +8,12 @@
 module.exports = {
 
   attributes: {
-  	styleId:{
-  		model: "style"
-  	},
-  	artistId:{
-  		model: "artist"
-  	}
+    styleId:{
+        model: "style"
+    },
+    artistId:{
+        model: "artist"
+    }
   }
 };
 
