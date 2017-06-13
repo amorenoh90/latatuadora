@@ -14,6 +14,16 @@ module.exports = {
       type: 'string',
       alphanumeric: true,
       maxLength: 40,
+    },
+    calculatorText: {
+    	 type: "string"
+    },
+    quotation: {
+    	type: "boolean",
+    	defaultsTo: false
+    },
+    imgUrl : {
+    	type: "string"
     }
   }
 };
