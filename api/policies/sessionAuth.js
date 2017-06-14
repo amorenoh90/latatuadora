@@ -7,15 +7,33 @@
  * @docs        :: http://sailsjs.org/#!/documentation/concepts/Policies
  *
  */
+ var constants = require('../Constants');
 module.exports = function(req, res, next) {
 
   // User is allowed, proceed to the next policy, 
   // or if this is the last policy, the controller
-  if (req.session.authenticated) {
-    return next();
+  var forbiddenmessage = 'You are not permitted to perform this action.';
+  var token = req.headers.authorization;
+  if (token) { 
+    jwt.verifyToken(token, function (err, decoded) {
+        if(err){
+            return res.forbidden({message : err.message});
+        }
+        else{
+            if(decoded.typ == constants.userType.user){
+                var user = {
+                    id: decoded.sub
+                }
+                req.body.user = user;
+                return next();
+            }
+            else{
+                return res.forbidden({message: 'This User Type not permitted to perform this action.'})
+            }
+        }
+    });
   }
-
-  // User is not allowed
-  // (default res.forbidden() behavior can be overridden in `config/403.js`)
-  return res.forbidden('You are not permitted to perform this action.');
+  else{
+    return res.forbidden({message : forbiddenmessage}); 
+  }
 };
