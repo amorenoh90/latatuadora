@@ -36,7 +36,17 @@ describe('FavoriteTattooController', function() {
       })
       .expect(200, done); 
     });
-    it("should remove favorite Tatto", function (done) {
+    it("should consult favorites Tattos by User", function (done) {
+      request(sails.hooks.http.app)
+      .get('/tattoofav')
+      .set('Authorization', mockuser.token)
+      .expect(function(res) {
+        assert.equal(res.body.length, 1);
+        assert.equal(res.body[0].tattooId, mocktattoo.id);
+      })
+      .expect(200, done); 
+    });
+    it("should remove favorite Tattoo", function (done) {
       request(sails.hooks.http.app)
       .post('/removetattoofav')
       .set('Authorization', mockuser.token)
