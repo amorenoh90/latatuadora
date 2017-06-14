@@ -68,6 +68,7 @@ module.exports.routes = {
   //<Flash Routes
   //>
   'post /tattoofav': 'FavoriteTattoo.add',
+  'get /tattoofav': 'FavoriteTattoo.consult',
   'post /removetattoofav': 'FavoriteTattoo.remove'
   //<
 };
