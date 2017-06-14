@@ -14,10 +14,10 @@ describe('FlashController', function() {
       };
     it("add Prerequisites", function (done) {
       Style.create({name:'Finn'}).exec(function (err, finn){
-        if (err) { return res.serverError(err); }
+        if (err) {done(err)}
       });
       Element.create({name:'Finn'}).exec(function (err, finn){
-        if (err) { return res.serverError(err); }
+        if (err) {done(err)}
         done();
       });
     })
