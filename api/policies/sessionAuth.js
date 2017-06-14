@@ -24,7 +24,7 @@ module.exports = function(req, res, next) {
                 var user = {
                     id: decoded.sub
                 }
-                req.body.user = user;
+                req.headers.user = user;
                 return next();
             }
             else{
