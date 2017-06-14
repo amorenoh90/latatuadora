@@ -8,7 +8,7 @@
 module.exports = {
     add: function (req, res) {
         FavoriteTattoo.findOrCreate({
-            userId: req.body.user.id,
+            userId: req.headers.user.id,
             tattooId: req.body.tattooId
         }).exec(function (err, favorite){
             if (err) {
@@ -20,11 +20,18 @@ module.exports = {
         });
     },
     consult: function (req, res) {
-        
+        FavoriteTattoo.find({userId:req.headers.user.id}).exec(function (err, favorites){
+          if (err) {
+            return res.serverError(err);
+          }
+          else{
+            return res.send(favorites); 
+          }
+        });
     },
     remove: function (req, res) {
         FavoriteTattoo.destroy({
-            userId: req.body.user.id,
+            userId: req.headers.user.id,
             tattooId: req.body.tattooId
         }).exec(function (err){
           if (err) { 
