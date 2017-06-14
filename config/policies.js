@@ -27,6 +27,8 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
+  'favoritetattoo': 'sessionAuth'
+
 
   /***************************************************************************
   *                                                                          *
@@ -48,4 +50,8 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
+
+
+//...
+
 };
