@@ -48,7 +48,7 @@ describe('FavoriteTattooController', function() {
     });
     it("should remove favorite Tattoo", function (done) {
       request(sails.hooks.http.app)
-      .post('/removetattoofav')
+      .delete('/tattoofav')
       .set('Authorization', mockuser.token)
       .send(mocktattoo)
       .expect(function(res) {
