@@ -27,7 +27,8 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
-  'favoritetattoo': 'sessionAuth'
+  'favoritetattoo': 'sessionAuth',
+  'favoriteflash': 'sessionAuth'
 
 
   /***************************************************************************
