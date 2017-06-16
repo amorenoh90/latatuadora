@@ -10,21 +10,25 @@ describe('FavoriteFlashController', function() {
         password: "password"
       },
       mockflash = {};
-    it("should logup a normal User and create a Flash (prerequisites)", function (done) {
+     it("should logup a normal User (prerequisites)", function (done) {
       request(sails.hooks.http.app)
       .post('/logup')
       .send(mockuser)
       .expect(function(res) {
         mockuser.token = res.body.token;
         assert.notEqual(res.body, null);
-        Flash.create({name:'flashtest'}).exec(function (err, flash){
-          if (err) { done(err); }
-          else{
-            mockflash.flashId = flash.id;
-          }
-        });
       })
       .expect(200, done);
+    });
+    it("should create new Flash (prerequisites)", function (done) {
+      Flash.create({name:'flashtest'}).then(function (flash){
+          if(flash){
+            mockflash.flashId = flash.id;
+            done();
+          }
+        }).catch(function (err) {
+           done(err);
+        }); 
     });
     it("should create favorite Flash", function (done) {
       request(sails.hooks.http.app)
@@ -42,7 +46,7 @@ describe('FavoriteFlashController', function() {
       .set('Authorization', mockuser.token)
       .expect(function(res) {
         assert.equal(res.body.length, 1);
-        assert.equal(res.body[0].flashId, mockflash.id);
+        assert.equal(res.body[0].flashId.id, mockflash.flashId);
       })
       .expect(200, done); 
     });
