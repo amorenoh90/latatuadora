@@ -69,6 +69,6 @@ module.exports.routes = {
   //>
   'post /tattoofav': 'FavoriteTattoo.add',
   'get /tattoofav': 'FavoriteTattoo.consult',
-  'post /removetattoofav': 'FavoriteTattoo.remove'
+  'delete /tattoofav': 'FavoriteTattoo.remove'
   //<
 };
