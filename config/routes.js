@@ -59,16 +59,20 @@ module.exports.routes = {
   'post /logup': 'UserController.logup',
   'post /login': 'UserController.login',
   //<User login
+
   //>Tattoo Routes
   'post /tattoo': 'TattooController.add',
+    ////favorites
+  'post /tattoofav': 'FavoriteTattoo.add',
+  'get /tattoofav': 'FavoriteTattoo.consult',
+  'delete /tattoofav': 'FavoriteTattoo.remove',
   //<Tattoo Routes
 
   //>Flash Routes
   'post /flash': 'FlashController.add',
+    ////Favorites
+  'post /flashfav': 'FavoriteFlash.add',
+  'get /flashfav': 'FavoriteFlash.consult',
+  'delete /flashfav': 'FavoriteFlash.remove'
   //<Flash Routes
-  //>
-  'post /tattoofav': 'FavoriteTattoo.add',
-  'get /tattoofav': 'FavoriteTattoo.consult',
-  'delete /tattoofav': 'FavoriteTattoo.remove'
-  //<
 };
