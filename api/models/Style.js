@@ -18,6 +18,7 @@ module.exports = {
     tattoos: {
       collection: 'tattoo',
       via: 'style'
+    },
     calculatorText: {
     	 type: "string"
     },
