@@ -50,8 +50,7 @@ module.exports.routes = {
 
   //>Routes Quotation
 
-  'put /quotation/references/:id': 'QuotationController.uploadReferences',
-  'put /quotation/user/:id': 'QuotationController.createUser',
+  'post /quotation': 'QuotationController.createQuotation',
      
   //<Routes Quotation
 
@@ -73,6 +72,29 @@ module.exports.routes = {
     ////Favorites
   'post /flashfav': 'FavoriteFlash.add',
   'get /flashfav': 'FavoriteFlash.consult',
-  'delete /flashfav': 'FavoriteFlash.remove'
+  'delete /flashfav': 'FavoriteFlash.remove',
   //<Flash Routes
+  //Routes Conekta
+  'get /conekta':{
+    view: 'pagoconekta'
+  },
+  'post /conekta': 'PaymentsController.conekta',
+  //<Routes Conekta
+  //Routes PayPal
+  'get /paypal':{
+    view: 'pagopaypal'
+  },
+  'post /paypal': 'PaymentsController.paypalIntent',
+  'get /paypalexecute': 'PaymentsController.paypalExecute',
+  'get /paypalcancel': 'PaymentsController.paypalCancel',
+  //<Routes PayPal
+
+  //>Routes ComproPago
+  'post /compropago': 'PaymentsController.compropagoCharge',
+  'post /compropagooptions': 'PaymentsController.compropagoOptions',
+  'get /compropago': {
+    view: 'compropagocharge'
+  },
+  'post /compropagopay': 'PaymentsController.compropagoPay'
+  //<Routes ComproPago
 };

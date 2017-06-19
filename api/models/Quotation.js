@@ -18,7 +18,7 @@ module.exports = {
       size: 5,
       required: true
     },
-    style:{
+    styleId:{
       model: 'style'
     },
     comments:{
@@ -31,9 +31,16 @@ module.exports = {
     references: {
       collection: 'quotationreferences',
       via: 'quotation'
+    },
+    bodypartId:{
+      model: 'bodypart'
+    },
+    studioId:{
+      model: 'studio'
     }
+
   },
-  beforeUpdate: function (values, cb) { 
+  beforeCreate: function (values, cb) { 
     if(values.style){
       Style.findOne({ id: values.style }).exec(function (err, style){
         if (err) {

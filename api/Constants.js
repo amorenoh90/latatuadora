@@ -6,5 +6,11 @@ module.exports = {
         freelance: 4,
         quotient: 5
     },
-    SECRET_TOKEN : 'latatuadoratokensecret'
+    SECRET_TOKEN : 'latatuadoratokensecret',
+    payment:{
+    	pending: 1,
+    	success: 2,
+    	expired: 3,
+    	undefined: 4
+    }
 };

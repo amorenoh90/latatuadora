@@ -6,21 +6,11 @@
  */
 
 module.exports = {
-  identity: 'BodyPart',
 
   attributes: {
-    id: {
-      type: "integer",
-      primaryKey: true
-    },
-    part: {
-      type: 'string',
-      size: 40
-    },
-    bodypart: {
-      collection: 'tattoo',
-      via: 'partbody'
-    }
+  	name:{
+  		type: 'string'
+  	}
   }
 };
 

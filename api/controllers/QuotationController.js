@@ -1,75 +1,70 @@
 /**
  * QuotationController
- *
- * @description :: Server-side logic for managing Quotations
- * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+var constants = require('../Constants');
 
 module.exports = {
-	
-/**s
- * Upload References
- *
- * (POST /quotation/references)
+  
+/**
+ * (POST /quotation)
  */
-  uploadReferences: function  (req, res) {
-    req.file('reference').upload({
-    	maxBytes: 10000000,
-    	dirname: require('path').resolve(sails.config.appPath, 'assets/references/images')
-    },function (err, uploadedFiles) {
-      if (err)
-        return res.serverError(err);
-	    else{
-	    	for(i in uploadedFiles){
-		    	QuotationReferences.create({imgUrl: uploadedFiles[i].fd, quotation: req.params.id}).exec(function (err, refrence){
-		      	if (err) { return res.serverError(err); }
-		    	});
-		    }
-	    }
-    });
-    Quotation.update({id: req.params.id},{comments: req.body.comments})
-      .exec(function (err, updated){
-        if (err) return res.negotiate(err);
-        else{
-          Quotation.findOne({ id: req.params.id }).populate('references').exec(function (err, quotation){
-            if (err) {
-              return res.serverError(err);
-            }
-            if (!quotation) {
-              return res.notFound("Could not find records in the db, sorry.");
-            }
-             res.send(200, quotation);
-          });
-        }
-    });
-   },     
-  createUser: function (req, res) {
-  	User.create({
-  		name: req.body.name,
-  		email: req.body.email,
-  		city: req.body.city,
-      telephone: req.body.telephone,
-  		userType: 5
-  	}).exec(function (err, newuser){
-  	  if (err) {res.serverError(err); }
-  	  else{
+  createquotation: function  (req, res) {
 
-  	  	Quotation.update({id: req.body.id},{userId: newuser.id}).exec(function afterwards(err, updated){
-  	  	  if (err) {
-  	  	    return res.serverError(err);
-  	  	  }
-  	  	  else{
-  	  	  	Quotation.findOne({id: req.body.id}).populate('userId').populate('style').exec(function (err, quotation){
-  	  	  	  if (err) {
-  	  	  	    return res.serverError(err);
-  	  	  	  }
-  	  	  	  else{
-  	  	  	  	res.send(200, quotation);
-  	  	  	  }
-  	  	  	});
-  	  	  }
-  	  	});
-  	  }
-  	});
+    var newuser = {
+      name: req.body.name,
+      email: req.body.email,
+      telephone: req.body.telephone,
+      userType: constants.userType.quotient
+    }
+
+    User.findOrCreate(newuser).exec(function (err, user){
+      if (err){
+        res.serverError(err);
+      }
+        else{
+        var  quotation = {
+          dimensionsY : req.body.dimensionsY,
+          dimensionsX : req.body.dimensionsX,
+          comments: req.body.comments,
+          styleId: req.body.style,
+          bodypartId: req.body.bodypart,
+          studioId: req.body.studio,
+          userId: user.id
+        }
+
+        Quotation.create(quotation).exec(function (err, quotation){
+          if (err){
+            res.serverError(err);
+          }  
+          else{ 
+            req.file('reference').upload({
+              maxBytes: 10000000,
+              dirname: require('path').resolve(sails.config.appPath, 'assets/references/images')
+            },function (err, uploadedFiles) {
+              if (err) {
+                sails.log.error(err);
+              }
+              else{
+                for(i in uploadedFiles){
+                  QuotationReferences.create({imgUrl: uploadedFiles[i].fd, quotation: quotation.id}).exec(function (err, refrence){
+                    if (err) { return res.serverError(err); }
+                  });
+                }
+              }
+            });
+
+            if(!quotation.studioId){
+              Quotient.calculate(quotation, function (err, calculated) {
+                if(err) res.negotiate(err);
+                else res.send(200, calculated);
+              });
+            }
+            else{
+              res.ok("Are you quoting with study");
+            }
+          }
+        });
+      }
+    });
   }
 };
