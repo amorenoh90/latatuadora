@@ -1,6 +1,6 @@
 var constants = require('../Constants');
 module.exports = {
-  add: function (values, image, done) {
+  add: function (values, image, done) { 
     var token;
     if(values.form == 'user'){
       var newuser = {
@@ -18,7 +18,7 @@ module.exports = {
                   return done(err);
               }
               else{
-                  return done(jwt.createToken(user));
+                  return done(null, jwt.createToken(user));
               }
           }
       });
