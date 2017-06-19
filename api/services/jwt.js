@@ -20,7 +20,6 @@ module.exports = {
             else{
                 return done(null,decoded);
             }
-        })
-    	//return jwt.verify(token, constants.SECRET_TOKEN);
+        });
     }
 }
