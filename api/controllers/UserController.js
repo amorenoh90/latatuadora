@@ -4,7 +4,10 @@
 var constants = require('../Constants');
 module.exports = {
     logup: function (req, res) {
-      logupService.add(req.body, req.file, function (done) {
+      logupService.add(req.body, req.file, function (err, done) {
+        if(err){
+            res.badRequest(err);
+        }
         res.send({token: done});
       })
     },
