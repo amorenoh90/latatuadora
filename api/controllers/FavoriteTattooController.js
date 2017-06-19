@@ -20,7 +20,7 @@ module.exports = {
         });
     },
     consult: function (req, res) {
-        FavoriteTattoo.find({userId:req.headers.user.id}).exec(function (err, favorites){
+        FavoriteTattoo.find({userId:req.headers.user.id}).populate('tattooId').exec(function (err, favorites){
           if (err) {
             return res.serverError(err);
           }
