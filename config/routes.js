@@ -95,6 +95,12 @@ module.exports.routes = {
   'get /compropago': {
     view: 'compropagocharge'
   },
-  'post /compropagopay': 'PaymentsController.compropagoPay'
+  'post /compropagopay': 'PaymentsController.compropagoPay',
   //<Routes ComproPago
+
+
+  //>memberships
+  //'post /memberships': 'MembershipsController.create'
+
+  //>memberships
 };
