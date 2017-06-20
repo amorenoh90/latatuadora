@@ -27,8 +27,11 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
-  'favoritetattoo': 'sessionAuth',
-  'favoriteflash': 'sessionAuth'
+  'favoritetattoo': 'userSessionAuth',
+  'favoriteflash': 'userSessionAuth',
+  MembershipsController: {
+    //'create': 'adminSessionAuth'
+  }
 
 
   /***************************************************************************
