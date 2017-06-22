@@ -90,7 +90,6 @@ module.exports = {
             if(req.query.page){
               var paginator = (req.query.page-1) * req.query.skip;
               var skiper = parseInt(req.query.skip) + parseInt(paginator);
-              console.log(paginator, skiper);
 
               return res.send(tattoos.slice(paginator, skiper))
             }
