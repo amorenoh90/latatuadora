@@ -13,7 +13,7 @@ module.exports = {
       type: "integer",
       primaryKey: true
     },
-    part: {
+    name: {
       type: 'string',
       size: 40
     },
