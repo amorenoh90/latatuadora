@@ -8,9 +8,18 @@
 module.exports = {
 
   attributes: {
-  	name:{
-  		type: 'string'
-  	}
+    id: {
+      type: "integer",
+      primaryKey: true
+    },
+    name: {
+      type: 'string',
+      size: 40
+    },
+    tattos: {
+      collection: 'tattoo',
+      via: 'partbody'
+    }
   }
 };
 

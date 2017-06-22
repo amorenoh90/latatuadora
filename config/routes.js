@@ -60,9 +60,11 @@ module.exports.routes = {
   //<User login
   //>Tattoo Routes
   'post /tattoo': 'TattooController.add',
+  'get /tattoo': 'TattooController.find',
   //<Tattoo Routes
 
   //>Flash Routes
-  'post /flash': 'FlashController.add'
+  'post /flash': 'FlashController.add',
+  'get /flash': 'FlashController.find'
   //<Flash Routes
 };
