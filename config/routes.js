@@ -73,6 +73,9 @@ module.exports.routes = {
     ////Favorites
   'post /flashfav': 'FavoriteFlash.add',
   'get /flashfav': 'FavoriteFlash.consult',
-  'delete /flashfav': 'FavoriteFlash.remove'
+  'delete /flashfav': 'FavoriteFlash.remove',
   //<Flash Routes
+  //>Favs
+  'get /favs': 'UserController.favs',
+  //<Favs
 };
