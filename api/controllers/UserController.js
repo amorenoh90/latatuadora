@@ -32,5 +32,17 @@ module.exports = {
         else{
             res.badRequest('Email and Password are required');
         }
+    },
+    favs: function(req, res) {
+        var values = {};
+        values.user = req.headers.user;
+        FavTattooFlashService.find(values, function(err, favs){
+            if(err){
+                res.serverError(err);
+            }
+            else{
+                res.send(favs);
+            }
+        });
     }
 };
