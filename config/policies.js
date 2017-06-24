@@ -44,7 +44,7 @@ module.exports.policies = {
   },
   UserController: {
     'favs': 'sessionAuth'
-  }
+  },
 
 
   /***************************************************************************
