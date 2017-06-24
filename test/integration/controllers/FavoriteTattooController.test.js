@@ -6,7 +6,7 @@ describe('FavoriteTattooController', function() {
   var mockuser = {
         form: "user",
         name: "usertest",
-        email: "asdsdsddd@sdfvffdggz.com",
+        email: "asdsdsddd@sdffdggz.com",
         password: "password"
       },
       mocktattoo = {};
