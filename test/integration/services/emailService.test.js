@@ -4,7 +4,7 @@ var assert = require("assert");
 describe('emailService', function() {
 
   var mockinfo = {
-        to: 'e28v11a96@gmail.com',
+        to: 'edwin@blick.mx',
         subject: "Test Email Service",
         text: 'mock Text'
       };
