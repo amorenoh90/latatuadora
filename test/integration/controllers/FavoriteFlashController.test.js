@@ -6,7 +6,7 @@ describe('FavoriteFlashController', function() {
   var mockuser = {
         form: "user",
         name: "usertest",
-        email: "test@test.com",
+        email: "tet@test.com",
         password: "password"
       },
       mockflash = {};
