@@ -1,4 +1,4 @@
-var jwt = require('jwt-simple');
+var jwt = require('jsonwebtoken');
 var moment = require('moment');
 var constants = require('../Constants');
 module.exports = {
@@ -10,6 +10,17 @@ module.exports = {
             exp: moment().add(7, 'days').unix()
         }
 
-        return jwt.encode(payload, constants.SECRET_TOKEN);
+        return jwt.sign(payload, constants.SECRET_TOKEN);
+    },
+    verifyToken: function (token, done) {
+        jwt.verify(token, constants.SECRET_TOKEN, function (err, decoded) {
+            if(err){
+                return done(err);
+            }
+            else{
+                return done(null,decoded);
+            }
+        })
+    	//return jwt.verify(token, constants.SECRET_TOKEN);
     }
 }

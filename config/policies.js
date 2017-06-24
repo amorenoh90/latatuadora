@@ -27,6 +27,25 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
+  'favoritetattoo': {
+    'add':'sessionAuth',
+    'consult': 'sessionAuth',
+    'remove': 'sessionAuth',
+    'find': true
+  },
+  'favoriteflash': {
+    'add':'sessionAuth',
+    'consult': 'sessionAuth',
+    'remove': 'sessionAuth',
+    'find': true
+  },
+  MembershipsController: {
+    //'create': 'adminSessionAuth'
+  },
+  UserController: {
+    'favs': 'sessionAuth'
+  }
+
 
   /***************************************************************************
   *                                                                          *
@@ -52,4 +71,8 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
+
+
+//...
+
 };
