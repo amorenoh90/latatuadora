@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-
+  	itemType:{
+  		type:"string",
+  		unique: true
+  	}
   }
 };
 
