@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-
+  	status:{
+  		type:'string',
+  		required: true
+  	}
   }
 };
 
