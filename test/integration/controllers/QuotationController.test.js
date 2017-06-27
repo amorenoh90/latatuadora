@@ -30,7 +30,7 @@ describe('QuotationController', function() {
         style: 1,
         comments: "False comment to quote a tattoo",
         name: "Pepito",
-        email: "blick@blick.com",
+        email: "blick@b.com",
         city: "CDMX",
         telephone: 92050923,
         bodypart: 1
@@ -57,6 +57,4 @@ describe('QuotationController', function() {
       })
       .expect(200, done);    
     });
-
-
 });

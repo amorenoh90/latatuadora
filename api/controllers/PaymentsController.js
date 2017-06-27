@@ -72,8 +72,8 @@ module.exports = {
                 payment_method: "paypal"
             },
             redirect_urls: {
-                return_url: "http://localhost:1337/paypalexecute",
-                cancel_url: "http://localhost:1337/paypalcancel"
+                return_url: constants.payPalUrls.execute,
+                cancel_url: constants.payPalUrls.cancel
             },
             transactions: [{
                 item_list: {

@@ -13,7 +13,6 @@ module.exports = {
     var newuser = {
       name: req.body.name,
       email: req.body.email,
-      city: req.body.city,
       telephone: req.body.telephone,
       userType: constants.userType.quotient
     }

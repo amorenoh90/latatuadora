@@ -8,9 +8,15 @@ module.exports = {
     },
     SECRET_TOKEN : 'latatuadoratokensecret',
     payment:{
-    	pending: 1,
-    	success: 2,
-    	expired: 3,
-    	undefined: 4
+        pending: 1,
+        success: 2,
+        expired: 3,
+        undefined: 4
+    },
+    payPalUrls:{
+        execute: 'http://localhost:1337/paypalexecute',
+        cancel: 'http://localhost:1337/paypalcancel',
+        aceptplan: 'http://localhost/aceptplan',
+        cancelplan: 'http://localhost/cancelplan'
     }
-};
+};  

@@ -54,6 +54,26 @@ module.exports.routes = {
      
   //<Routes Quotation
 
+  //>User login
+  'post /logup': 'UserController.logup',
+  'post /login': 'UserController.login',
+  //<User login
+
+  //>Tattoo Routes
+  'post /tattoo': 'TattooController.add',
+    ////favorites
+  'post /tattoofav': 'FavoriteTattoo.add',
+  'get /tattoofav': 'FavoriteTattoo.consult',
+  'delete /tattoofav': 'FavoriteTattoo.remove',
+  //<Tattoo Routes
+
+  //>Flash Routes
+  'post /flash': 'FlashController.add',
+    ////Favorites
+  'post /flashfav': 'FavoriteFlash.add',
+  'get /flashfav': 'FavoriteFlash.consult',
+  'delete /flashfav': 'FavoriteFlash.remove',
+  //<Flash Routes
   //Routes Conekta
   'get /conekta':{
     view: 'pagoconekta'
@@ -75,6 +95,12 @@ module.exports.routes = {
   'get /compropago': {
     view: 'compropagocharge'
   },
-  'post /compropagopay': 'PaymentsController.compropagoPay'
+  'post /compropagopay': 'PaymentsController.compropagoPay',
   //<Routes ComproPago
+
+
+  //>memberships
+  //'post /memberships': 'MembershipsController.create'
+
+  //>memberships
 };
