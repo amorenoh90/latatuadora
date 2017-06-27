@@ -15,21 +15,21 @@ module.exports = {
         }
         if(loginuser.email && loginuser.password){
             User.attemptLogin(loginuser, function (err, user) {
-                if(!err){
-                    if(!user) {
-                        res.badRequest("Invalid Email/Password combination");
-                    }
-                    else{
-                        res.status(200).send({token: jwt.createToken(user), usertype: user.userType}); 
-                    }
+                if(err){
+                    res.badRequest(err);
                 }
                 else{
-                    res.negotiate(err);
+                    if(!user) {
+                        res.badRequest({message: "Invalid Email/Password combination"});
+                    }
+                    else{
+                        res.send({token: jwt.createToken(user), usertype: user.userType});
+                    }
                 }
             })
         }
         else{
-            res.badRequest('Email and Password are required');
+            res.badRequest({message: 'Email and Password are required'});
         }
     },
     favs: function(req, res) {
