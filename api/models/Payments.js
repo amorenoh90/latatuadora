@@ -1,18 +1,18 @@
 module.exports = {
     attributes: {
-        userId: {
+        user: {
             model: 'user'
         },
         token: {
             type: 'string'
         },
-        statusId: {
+        status: {
             model: 'paymentstatus'
         },
-        itemTypeId: {
+        itemType: {
             model: 'itemtype'
         },
-        referenceId: {
+        reference: {
             type: "string"
         }
     }
