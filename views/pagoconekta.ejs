@@ -10,29 +10,41 @@
   <span class="card-errors"></span>
   <div>
     <label>
+      <span>Itemid</span>
+      <input name="itemId" type="text" value="1">
+    </label>
+  </div>
+  <div>
+    <label>
+      <span>itemType</span>
+      <input  name="itemType" type="text" value="1">
+    </label>
+  </div>
+  <div>
+    <label>
       <span>Nombre del tarjetahabiente</span>
-      <input type="text" size="20" name="cardname" data-conekta="card[name]">
+      <input type="text" size="20" name="cardname" data-conekta="card[name]" value='more'>
     </label>
   </div>
   <div>
     <label>
       <span>Número de tarjeta de crédito</span>
-      <input type="text" size="20" data-conekta="card[number]">
+      <input type="text" size="20" data-conekta="card[number]" value="4111111111111111">
     </label>
   </div>
   <div>
     <label>
       <span>CVC</span>
-      <input type="text" size="4" data-conekta="card[cvc]">
+      <input type="text" size="4" data-conekta="card[cvc]" value="123">
     </label>
   </div>
   <div>
     <label>
       <span>Fecha de expiración (MM/AAAA)</span>
-      <input type="text" size="2" data-conekta="card[exp_month]">
+      <input type="text" size="2" data-conekta="card[exp_month]" value="11">
     </label>
     <span>/</span>
-    <input type="text" size="4" data-conekta="card[exp_year]">
+    <input type="text" size="4" data-conekta="card[exp_year]" value="2020">
   </div>
   <button type="submit">Crear token</button>
 </form>
