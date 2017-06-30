@@ -36,8 +36,17 @@ module.exports = {
   	},
     canGoHome:{
       type: "boolean"
+    },
+    membership:{
+      model: 'memberships'
+    },
+    membershipExp:{
+      type: "datetime"
     }
-
+  },
+  beforeCreate: function (values, cb) {
+    values.membership = contstants.memberships.freelancer;
+    cb();
   },
   addProfileImg: function (image, freelancer, cb) { 
     image('profileImg').upload({
@@ -47,15 +56,20 @@ module.exports = {
       if (err)
         cb(err);
       else{
-        Freelancer.update({id: freelancer},{profileImgUrl: uploadedFiles[0].fd})
-          .exec(function (err, updated){
-            if (err) { 
-              return cb(err); 
-            }
-            else{
-              return cb();
-            }
-        });
+        if(uploadedFiles.length === 0){
+          return cb();
+        }
+        else{
+          Freelancer.update({id: freelancer},{profileImgUrl: uploadedFiles[0].fd})
+            .exec(function (err, updated){
+              if (err) { 
+                return cb(err); 
+              }
+              else{
+                return cb();
+              }
+          });
+        }
       }
     });
   }
