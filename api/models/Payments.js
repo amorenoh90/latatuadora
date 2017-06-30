@@ -3,7 +3,7 @@ module.exports = {
         user: {
             model: 'user'
         },
-        token: {
+        purchaseId: {
             type: 'string'
         },
         status: {
