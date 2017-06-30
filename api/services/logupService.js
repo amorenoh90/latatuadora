@@ -87,7 +87,7 @@ module.exports = {
                               }
                             }
                             Studio.addProfileImg(image, studio.id, function (cb) {
-                              done(jwt.createToken(studioUser));
+                              done(null, jwt.createToken(studioUser));
                             });
                           }
                       });
@@ -135,7 +135,7 @@ module.exports = {
                         });
                       }
                       Freelancer.addProfileImg(image, freelancer.id, function (cb) {
-                        return done(jwt.createToken(freelanceruser));
+                        return done(null, jwt.createToken(freelanceruser));
                       })
                     }
                 });
