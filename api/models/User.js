@@ -13,12 +13,10 @@ module.exports = {
     name: {
       type: 'string',
       maxLength: 40,
-      alphanumeric: true, 
       required: true
     },
     lastname: {
-      type: "string",
-      alphanumeric: true
+      type: "string"
     },
     email:{
       type: 'email',
@@ -37,7 +35,7 @@ module.exports = {
     },
     telephone:{
       type: "integer",
-      maxLength: 10,
+      maxLength: 11,
       minLength: 8
     },
     userType:{
@@ -46,15 +44,21 @@ module.exports = {
     quotation:{
       collection: "quotation",
       via: "userId"
+    },
+    conekta:{
+      type: 'string'
     }
   },
-
   beforeCreate: function (values, cb) { 
     if(values.password){
       bcrypt.hash(values.password, 10, function(err, hash) {
-        if(err) return cb(500, err);
-        values.password = hash;
-        cb();
+        if(err){
+          return cb(err);
+        } 
+        else{
+          values.password = hash;
+          cb(); 
+        }
       });
     }
     else{
@@ -82,4 +86,3 @@ module.exports = {
     });
   }
 };
-
