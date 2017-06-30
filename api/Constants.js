@@ -9,7 +9,7 @@ module.exports = {
     SECRET_TOKEN : 'latatuadoratokensecret',
     payment:{
         pending: 1,
-        success: 2,
+        paid: 2,
         expired: 3,
         undefined: 4
     },
@@ -18,5 +18,15 @@ module.exports = {
         cancel: 'http://localhost:1337/paypalcancel',
         aceptplan: 'http://localhost/aceptplan',
         cancelplan: 'http://localhost/cancelplan'
+    },
+    itemType:{
+        1: "Flash",
+        2: "Lead",
+        3: "StudioMembership", 
+        4: "FreelanceMembership"
+    },
+    memberships:{
+        studio: 1,
+        freelancer: 2
     }
 };  
