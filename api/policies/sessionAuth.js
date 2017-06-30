@@ -14,14 +14,14 @@ module.exports = function(req, res, next) {
   // User is allowed, proceed to the next policy, 
   // or if this is the last policy, the controller
   var forbiddenmessage = 'You are not permitted to perform this action.';
-  var token = req.headers.authorization;
+  var token = req.headers["x-authorization"];
   if (token) { 
     jwt.verifyToken(token, function (err, decoded) {
         if(err){
             return res.forbidden({message : err.message});
         }
         else{
-            if(decoded.typ == constants.userType.user){
+            if(decoded.typ == constants.userType.freelance || decoded.typ == constants.userType.studio || decoded.typ == constants.userType.user){
                 var user = {
                     id: decoded.sub
                 }
