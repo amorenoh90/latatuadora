@@ -17,9 +17,19 @@ describe('Conekta Service', function() {
         elementId: 2
       },
       mockplan = {
-      	name: 'mockplan',
-      	amount: 3500
+        name: 'mockplan',
+        amount: 3500
       };
+    it("should logup a Studio User (prerequisites)", function (done) {
+      request(sails.hooks.http.app)
+      .post('/logup')
+      .send(mockstudio)
+      .expect(function(res) {
+        mockstudio.token = res.body.token;
+        assert.notEqual(res.body, null);
+      })
+      .expect(200, done);
+    });
     it("add flash (prerequisites)", function (done) {
       Flash.create(mockflash).exec(function (err, flash){
         if (err) {
@@ -33,14 +43,24 @@ describe('Conekta Service', function() {
       });
     });
     it('should create a new conekta plan', function (done) {
-    	ConektaService.createPlan(mockplan, function (err, plan) {
-    		if(err){
-    			done(err);
-    		}
-    		else{
-    			console.log(plan);
-    			done();
-    		}
-    	})
-    })
+      ConektaService.createPlan(mockplan, function (err, plan) {
+        if(err){
+          done(err);
+        }
+        else{
+          done();
+        }
+      });
+    });
+    it('subscribe Studio to plan', function (done) {
+      ConektaService.createSubscription(mockstudio ,function (err, subscription) {
+        if(err){
+          done(err);
+        }
+        else{
+          console.log(subscription);
+          done();
+        }
+      });
+    });
 });
