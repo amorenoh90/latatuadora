@@ -52,13 +52,30 @@ describe('PaymentsControllerTest', function() {
      "customer_email": "pepito@gmail.com",
      "customer_phone": "5555555555"
    }
- }
-
-  it("should apply for a new order", function (done) {
+ } 
+ var mockuser = {
+        form: "user",
+        name: "usertest",
+        email: "payusertest@test.com",
+        password: "password"
+      },
+      mockflash = {};
+  it("should logup a normal User (prerequisites)", function (done) {
+    request(sails.hooks.http.app)
+    .post('/logup')
+    .send(mockuser)
+    .expect(function(res) {
+      mockuser.token = res.body.token;
+      assert.notEqual(res.body, null);
+    })
+    .expect(200, done);
+  });
+  it("should apply for buy a flash", function (done) {
     this.timeout(20000);
     request(sails.hooks.http.app)
       .post('/compropago')
       .send(mock)
+      .set('X-Authorization', mockuser.token)
       .expect(function(res) {
         mockhook.id = res.body.id;
         assert.equal(res.body.status, "pending");
@@ -73,8 +90,8 @@ describe('PaymentsControllerTest', function() {
       .post('/compropagopay')
       .send(mockhook)
       .expect(function(res) {
-        assert.equal(mockhook.id, res.body.token)
-        assert.equal(2, res.body.statusId);
+        assert.equal(mockhook.id, res.body.purchaseId)
+        assert.equal(2, res.body.status);
       })
       .expect(200, done);
   });
