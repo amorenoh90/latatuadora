@@ -104,7 +104,7 @@ module.exports = {
           email: values.email,
           password: values.password,
           telephone: values.telephone,
-          userType: constants.userType.frelance
+          userType: constants.userType.freelance
         },
         newfreelancer = {
           name: values.name,
@@ -115,6 +115,7 @@ module.exports = {
             return done(err); 
           }
           else{
+            newfreelancer.user = freelanceruser.id;
             Freelancer.create(newfreelancer).exec(function (err, freelancer){
               if (err) { 
                 return done(err);
