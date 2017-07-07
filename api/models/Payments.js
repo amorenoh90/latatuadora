@@ -4,7 +4,8 @@ module.exports = {
             model: 'user'
         },
         purchaseId: {
-            type: 'string'
+            type: 'string',
+            unique: true
         },
         status: {
             model: 'paymentstatus'
@@ -13,7 +14,7 @@ module.exports = {
             model: 'itemtype'
         },
         reference: {
-            type: "string"
+            type: "integer"
         }
     }
 };
