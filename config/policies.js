@@ -45,7 +45,10 @@ module.exports.policies = {
   UserController: {
     'favs': 'userSessionAuth'
   },
-  'PaymentsController': 'sessionAuth'
+  'PaymentsController': {
+    '*': 'sessionAuth',
+    'compropagopay': true
+  }
 
   /***************************************************************************
   *                                                                          *
