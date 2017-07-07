@@ -12,7 +12,6 @@ paypal.configure({
   'client_secret': 'EKOvENrICZilSHCE44wTyVZZQbwDsBoY5Hzk_UTbAW4LG3WLOtC79zbMZz7UTCLzAPnL7lNDvUGhmMZH'
 });
 module.exports = {
-
   attributes: {
     userTypeId: {
       model: 'usertype'
@@ -40,9 +39,7 @@ module.exports = {
       type: 'string'
     }
   },
-
   beforeCreate: function (values, cb) {
-    console.log(values);
     ConektaService.createPlan(values, function (err, plan) {
       if(err){
         return cb(err);
@@ -62,7 +59,7 @@ module.exports = {
             "value": values.amount
           },
           "cycles": "0",
-          "frequency": "MONTH",
+          "frequency": "YEAR",
           "frequency_interval": "1",
           "name": "Regular",
           "type": "REGULAR"
@@ -77,15 +74,29 @@ module.exports = {
         "return_url": constants.payPalUrls.aceptplan
       }
     };
+    var billingPlanUpdateAttributes = [{
+      "op": "replace",
+      "path": "/",
+      "value": {
+        "state": "ACTIVE"
+      }
+    }];
     paypal.billingPlan.create(billingPlanAttributes, function (err, billingPlan) {
       if (err) {
-        console.log(err);
         cb(err);
       } 
       else {
-        values.paypal = billingPlan.id;
-        console.log(billingPlan);
-        cb();
+        paypal.billingPlan.update(billingPlan.id, billingPlanUpdateAttributes, 
+            function(error, response){
+            if (error) {
+                throw cb(error);
+            } 
+            else {
+              console.log(response);
+              values.paypal = billingPlan.id;
+              cb();
+            }
+        });
       }
     });
   }
