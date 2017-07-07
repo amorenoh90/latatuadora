@@ -84,9 +84,11 @@ module.exports.routes = {
   'get /paypal':{
     view: 'pagopaypal'
   },
-  'post /paypal': 'PaymentsController.paypalIntent',
+  'post /paypal': 'PaymentsController.paypal',
   'get /paypalexecute': 'PaymentsController.paypalExecute',
   'get /paypalcancel': 'PaymentsController.paypalCancel',
+  'get /aceptplan': 'PaymentsController.paypalAceptPlan',
+  'get /cancelplan': 'PaymentsController.paypalCancelPlan',
   //<Routes PayPal
 
   //>Routes ComproPago
