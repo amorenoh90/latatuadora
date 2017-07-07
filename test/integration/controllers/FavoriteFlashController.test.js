@@ -10,7 +10,7 @@ describe('FavoriteFlashController', function() {
         password: "password"
       },
       mockflash = {};
-     it("should logup a normal User (prerequisites)", function (done) {
+    it("should logup a normal User (prerequisites)", function (done) {
       request(sails.hooks.http.app)
       .post('/logup')
       .send(mockuser)
