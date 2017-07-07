@@ -4,7 +4,7 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-
+var constants = require('../Constants.js');
 module.exports = {
 
   attributes: {
@@ -23,6 +23,9 @@ module.exports = {
   	rank:{
   		type:"string"
   	},
+    user:{
+      model:'user'
+    },
   	profileImgUrl:{
   		type: "string"
   	},
@@ -45,7 +48,7 @@ module.exports = {
     }
   },
   beforeCreate: function (values, cb) {
-    values.membership = contstants.memberships.freelancer;
+    values.membership = constants.memberships.freelancer;
     cb();
   },
   addProfileImg: function (image, freelancer, cb) { 
