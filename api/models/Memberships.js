@@ -46,7 +46,6 @@ module.exports = {
       }
       else{
         values.conekta = plan.id;
-        console.log(values);
       }
     });
     var billingPlanAttributes = {
@@ -92,7 +91,6 @@ module.exports = {
                 throw cb(error);
             } 
             else {
-              console.log(response);
               values.paypal = billingPlan.id;
               cb();
             }
