@@ -1,6 +1,6 @@
 var mocha = require('mocha'),
   assert = require('assert');
-
+  request = require('supertest');
 describe('Conekta Service', function() {
 
   var mockitem = {
@@ -19,6 +19,19 @@ describe('Conekta Service', function() {
       mockplan = {
         name: 'mockplan',
         amount: 3500
+      },
+      mockstudio = {
+        "shedule":[{"dayId": 1, "start": 8, "end": 15 }, {"dayId": 2, "start": 8, "end": 15 }, {"dayId": 3, "start": 8, "end": 15 }],
+        "styles": [{"styleId": 1}, {"styleId": 2}],
+        "form": "user",
+        "name": "Studio-Test",
+        "email": "userr@latatuadora.com",
+        "password": "password",
+        "state": "CDMX",
+        "suburb": "Roma",
+        "town": "Cuahutemoc",
+        "street": "Chapultepec",
+        "zc": "07000"
       };
     it("should logup a Studio User (prerequisites)", function (done) {
       request(sails.hooks.http.app)
@@ -48,17 +61,6 @@ describe('Conekta Service', function() {
           done(err);
         }
         else{
-          done();
-        }
-      });
-    });
-    it('subscribe Studio to plan', function (done) {
-      ConektaService.createSubscription(mockstudio ,function (err, subscription) {
-        if(err){
-          done(err);
-        }
-        else{
-          console.log(subscription);
           done();
         }
       });
