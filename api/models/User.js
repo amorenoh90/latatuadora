@@ -78,10 +78,13 @@ module.exports = {
       else{
         bcrypt.compare(values.password, user.password, function (err, res) {
           if(err){
-            cb(err);
+            return cb(err);
           }
           if(res){
-            cb(null, user);
+            return cb(null, user);
+          }
+          else{
+            return cb();
           }
         })
       }
