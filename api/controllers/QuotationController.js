@@ -1,7 +1,7 @@
 /**
  * QuotationController
  */
-var usertype = require('../UserTypeConstants');
+var constants = require('../Constants');
 
 module.exports = {
   
@@ -12,9 +12,8 @@ module.exports = {
     var newuser = {
       name: req.body.name,
       email: req.body.email,
-      city: req.body.city,
       telephone: req.body.telephone,
-      userType: usertype.quotient
+      userType: constants.userType.quotient
     };
     User.findOrCreate({email: newuser.email},newuser).exec(function (err, user){
       if (err){

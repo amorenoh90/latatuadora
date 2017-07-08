@@ -9,7 +9,6 @@ module.exports = {
             iat: moment().unix(),
             exp: moment().add(7, 'days').unix()
         }
-
         return jwt.sign(payload, constants.SECRET_TOKEN);
     },
     verifyToken: function (token, done) {
@@ -20,7 +19,6 @@ module.exports = {
             else{
                 return done(null,decoded);
             }
-        })
-    	//return jwt.verify(token, constants.SECRET_TOKEN);
+        });
     }
 }

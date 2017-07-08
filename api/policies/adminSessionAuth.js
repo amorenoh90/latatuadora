@@ -1,12 +1,5 @@
-
 /**
- * sessionAuth
- *
- * @module      :: Policy
- * @description :: Simple policy to allow any authenticated user
- *                 Assumes that your login action in one of your controllers sets `req.session.authenticated = true;`
- * @docs        :: http://sailsjs.org/#!/documentation/concepts/Policies
- *
+ * adminsessionAuth
  */
  var constants = require('../Constants');
 module.exports = function(req, res, next) {
@@ -21,7 +14,7 @@ module.exports = function(req, res, next) {
             return res.forbidden({message : err.message});
         }
         else{
-            if(decoded.typ == constants.userType.freelance || decoded.typ == constants.userType.studio || decoded.typ == constants.userType.user){
+            if(decoded.typ == constants.userType.admin){
                 var user = {
                     id: decoded.sub
                 }

@@ -1,4 +1,3 @@
-
 /**
  * sessionAuth
  *
@@ -21,7 +20,7 @@ module.exports = function(req, res, next) {
             return res.forbidden({message : err.message});
         }
         else{
-            if(decoded.typ == constants.userType.freelance || decoded.typ == constants.userType.studio || decoded.typ == constants.userType.user){
+            if(decoded.typ == constants.userType.user){
                 var user = {
                     id: decoded.sub
                 }

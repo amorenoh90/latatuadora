@@ -37,15 +37,27 @@ module.exports.policies = {
     'add':'sessionAuth',
     'consult': 'sessionAuth',
     'remove': 'sessionAuth',
+    'add':'userSessionAuth',
+    'consult': 'userSessionAuth',
+    'remove': 'userSessionAuth',
+    'find': true
+  },
+  'favoriteflash': {
+    'add':'userSessionAuth',
+    'consult': 'userSessionAuth',
+    'remove': 'userSessionAuth',
     'find': true
   },
   MembershipsController: {
     //'create': 'adminSessionAuth'
   },
   UserController: {
-    'favs': 'sessionAuth'
+    'favs': 'userSessionAuth'
   },
-
+  'PaymentsController': {
+    '*': 'sessionAuth',
+    'compropagopay': true
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -71,7 +83,6 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
-
 
 //...
 

@@ -4,7 +4,7 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-
+var constants = require('../Constants.js');
 module.exports = {
 
   attributes: {
@@ -23,6 +23,9 @@ module.exports = {
   	rank:{
   		type:"string"
   	},
+    user:{
+      model:'user'
+    },
   	profileImgUrl:{
   		type: "string"
   	},
@@ -36,8 +39,17 @@ module.exports = {
   	},
     canGoHome:{
       type: "boolean"
+    },
+    membership:{
+      model: 'memberships'
+    },
+    membershipExp:{
+      type: "datetime"
     }
-
+  },
+  beforeCreate: function (values, cb) {
+    values.membership = constants.memberships.freelancer;
+    cb();
   },
   addProfileImg: function (image, freelancer, cb) { 
     image('profileImg').upload({
@@ -47,15 +59,20 @@ module.exports = {
       if (err)
         cb(err);
       else{
-        Freelancer.update({id: freelancer},{profileImgUrl: uploadedFiles[0].fd})
-          .exec(function (err, updated){
-            if (err) { 
-              return cb(err); 
-            }
-            else{
-              return cb();
-            }
-        });
+        if(uploadedFiles.length === 0){
+          return cb();
+        }
+        else{
+          Freelancer.update({id: freelancer},{profileImgUrl: uploadedFiles[0].fd})
+            .exec(function (err, updated){
+              if (err) { 
+                return cb(err); 
+              }
+              else{
+                return cb();
+              }
+          });
+        }
       }
     });
   }

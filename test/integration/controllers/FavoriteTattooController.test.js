@@ -34,7 +34,7 @@ describe('FavoriteTattooController', function() {
     it("should add a new Favorite Tattoo", function (done) {
           request(sails.hooks.http.app)
             .post('/tattoofav')
-            .set('Authorization', mockuser.token)
+            .set('X-Authorization', mockuser.token)
             .send(mocktattoo)
             .expect(function(res) {
               assert.equal(res.body.message, 'favorite is added');
@@ -44,7 +44,7 @@ describe('FavoriteTattooController', function() {
     it("should consult favorites Tattos by User", function (done) {
       request(sails.hooks.http.app)
       .get('/tattoofav')
-      .set('Authorization', mockuser.token)
+      .set('X-Authorization', mockuser.token)
       .expect(function(res) {
         assert.equal(res.body.length, 1);
         assert.equal(res.body[0].tattooId.id, mocktattoo.tattooId);
@@ -54,7 +54,7 @@ describe('FavoriteTattooController', function() {
     it("should remove favorite Tattoo", function (done) {
       request(sails.hooks.http.app)
       .delete('/tattoofav')
-      .set('Authorization', mockuser.token)
+      .set('X-Authorization', mockuser.token)
       .send(mocktattoo)
       .expect(function(res) {
         assert.equal(res.body.message, 'favorite is removed');

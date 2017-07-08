@@ -57,6 +57,4 @@ describe('QuotationController', function() {
       })
       .expect(200, done);    
     });
-
-
 });

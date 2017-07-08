@@ -1,6 +1,6 @@
 var constants = require('../Constants');
 module.exports = {
-  add: function (values, image, done) {
+  add: function (values, image, done) { 
     var token;
     if(values.form == 'user'){
       var newuser = {
@@ -18,34 +18,34 @@ module.exports = {
                   return done(err);
               }
               else{
-                  return done(jwt.createToken(user));
+                  return done(null, jwt.createToken(user));
               }
           }
       });
     }
     if(values.form == 'studio'){
       var newstudioUser = {
-            name: values.name,
-            email: values.email,
-            password: values.password,
-            userType: constants.userType.studio,
-            telephone: values.telephone,
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        userType: constants.userType.studio,
+        telephone: values.telephone,
       },
       newstudio = {
-          name: values.name,
-          certCofepris: values.cofepris,
-          about: values.about,
+        name: values.name,
+        certCofepris: values.cofepris,
+        about: values.about,
       },
       addressStudio = {
-          street: values.street,
-          numInt: values.numInt,
-          numExt: values.numExt,
-          lat: values.lat,
-          long: values.long,
-          zc: values.zc,
-          state: values.state,
-          town: values.town,
-          suburb: values.suburb
+        street: values.street,
+        numInt: values.numInt,
+        numExt: values.numExt,
+        lat: values.lat,
+        long: values.long,
+        zc: values.zc,
+        state: values.state,
+        town: values.town,
+        suburb: values.suburb
       }, studioId;
       AddressService.add(addressStudio, function (err, newaddressId) {
         if(err){
@@ -87,7 +87,7 @@ module.exports = {
                               }
                             }
                             Studio.addProfileImg(image, studio.id, function (cb) {
-                              done(jwt.createToken(studioUser));
+                              done(null, jwt.createToken(studioUser));
                             });
                           }
                       });
@@ -104,7 +104,7 @@ module.exports = {
           email: values.email,
           password: values.password,
           telephone: values.telephone,
-          userType: constants.userType.frelance
+          userType: constants.userType.freelance
         },
         newfreelancer = {
           name: values.name,
@@ -115,6 +115,7 @@ module.exports = {
             return done(err); 
           }
           else{
+            newfreelancer.user = freelanceruser.id;
             Freelancer.create(newfreelancer).exec(function (err, freelancer){
               if (err) { 
                 return done(err);
@@ -135,7 +136,7 @@ module.exports = {
                         });
                       }
                       Freelancer.addProfileImg(image, freelancer.id, function (cb) {
-                        return done(jwt.createToken(freelanceruser));
+                        return done(null, jwt.createToken(freelanceruser));
                       })
                     }
                 });

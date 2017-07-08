@@ -79,4 +79,29 @@ module.exports.routes = {
   //>Favs
   'get /favs': 'UserController.favs',
   //<Favs
+  //Routes Conekta
+  'get /conekta':{
+    view: 'pagoconekta'
+  },
+  'post /conekta': 'PaymentsController.conekta',
+  //<Routes Conekta
+  //Routes PayPal
+  'get /paypal':{
+    view: 'pagopaypal'
+  },
+  'post /paypal': 'PaymentsController.paypal',
+  'get /paypalexecute': 'PaymentsController.paypalExecute',
+  'get /paypalcancel': 'PaymentsController.paypalCancel',
+  'get /aceptplan': 'PaymentsController.paypalAceptPlan',
+  'get /cancelplan': 'PaymentsController.paypalCancelPlan',
+  //<Routes PayPal
+
+  //>Routes ComproPago
+  'post /compropago': 'PaymentsController.compropagoCharge',
+  'post /compropagooptions': 'PaymentsController.compropagoOptions',
+  'get /compropago': {
+    view: 'compropagocharge'
+  },
+  'post /compropagopay': 'PaymentsController.compropagoPay',
+  //<Routes ComproPago
 };

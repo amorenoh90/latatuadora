@@ -16,10 +16,20 @@ module.exports = {
    * Set the default database connection for models in the development       *
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
-
+   conection:{
+	   	devMysqlServer: {
+	     adapter: 'sails-mysql',
+	     host: 'localhost',
+	     user: 'root', //optional
+	     password: 'n0m3l0s3', //optional
+	     database: 'core_latatuadora' //optional
+	  }
+   },
    models: {
-     connection: 'latatuadoraMysqlServer'
+     connection: 'devMysqlServer',
+     migrate: 'drop'
   	},
-	hookTimeout: 40000
+	port: 1337,
+
 };
 

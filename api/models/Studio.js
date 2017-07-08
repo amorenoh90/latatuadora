@@ -4,7 +4,7 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-
+var constants = require('../Constants');
 module.exports = {
 
   attributes: {
@@ -52,7 +52,17 @@ module.exports = {
     },
     status:{
       model:"studiostatus"
+    },
+    membership:{
+      model: 'memberships'
+    },
+    membershipExp:{
+      type: "datetime"
     }
+  },
+  beforeCreate: function (values, cb) {
+    values.membership = constants.memberships.studio;
+    cb();
   },
   addProfileImg: function (image, studio, cb) { 
     image('profileImg').upload({

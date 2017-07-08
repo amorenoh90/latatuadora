@@ -12,11 +12,10 @@ module.exports = {
   attributes: {
     name: {
       type: 'string',
-      maxLength: 40,      
-      required: true
+      maxLength: 40,
     },
     lastname: {
-      type: "string",      
+      type: "string"
     },
     email:{
       type: 'email',
@@ -33,8 +32,10 @@ module.exports = {
       unique: true,
       primaryKey: true
     },
-    telephone:{
-      type: "integer",      
+    telephone:{      
+      type: "integer",
+      maxLength: 11,
+      minLength: 8
     },
     userType:{
       model: "usertype"
@@ -42,15 +43,21 @@ module.exports = {
     quotation:{
       collection: "quotation",
       via: "userId"
+    },
+    conekta:{
+      type: 'string'
     }
   },
-
   beforeCreate: function (values, cb) { 
     if(values.password){
       bcrypt.hash(values.password, 10, function(err, hash) {
-        if(err) return cb(500, err);
-        values.password = hash;
-        cb();
+        if(err){
+          return cb(err);
+        } 
+        else{
+          values.password = hash;
+          cb(); 
+        }
       });
     }
     else{
@@ -70,6 +77,9 @@ module.exports = {
       }
       else{
         bcrypt.compare(values.password, user.password, function (err, res) {
+          if(err){
+            cb(err);
+          }
           if(res){
             cb(null, user);
           }
@@ -78,4 +88,3 @@ module.exports = {
     });
   }
 };
-

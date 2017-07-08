@@ -5,7 +5,7 @@ describe('UserController', function() {
 
   var mockuser={
         name: "Pepito",
-        email: "blick@blck.com",
+        email: "blick@lick.com",
         password: "password",
         form: "user"
       }
@@ -22,21 +22,22 @@ describe('UserController', function() {
     it("should find favs", function (done) {
       request(sails.hooks.http.app)
       .get('/favs')
-      .set('Authorization', mockuser.token)
+      .set('X-Authorization', mockuser.token)
       .expect(function (res) {
         var test = [];
         assert.equal(res.body.tattoos[0], test[0]);
         assert.equal(res.body.flashes[0], test[0]);
       })
       .expect(200, done);
-    })
+    });
     it("should login a normal User", function (done) {
       request(sails.hooks.http.app)
       .post('/login')
       .send(mockuser)
-      .expect(function (res) {
-        assert.notEqual(res.body, null);
+      .expect(function(res) {
+        assert.notEqual(res.body.token, null);
+        assert.equal(res.body.usertype, 2);
       })
-      .expect(200, done)
-    })
+      .expect(200, done);
+    });
 });

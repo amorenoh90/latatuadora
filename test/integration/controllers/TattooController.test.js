@@ -12,7 +12,7 @@ describe('TattooController', function() {
         style: 1,
         artistId: 2
       }
-
+    
     it("should create a new Tattoo", function (done) {
       request(sails.hooks.http.app)
       .post('/tattoo')
