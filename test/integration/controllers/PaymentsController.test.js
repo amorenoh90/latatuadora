@@ -7,13 +7,8 @@ var request = require('supertest'),
 describe('PaymentsControllerTest', function() {
 
   var mock = {
-    name : "Pepito",
-    email: "pepito@gmail.com",
-    item: "Tattoo",
     payment_type: "OXXO",
-    price: 300,
-    itemTypeId: 1,
-    itemId: 58
+    itemType: 1
   },
   mockhook = {
    "short_id": "000000",
@@ -59,7 +54,15 @@ describe('PaymentsControllerTest', function() {
         email: "payusertest@test.com",
         password: "password"
       },
-      mockflash = {};
+      mockflash = {
+        amount: 300.00,
+        sizeId: 1,
+        significant: 'mylife',
+        artistId: 1,
+        copyrigth: true,
+        styleId: 1,
+        elementId: 2
+      };
   it("should logup a normal User (prerequisites)", function (done) {
     request(sails.hooks.http.app)
     .post('/logup')
@@ -69,6 +72,16 @@ describe('PaymentsControllerTest', function() {
       assert.notEqual(res.body, null);
     })
     .expect(200, done);
+  });
+  it("should add a new Flash (prerequisites", function (done) {
+    Flash.create(mockflash).exec(function (err, flash){
+      if (err) { return done(err); }
+      else{
+        mock.name = "flash-"+flash.id
+        mock.itemId = flash.id;
+      }
+      return done();
+    });
   });
   it("should apply for buy a flash", function (done) {
     this.timeout(20000);
@@ -80,7 +93,7 @@ describe('PaymentsControllerTest', function() {
         mockhook.id = res.body.id;
         assert.equal(res.body.status, "pending");
         assert.notEqual(res.body.instructions, null);
-        assert.equal(res.body.item, mock.item);
+        assert.equal(res.body.item, mock.name);
       })
       .expect(200, done);
   });
@@ -90,8 +103,7 @@ describe('PaymentsControllerTest', function() {
       .post('/compropagopay')
       .send(mockhook)
       .expect(function(res) {
-        assert.equal(mockhook.id, res.body.purchaseId)
-        assert.equal(2, res.body.status);
+        assert.equal(true, res.body[0].sell);
       })
       .expect(200, done);
   });
