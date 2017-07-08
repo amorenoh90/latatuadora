@@ -3,13 +3,14 @@ var assert = require("assert");
 
 describe('emailService', function() {
 
-  var mockinfo = {
+  var mockemail = {
         to: 'edwin@blick.mx',
         subject: "Test Email Service",
         text: 'mock Text'
       };
-    it("should logup a normal User (prerequisites)", function (done) {
-      emailService.send(mockinfo, function (err, email) {
+    it("should send an email", function (done) {
+      this.timeout(5000);
+      emailService.send(mockemail, function (err, email) {
         if(err){
             done(err);
         }
@@ -19,5 +20,4 @@ describe('emailService', function() {
         }
       })
     });
-    
 });   

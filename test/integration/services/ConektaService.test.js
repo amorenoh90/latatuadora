@@ -56,6 +56,7 @@ describe('Conekta Service', function() {
       });
     });
     it('should create a new conekta plan', function (done) {
+      this.timeout(5000);
       ConektaService.createPlan(mockplan, function (err, plan) {
         if(err){
           done(err);
