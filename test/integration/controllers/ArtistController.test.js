@@ -1,6 +1,5 @@
 var request = require('supertest'),
-  assert = require('assert'),
-  fs = require('fs');
+  assert = require('assert');
 
 describe('ArtistController', function() {
 
@@ -41,9 +40,7 @@ describe('ArtistController', function() {
         suburb: "Roma",
         town: "Cuahutemoc"
       };
-
-  var filename = 'x.png'
-  var boundary = Math.random();
+      
   it("should create a new Studio (prerequisites)", function (done) {
     request(sails.hooks.http.app)
     .post('/logup')
