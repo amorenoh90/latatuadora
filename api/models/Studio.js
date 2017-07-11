@@ -58,6 +58,10 @@ module.exports = {
     },
     membershipExp:{
       type: "datetime"
+    },
+    carrousel:{
+      collection: 'Carrousel',
+      via: 'studio'
     }
   },
   beforeCreate: function (values, cb) {
@@ -88,6 +92,7 @@ module.exports = {
         }
       }
     });
-  }
+  },
+
 };
 
