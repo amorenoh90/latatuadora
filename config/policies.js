@@ -58,7 +58,12 @@ module.exports.policies = {
     '*': 'sessionAuth',
     'compropagopay': true
   },
-
+  Artist:{
+    '*': false,
+    create: 'studioSessionAuth',
+    update: 'studioSessionAuth',
+    find: true
+  },
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *
