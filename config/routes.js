@@ -104,4 +104,7 @@ module.exports.routes = {
   },
   'post /compropagopay': 'PaymentsController.compropagoPay',
   //<Routes ComproPago
+  //>Routes Artist
+  'put /artist': 'ArtistController.update'
+  //<Routes Artist  
 };
