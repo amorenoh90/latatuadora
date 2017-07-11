@@ -49,8 +49,7 @@ module.exports.connections = {
      database: 'latatuadora_core' //optional
   },
   testInMemoryDatabase: {
-    adapter: 'sails-disk',
-    schema: true
+    adapter: 'sails-memory',
   } 
 
   /***************************************************************************
