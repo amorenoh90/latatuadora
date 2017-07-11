@@ -40,7 +40,7 @@ module.exports = {
   	},
   	artist:{
   		collection: "artist",
-  		via: "studioId"
+  		via: "studio"
   	},
   	shedule:{
   		collection: "shedule",
