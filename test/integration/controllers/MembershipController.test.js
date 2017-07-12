@@ -11,7 +11,7 @@ describe('MembershipController', function() {
         recurrentId: 1
       };
     it("should add a new Membership", function (done) {
-      this.timeout(5000);
+      this.timeout(7000);
       request(sails.hooks.http.app)
       .post('/memberships')
       .send(mockmembership)
