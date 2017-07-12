@@ -48,6 +48,9 @@ module.exports.connections = {
      password: 'latatuadora', //optional
      database: 'latatuadora_core' //optional
   },
+  testInMemoryDatabase: {
+    adapter: 'sails-memory',
+  } 
 
   /***************************************************************************
   *                                                                          *
