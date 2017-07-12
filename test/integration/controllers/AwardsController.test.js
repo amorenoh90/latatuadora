@@ -2,7 +2,7 @@ var request = require('supertest'),
   assert = require('assert'),
   fs = require('fs');
 
-describe('ArtistController', function() {
+describe('AwardsController', function() {
 
   var mockartist = {
         name: 'The Artist',
