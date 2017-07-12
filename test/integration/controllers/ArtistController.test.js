@@ -68,7 +68,6 @@ describe('ArtistController', function() {
     .expect(201, done);
   });
   it('should update avatar', function (done) {
-  
     request(sails.hooks.http.app)
     .put('/artist')
     .set('X-Authorization', mockStudio.token)
