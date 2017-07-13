@@ -80,4 +80,19 @@ describe('ArtistController', function() {
     .expect(200, done);
     
   });
+  it('should remove artist', function (done) {
+    var url='/artist/'+ mockartist.id;
+    console.log(url);
+    request(sails.hooks.http.app)
+    .del(url)
+    .set('X-Authorization', mockStudio.token)
+    .expect(function (res) {
+      assert.equal(res.body.id, mockartist.id);
+      assert.equal(res.body.name, mockartist.name);
+      assert.equal(res.body.bio, mockartist.bio);
+    })    
+    .expect(200, done);
+    
+  });
+
 });
