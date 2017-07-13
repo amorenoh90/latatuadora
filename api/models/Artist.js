@@ -51,6 +51,10 @@ module.exports = {
     score:{
       collection: "score",
       via: "artistId"
+    },
+    awards:{
+      collection: "awards",
+      via: "artist"
     }
   },
   beforeUpdate : function (values, cb) {

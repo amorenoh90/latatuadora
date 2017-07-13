@@ -31,7 +31,8 @@ module.exports.policies = {
     'add':'sessionAuth',
     'consult': 'sessionAuth',
     'remove': 'sessionAuth',
-    'find': true
+    'find': true,
+    findOne: true
   },
   'favoriteflash': {
     'add':'sessionAuth',
@@ -40,13 +41,15 @@ module.exports.policies = {
     'add':'userSessionAuth',
     'consult': 'userSessionAuth',
     'remove': 'userSessionAuth',
-    'find': true
+    'find': true,
+    findOne: true
   },
   'favoriteflash': {
     'add':'userSessionAuth',
     'consult': 'userSessionAuth',
     'remove': 'userSessionAuth',
-    'find': true
+    find: true,
+    findOne: true
   },
   MembershipsController: {
     //'create': 'adminSessionAuth'
@@ -59,9 +62,12 @@ module.exports.policies = {
     'compropagopay': true
   },
   Artist:{
-    '*': false,
-    create: 'studioSessionAuth',
-    update: 'studioSessionAuth',
+    '*': 'studioSessionAuth',
+    find: true,
+    findOne: true
+  },
+  Awards:{
+    '*': 'studioSessionAuth',
     find: true
   },
   Carrousel:{

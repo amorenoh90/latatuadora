@@ -1,7 +1,8 @@
 var request = require('supertest'),
-  assert = require('assert');
+  assert = require('assert'),
+  fs = require('fs');
 
-describe('ArtistController', function() {
+describe('AwardsController', function() {
 
   var mockartist = {
         name: 'The Artist',
@@ -34,15 +35,20 @@ describe('ArtistController', function() {
         ],
         form: "studio",
         name: "Studio-Test",
-        email: "studio@latatuadora.com",
+        email: "studioawards@latatuadora.com",
         password: "password",
         state: "CDMX",
         suburb: "Roma",
         town: "Cuahutemoc"
+      },
+      mockAward = {
+        award: "Best Mock Award"
       };
-      
+
+  var filename = 'x.png'
+  var boundary = Math.random();
   it("should create a new Studio (prerequisites)", function (done) {
-    this.timeout(5000);
+     this.timeout(5000);
     request(sails.hooks.http.app)
     .post('/logup')
     .send(mockStudio)
@@ -52,7 +58,7 @@ describe('ArtistController', function() {
     })
     .expect(200, done);
   });
-  it("should create a new Artist", function (done) {
+  it("should create a new Artist (prerequisites)", function (done) {
     request(sails.hooks.http.app)
     .post('/artist')
     .set('X-Authorization', mockStudio.token)
@@ -62,34 +68,21 @@ describe('ArtistController', function() {
       assert.equal(res.body.name, mockartist.name);
       assert.equal(res.body.bio, mockartist.bio);
       mockartist.id = res.body.id;
+      mockAward.artist = res.body.id;
     })
     .expect(201, done);
   });
-  it('should update avatar', function (done) {
+  it('should add new Award', function (done) {
     request(sails.hooks.http.app)
-    .put('/artist')
+    .post('/awards')
     .set('X-Authorization', mockStudio.token)
-    .field("id", mockartist.id)
-    .attach('avatar', sails.config.appPath + "/test/resources/test.jpg")
+    .send(mockAward)
     .expect(function (res) {
-      assert.notEqual(res.body[0].avatarUrl, null);
+      assert.notEqual(res.body.id, null);
+      assert.equal(res.body.artist, mockartist.id);
+      assert.equal(res.body.award, mockAward.award);
     })    
-    .expect(200, done);
+    .expect(201, done);
     
   });
-  it('should remove artist', function (done) {
-    var url='/artist/'+ mockartist.id;
-    console.log(url);
-    request(sails.hooks.http.app)
-    .del(url)
-    .set('X-Authorization', mockStudio.token)
-    .expect(function (res) {
-      assert.equal(res.body.id, mockartist.id);
-      assert.equal(res.body.name, mockartist.name);
-      assert.equal(res.body.bio, mockartist.bio);
-    })    
-    .expect(200, done);
-    
-  });
-
 });
