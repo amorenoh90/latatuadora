@@ -35,7 +35,8 @@ describe('ArtistController', function() {
         state: "CDMX",
         suburb: "Roma",
         town: "Cuahutemoc"
-      };
+      },
+      mockImage= {};
 
   it("should create a new Studio (prerequisites)", function (done) {
     request(sails.hooks.http.app)
@@ -55,6 +56,18 @@ describe('ArtistController', function() {
     .expect(function (res) {
       assert.notEqual(res.body.url, null);
       assert.notEqual(res.body.studio, null);
+      mockImage.id = res.body.id;
+    })    
+    .expect(200, done);
+    
+  });
+  it('should remove an Image for Studio Carrousel', function (done) {
+  var url = '/carrousel/' + mockImage.id;
+    request(sails.hooks.http.app)
+    .post(url)
+    .set('X-Authorization', mockStudio.token)
+    .expect(function (res) {
+      assert.equal(res.body.id, mockImage.id);
     })    
     .expect(200, done);
     
