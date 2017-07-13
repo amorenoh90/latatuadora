@@ -79,7 +79,6 @@ describe('ArtistController', function() {
   });
   it('should remove artist', function (done) {
     var url='/artist/'+ mockartist.id;
-    console.log(url);
     request(sails.hooks.http.app)
     .del(url)
     .set('X-Authorization', mockStudio.token)
