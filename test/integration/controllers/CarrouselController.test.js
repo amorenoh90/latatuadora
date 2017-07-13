@@ -30,7 +30,7 @@ describe('ArtistController', function() {
         ],
         form: "studio",
         name: "Studio-Test",
-        email: "studio@latatuadora.com",
+        email: "Carrouselstudio@latatuadora.com",
         password: "password",
         state: "CDMX",
         suburb: "Roma",
