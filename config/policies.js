@@ -62,9 +62,7 @@ module.exports.policies = {
     'compropagopay': true
   },
   Artist:{
-    '*': false,
-    create: 'studioSessionAuth',
-    update: 'studioSessionAuth',
+    '*': 'studioSessionAuth',
     find: true,
     findOne: true
   },
