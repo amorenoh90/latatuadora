@@ -129,7 +129,7 @@ module.exports = {
                     else{
                       for(i in values.zones){
                         values.zones[i].freelancerId = freelancer.id;
-                        Zone.create(values.zone[i]).exec(function (err){
+                        Zone.create(values.zones[i]).exec(function (err){
                           if (err) { 
                             return done(err); 
                           }
