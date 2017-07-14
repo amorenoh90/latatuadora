@@ -13,7 +13,7 @@ module.exports = {
   		required: true
   	},
   	freelancerId:{
-  		
+  		model:"freelancer"
   	}
   }
 };
