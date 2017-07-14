@@ -30,7 +30,7 @@ module.exports = {
   		type: "string"
   	},
   	zone:{
-  		collection: "freelancerzone",
+  		collection: "zone",
   		via: "freelancerId"
   	},
   	artist:{
