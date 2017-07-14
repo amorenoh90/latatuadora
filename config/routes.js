@@ -98,7 +98,7 @@ module.exports.routes = {
 
   //>Routes ComproPago
   'post /compropago': 'PaymentsController.compropagoCharge',
-  'post /compropagooptions': 'PaymentsController.compropagoOptions',
+  'get /compropagooptions': 'PaymentsController.compropagoOptions',
   'get /compropago': {
     view: 'compropagocharge'
   },
