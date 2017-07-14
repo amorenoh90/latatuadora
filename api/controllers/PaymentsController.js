@@ -239,7 +239,7 @@ module.exports = {
       'Accept': 'application/compropago',
       'Content-type': 'application/json'
     };
-    var dataString = '{"order_total": '+ req.body.price + '}';
+    var dataString = '{"order_total": '+ req.param('price') + '}';
     var options = {
       url: 'https://api.compropago.com/v1/providers',
       headers: headers,

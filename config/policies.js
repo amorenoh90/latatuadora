@@ -59,7 +59,11 @@ module.exports.policies = {
   },
   'PaymentsController': {
     '*': 'sessionAuth',
-    'compropagopay': true
+     'compropagopay': true,
+    compropagooptions: true,
+    paypalAceptPlan: true,
+    paypalCancelPlan: true,
+    paypalCancel: true
   },
   Artist:{
     '*': 'studioSessionAuth',
