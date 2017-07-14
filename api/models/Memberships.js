@@ -21,8 +21,7 @@ module.exports = {
       required: true
     },
     recurrentId: {
-      model: 'recurrent',
-      required: true
+      model: 'recurrent'
     },
     description: {
       type: 'string',
