@@ -7,6 +7,7 @@
 
 module.exports = {
   add: function (req, res){
+    console.log(req.body);
       var sellimg;
       Flash.create(req.body)
         .then(function (flash){
