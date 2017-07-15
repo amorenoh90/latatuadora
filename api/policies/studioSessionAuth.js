@@ -16,7 +16,9 @@ module.exports = function(req, res, next) {
             id: decoded.sub
           }
           req.headers.user = user;
-          req.body.studio = user.id;
+          if(req.body){
+            req.body.studio = user.id;
+          }
           return next();
         }
         else{
