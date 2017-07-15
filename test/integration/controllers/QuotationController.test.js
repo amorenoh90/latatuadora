@@ -42,7 +42,7 @@ describe('QuotationController', function() {
       .send(quotation)
       .expect(function(res) {
         assert.equal(res.body.minAmount, 600);
-        assert.equal(res.body.maxAmount, 600)
+        assert.equal(res.body.maxAmount, 600);
       })
       .expect(200, done);    
     });

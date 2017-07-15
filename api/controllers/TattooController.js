@@ -1,9 +1,10 @@
 /**
- * CalculatorController
+ * TattooController
  *
- * @description :: Server-side logic for managing Calculators
+ * @description :: Server-side logic for managing tattoos
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+
 
 module.exports = {
     add: function(req, res) {

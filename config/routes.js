@@ -54,4 +54,15 @@ module.exports.routes = {
      
   //<Routes Quotation
 
+  //>User login
+  'post /logup': 'UserController.logup',
+  'post /login': 'UserController.login',
+  //<User login
+  //>Tattoo Routes
+  'post /tattoo': 'TattooController.add',
+  //<Tattoo Routes
+
+  //>Flash Routes
+  'post /flash': 'FlashController.add'
+  //<Flash Routes
 };
