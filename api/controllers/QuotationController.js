@@ -76,5 +76,26 @@ module.exports = {
         });
       }
     });
+  },
+  findByStudio: function (req, res) {
+    var studio = req.headers.user.id;
+    Quotation.find({studioId: studio}).exec(function (err, quotations){
+      if (err) {
+        return res.serverError(err);
+      }
+      else{
+        return res.send(quotations);
+      }
+    });
+  },
+  find:function (req, res) {
+    Quotation.find({studio: null}).exec(function (err, quotations){
+      if (err) {
+        return res.serverError(err);
+      }
+      else{
+        return res.send(quotations);
+      }
+    });
   }
 };
