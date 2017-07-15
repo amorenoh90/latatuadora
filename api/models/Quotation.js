@@ -37,6 +37,10 @@ module.exports = {
     },
     studioId:{
       model: 'studio'
+    },
+    used:{
+      type: "boolean",
+      defaultsTo: false
     }
 
   },
