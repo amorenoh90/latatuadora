@@ -78,10 +78,10 @@ module.exports = {
     });
   },
   findByStudio: function (req, res) {
-    var studio = req.headers.user.id;
-    Quotation.find({studioId: studio}).exec(function (err, quotations){
+    var studio = req.headers.studio.id;
+    Quotation.find({studioId: studio}).populate('styleId').populate('bodypartId').populate('userId').exec(function (err, quotations){
       if (err) {
-        return res.serverError(err);
+        return res.serverError(':v',err);
       }
       else{
         return res.send(quotations);
@@ -89,7 +89,7 @@ module.exports = {
     });
   },
   find:function (req, res) {
-    Quotation.find({studio: null}).exec(function (err, quotations){
+    Quotation.find({studioId: null}).exec(function (err, quotations){
       if (err) {
         return res.serverError(err);
       }
