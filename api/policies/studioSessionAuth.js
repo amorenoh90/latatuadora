@@ -16,10 +16,20 @@ module.exports = function(req, res, next) {
             id: decoded.sub
           }
           req.headers.user = user;
-          if(req.body){
-            req.body.studio = user.id;
-          }
-          return next();
+          Studio.findOne({userId: user.id})
+          .then(function (studio){
+              req.headers.studio = studio;
+              return studio;
+          })
+          .then(function (studio) {
+            if(req.body){
+              req.body.studio = studio.id;
+            }
+            return next();
+          })
+          .catch(function (err) {
+            return res.serverError(err);
+          });
         }
         else{
           return res.forbidden({message: 'This User Type not permitted to perform this action.'})
