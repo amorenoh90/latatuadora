@@ -49,7 +49,16 @@ module.exports = {
         telephone: req.body.telephone,
         userType: constants.userType.quotient
       };
-      Quotation.create(newuser);
+      req.body.newUser = newuser;
+      req.body.file = req.file;
+      QuotationService.createquotation(req.body, function (err, quotation) {
+        if(err){
+          return res.serverError(err);
+        }
+        else{
+          return res.send(quotation);
+        }
+      });
     }
   },
   findByStudio: function (req, res) {
