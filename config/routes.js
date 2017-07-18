@@ -111,6 +111,11 @@ module.exports.routes = {
   'put /artist': 'ArtistController.update',
   //<Routes Artist  
   //>Carrousel
-  'post /carrousel': 'CarrouselController.create'
+  'post /carrousel': 'CarrouselController.create',
   //<Carrousel
+  //>Studio Favs
+  'post /studiofav': 'FavoriteStudio.add',
+  'get /studiofav': 'FavoriteStudio.consult',
+  'delete /studiofav': 'FavoriteStudio.remove',
+  //<Studio Favs
 };
