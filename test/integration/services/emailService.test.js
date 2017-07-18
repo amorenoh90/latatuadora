@@ -9,7 +9,6 @@ describe('emailService', function() {
         text: 'mock Text'
       };
     it("should send an email", function (done) {
-      this.timeout(5000);
       emailService.send(mockemail, function (err, email) {
         if(err){
             done(err);
