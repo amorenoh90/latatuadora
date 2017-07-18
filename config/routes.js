@@ -50,7 +50,7 @@ module.exports.routes = {
 
   //>Routes Quotation
 
-  'post /quotation': 'QuotationController.createQuotation',
+  'post /quotation': 'QuotationController.quotation',
   'get /quotation/studio': 'QuotationController.findByStudio',
   'get /quotation': 'QuotationController.find',
   //<Routes Quotation
