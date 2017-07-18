@@ -99,5 +99,30 @@ module.exports = {
           }
         });
       }
+    },
+    approve: function (req, res) {
+      var values = req.body;
+      Tattoo.update({id:req.params.id},values).exec(function afterwards(err, updated){
+        if (err) {
+          return res.negotiate(err);
+        }
+        else{
+          return res.send(updated[0]);
+        }
+      });
+    },
+    update: function (req, res) {
+      var values = req.body;
+      if(values.approve){
+        delete values.approve;
+      }
+      Tattoo.update({id:req.params.id},values).exec(function afterwards(err, updated){
+        if (err) {
+          return res.negotiate(err);
+        }
+        else{
+          return res.send(updated[0]);
+        }
+      });
     }
 };
