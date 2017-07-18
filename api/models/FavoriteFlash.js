@@ -8,12 +8,12 @@
 module.exports = {
 
   attributes: {
-  	flashId:{
-  		model:"flash"
-  	},
-  	userId: {
-  		model: "user"
-  	}
+    flashId:{
+      model:"flash"
+    },
+    userId: {
+      model: "user"
+    }
   }
 };
 
