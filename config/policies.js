@@ -80,17 +80,17 @@ module.exports.policies = {
   },
   Quotation:{
     findByStudio: 'studioSessionAuth'
-  },  
+  },
+  Tattoo:{
+    approve: 'adminSessionAuth',
+    find: true
+  }
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *
   * and its actions                                                          *
   *                                                                          *
   ***************************************************************************/
-
-  TattooController: {
-    find: true
-  }
 	// RabbitController: {
 
 		// Apply the `false` policy as the default for all of RabbitController's actions
