@@ -59,7 +59,7 @@ module.exports.policies = {
   },
   'PaymentsController': {
     '*': 'sessionAuth',
-     'compropagopay': true,
+    'compropagopay': true,
     compropagooptions: true,
     paypalAceptPlan: true,
     paypalCancelPlan: true,
@@ -84,6 +84,12 @@ module.exports.policies = {
   Tattoo:{
     approve: 'adminSessionAuth',
     find: true
+  },
+  FavoriteStudio:{
+    add: 'userSessionAuth',
+    remove:'userSessionAuth',
+    consult: 'userSessionAuth',
+    find:true
   }
   /***************************************************************************
   *                                                                          *
