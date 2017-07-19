@@ -82,6 +82,7 @@ module.exports.policies = {
     findByStudio: 'studioSessionAuth'
   },
   Tattoo:{
+    add:'freelancerorStudioSessionAuth',
     approve: 'adminSessionAuth',
     find: true
   },
@@ -90,6 +91,9 @@ module.exports.policies = {
     remove:'userSessionAuth',
     consult: 'userSessionAuth',
     find:true
+  },
+  Flash:{
+    add: 'freelancerorStudioSessionAuth'
   }
   /***************************************************************************
   *                                                                          *
