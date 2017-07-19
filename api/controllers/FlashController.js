@@ -114,7 +114,18 @@ module.exports = {
           }
         });
       }
-    }
+    },
+  findByStudio: function (req, res) {
+    var studio = req.param('id');
+    Flash.find({studio: studio}).exec(function (err, flashes){
+      if (err) {
+        return res.serverError(err);
+      }
+      else{
+        return res.send(flashes);
+      }
+    });
+  } 
 };
 
  //select * from flashstyle inner join flash on flashstyle.flashId = flash.id inner join flashelement on flashelement.flashId = flash.id WHERE flashstyle.style = 2 and flashelement.element = 9;
