@@ -42,7 +42,6 @@ describe('ArtistController', function() {
       };
       
   it("should create a new Studio (prerequisites)", function (done) {
-    this.timeout(5000);
     request(sails.hooks.http.app)
     .post('/logup')
     .send(mockStudio)
