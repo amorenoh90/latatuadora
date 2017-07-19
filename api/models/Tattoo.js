@@ -42,10 +42,10 @@ module.exports = {
     style:{
       model: 'style'
     },
-    artistId:{
+    artist:{
       model:'artist'
     },
-    freelancerId:{
+    freelancer:{
       model: 'freelancer'
     },
     votes:{
