@@ -25,7 +25,7 @@ module.exports = {
         return res.serverError(err);
       }
       else{
-        return res.send(favorites[0]); 
+        return res.send(favorites); 
       }
     });
   },
