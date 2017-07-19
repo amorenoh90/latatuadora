@@ -26,11 +26,11 @@ module.exports = {
     },
     completeTattoos: {
       collection: 'tattoo',
-      via: 'artistId'
+      via: 'artist'
     },
     Flashes: {
       collection: 'Flash',
-      via: 'artistId'
+      via: 'artist'
     },
     styles:{
       collection: "artiststyle",
