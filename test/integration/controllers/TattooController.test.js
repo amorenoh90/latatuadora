@@ -12,6 +12,15 @@ describe('TattooController', function() {
         style: 1,
         artistId: 2
       },
+      mocktattoo2={
+        dimensionsX: 5,
+        dimensionsY: 9,
+        name: 'tattoo2',
+        element: 4,
+        partbody: 5,
+        style: 7,
+        artistId: 8
+      },
       mockadmin={
         email: 'admin@latatoadora.com',
         name: 'admin',
@@ -79,6 +88,23 @@ describe('TattooController', function() {
     })
     .expect(200, done);
   });
+   it("should create a new Tattoo 2", function (done) {
+    request(sails.hooks.http.app)
+    .post('/tattoo')
+    .set('X-Authorization', mockStudio.token)
+    .send(mocktattoo2)
+    .expect(function(res) {
+      assert.notEqual(res.body[0].id, null);
+      assert.equal(res.body[0].dimensionsY, mocktattoo2.dimensionsY);
+      assert.equal(res.body[0].dimensionsX, mocktattoo2.dimensionsX);
+      assert.equal(res.body[0].name, mocktattoo2.name);
+      assert.equal(res.body[0].element, mocktattoo2.element);
+      assert.equal(res.body[0].partbody, mocktattoo2.partbody);
+      assert.equal(res.body[0].style, mocktattoo2.style);
+      mocktattoo2.id = res.body[0].id;
+    })
+    .expect(200, done);
+  });
   it("should create an login a user type admin", function (done) {
     User.create(mockadmin)
     .then(function (admin){
@@ -106,6 +132,21 @@ describe('TattooController', function() {
     .expect(function (res) {
       assert.equal(res.body.id , mocktattoo.id);
       assert.equal(res.body.publicate, true);
+    })
+    .expect(200, done);
+  });
+  it("should get approved tattoos", function (done) {
+    request(sails.hooks.http.app)
+    .get('/tattoo')
+    .send({publicate: true})
+    .expect(function (res) {
+      assert.equal(res.body[0].publicate, true);
+      assert.equal(res.body[0].dimensionsY, mocktattoo.dimensionsY);
+      assert.equal(res.body[0].dimensionsX, mocktattoo.dimensionsX);
+      assert.equal(res.body[0].name, mocktattoo.name);
+      assert.equal(res.body[0].element, mocktattoo.element);
+      assert.equal(res.body[0].partbody, mocktattoo.partbody);
+      assert.equal(res.body[0].style, mocktattoo.style);
     })
     .expect(200, done);
   });
