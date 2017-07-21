@@ -77,7 +77,7 @@ describe('TattooController', function() {
     .post('/tattoo')
     .set('X-Authorization', mockStudio.token)
     .send(mocktattoo)
-    .expect(function(res) {
+    .expect(function(res) {-
       assert.notEqual(res.body[0].id, null);
       assert.equal(res.body[0].dimensionsY, mocktattoo.dimensionsY);
       assert.equal(res.body[0].dimensionsX, mocktattoo.dimensionsX);
@@ -86,6 +86,7 @@ describe('TattooController', function() {
       assert.equal(res.body[0].partbody, mocktattoo.partbody);
       assert.equal(res.body[0].style, mocktattoo.style);
       mocktattoo.id = res.body[0].id;
+      mockStudio.id = res.body[0].studio;
     })
     .expect(200, done);
   });
@@ -103,7 +104,6 @@ describe('TattooController', function() {
     .set('X-Authorization', mockStudio.token)
     .send(mocktattoo2)
     .expect(function(res) {
-      assert.notEqual(res.body[0].id, null);
       assert.equal(res.body[0].dimensionsY, mocktattoo2.dimensionsY);
       assert.equal(res.body[0].dimensionsX, mocktattoo2.dimensionsX);
       assert.equal(res.body[0].name, mocktattoo2.name);
@@ -113,6 +113,20 @@ describe('TattooController', function() {
       mocktattoo2.id = res.body[0].id;
     })
     .expect(200, done);
+  });
+  it("should find Tattoo By Studio", function (done) {
+    request(sails.hooks.http.app)
+    .get('/tattoo/studio/'+ mockStudio.id)
+    .expect(function(res) {
+      assert.equal(res.body[0].dimensionsY, mocktattoo.dimensionsY);
+      assert.equal(res.body[0].dimensionsX, mocktattoo.dimensionsX);
+      assert.equal(res.body[0].name, mocktattoo.name);
+      assert.equal(res.body[0].element, mocktattoo.element);
+      assert.equal(res.body[0].partbody, mocktattoo.partbody);
+      assert.equal(res.body[0].style, mocktattoo.style);
+      assert.notEqual(res.body[0].studio, null);
+    })
+    .expect(200, done); 
   });
   it("should create an login a user type admin", function (done) {
     User.create(mockadmin)
