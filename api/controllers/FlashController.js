@@ -55,7 +55,7 @@ module.exports = {
         paginator = 0;
         if(req.query.skip) skiper = req.query.skip;
         if(req.query.page) paginator = req.query.page;
-        Flash.find({}).paginate({page: paginator, limit: skiper}).exec(function (err, flash){
+        Flash.find({publicate : true}).paginate({page: paginator, limit: skiper}).exec(function (err, flash){
           if (err) {
             return res.serverError(err);
           }
@@ -63,7 +63,7 @@ module.exports = {
         });
       }
       else{
-        sql= 'select *, flash.id from flash';
+        sql= 'select *, flash.id from flash where publicate = true';
         if(req.query.style){
           sql = sql + ' left join flashstyle on flashstyle.flashId = flash.id';
         }
@@ -115,6 +115,16 @@ module.exports = {
         });
       }
     },
+  notApproved: function (req, res) {
+    Flash.find({publicate: false}).exec(function (err, tattoos){
+      if (err) {
+        return res.serverError(err);
+      }
+      else{
+        return res.send(tattoos);
+      }
+    });
+  },
   findByStudio: function (req, res) {
     var studio = req.param('id');
     Flash.find({studio: studio}).exec(function (err, flashes){
@@ -125,7 +135,30 @@ module.exports = {
         return res.send(flashes);
       }
     });
-  } 
+  },
+  approve: function (req, res) {
+    var values = req.body;
+    Flash.update({id:req.params.id},values).exec(function afterwards(err, updated){
+      if (err) {
+        return res.negotiate(err);
+      }
+      else{
+        return res.send(updated[0]);
+      }
+    });
+  },
+  update: function (req, res) {
+    var values = req.body;
+    if(values.approve){
+      delete values.approve;
+    }
+    Flash.update({id:req.params.id},values).exec(function afterwards(err, updated){
+      if (err) {
+        return res.negotiate(err);
+      }
+      else{
+        return res.send(updated[0]);
+      }
+    });
+  }
 };
-
- //select * from flashstyle inner join flash on flashstyle.flashId = flash.id inner join flashelement on flashelement.flashId = flash.id WHERE flashstyle.style = 2 and flashelement.element = 9;
