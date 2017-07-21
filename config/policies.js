@@ -84,7 +84,8 @@ module.exports.policies = {
   Tattoo:{
     add:'freelancerorStudioSessionAuth',
     approve: 'adminSessionAuth',
-    find: true
+    find: true,
+    notApproved: 'adminSessionAuth'
   },
   FavoriteStudio:{
     add: 'userSessionAuth',
