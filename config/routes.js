@@ -66,6 +66,7 @@ module.exports.routes = {
   'put /tattoo/approve/:id': 'TattooController.approve',
   'put /tattoo/:id': 'TattooController.update',
   'get /tattoo/notApproved': 'TattooController.notApproved',
+  'get /tattoo/studio/:id': 'TattooController.findByStudio',
     ////favorites
   'post /tattoofav': 'FavoriteTattoo.add',
   'get /tattoofav': 'FavoriteTattoo.consult',
