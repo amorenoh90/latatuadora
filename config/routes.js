@@ -76,6 +76,9 @@ module.exports.routes = {
   'post /flash': 'FlashController.add',
   'get /flash': 'FlashController.find',
   'get /flash/studio/:id': 'FlashController.findByStudio',
+  'put /flash/approve/:id': 'FlashController.approve',
+  'put /flash/:id': 'FlashController.update',
+  'get /flash/notApproved': 'FlashController.notApproved',
     ////Favorites
   'post /flashfav': 'FavoriteFlash.add',
   'get /flashfav': 'FavoriteFlash.consult',
