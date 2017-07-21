@@ -134,5 +134,15 @@ module.exports = {
         return res.send(updated[0]);
       }
     });
+  },
+  findByStudio: function (req, res) {
+    Tattoo.find({studio:req.param('id')}).exec(function (err, tattoos){
+      if (err) {
+        return res.serverError(err);
+      }
+      else{
+        return res.send(tattoos);
+      }
+    });
   }
 };
