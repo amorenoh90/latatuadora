@@ -26,8 +26,8 @@ describe('TattooController', function() {
         name: 'admin',
         password: 'password',
         userType: 1
-      };
-  var mockStudio = {
+      },
+      mockStudio = {
         shedule:[
           {
             dayId: 1, 
@@ -147,6 +147,21 @@ describe('TattooController', function() {
       assert.equal(res.body[0].element, mocktattoo.element);
       assert.equal(res.body[0].partbody, mocktattoo.partbody);
       assert.equal(res.body[0].style, mocktattoo.style);
+    })
+    .expect(200, done);
+  });
+  it("should get not approved tattoos", function (done) {
+    request(sails.hooks.http.app)
+    .get('/tattoo/notApproved')
+    .set('X-Authorization', mockadmin.token)
+    .expect(function (res) {
+      assert.equal(res.body[0].publicate, false);
+      assert.equal(res.body[0].dimensionsY, mocktattoo2.dimensionsY);
+      assert.equal(res.body[0].dimensionsX, mocktattoo2.dimensionsX);
+      assert.equal(res.body[0].name, mocktattoo2.name);
+      assert.equal(res.body[0].element, mocktattoo2.element);
+      assert.equal(res.body[0].partbody, mocktattoo2.partbody);
+      assert.equal(res.body[0].style, mocktattoo2.style);
     })
     .expect(200, done);
   });
