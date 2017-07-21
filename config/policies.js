@@ -94,7 +94,10 @@ module.exports.policies = {
     find:true
   },
   Flash:{
-    add: 'freelancerorStudioSessionAuth'
+    add: 'freelancerorStudioSessionAuth',
+    update: 'freelancerorStudioSessionAuth',
+    find: true,
+    notApproved:'adminSessionAuth'
   }
   /***************************************************************************
   *                                                                          *
