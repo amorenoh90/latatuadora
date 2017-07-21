@@ -100,6 +100,16 @@ module.exports = {
       });
     }
   },
+  notApproved: function (req, res) {
+    Tattoo.find({publicate: false}).exec(function (err, tattoos){
+      if (err) {
+        return res.serverError(err);
+      }
+      else{
+        return res.send(tattoos);
+      }
+    });
+  },
   approve: function (req, res) {
     var values = req.body;
     Tattoo.update({id:req.params.id},values).exec(function afterwards(err, updated){
