@@ -46,6 +46,10 @@ module.exports = {
     },
     studio:{
       model:'studio'
+    },
+    publicate:{
+      type: 'boolean',
+      defaultsTo: false
     }
   },
   addSellImg: function (image, flash, cb) { 
