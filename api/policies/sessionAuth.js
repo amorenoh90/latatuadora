@@ -29,7 +29,7 @@ module.exports = function(req, res, next) {
                 return next();
             }
             else{
-                return res.forbidden({message: 'This User Type not permitted to perform this action.'})
+                return res.forbidden({message: 'This User Type not permitted to perform this action.'});
             }
         }
     });

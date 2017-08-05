@@ -121,7 +121,7 @@ module.exports = {
                 return done(err);
               }
               else{
-                Artist.create({freelancerId: freelancer.id, userId: freelanceruser.id })
+                Artist.create({freelancerId: freelancer.id })
                   .exec(function (err, artist){
                     if (err) { 
                       return done(err); 

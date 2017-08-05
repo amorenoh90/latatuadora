@@ -31,7 +31,8 @@ module.exports.policies = {
     'add':'sessionAuth',
     'consult': 'sessionAuth',
     'remove': 'sessionAuth',
-    'find': true
+    'find': true,
+    findOne: true
   },
   'favoriteflash': {
     'add':'sessionAuth',
@@ -40,13 +41,15 @@ module.exports.policies = {
     'add':'userSessionAuth',
     'consult': 'userSessionAuth',
     'remove': 'userSessionAuth',
-    'find': true
+    'find': true,
+    findOne: true
   },
   'favoriteflash': {
     'add':'userSessionAuth',
     'consult': 'userSessionAuth',
     'remove': 'userSessionAuth',
-    'find': true
+    find: true,
+    findOne: true
   },
   MembershipsController: {
     //'create': 'adminSessionAuth'
@@ -56,19 +59,52 @@ module.exports.policies = {
   },
   'PaymentsController': {
     '*': 'sessionAuth',
-    'compropagopay': true
+    'compropagopay': true,
+    compropagooptions: true,
+    paypalAceptPlan: true,
+    paypalCancelPlan: true,
+    paypalCancel: true
   },
-
+  Artist:{
+    '*': 'studioSessionAuth',
+    find: true,
+    findOne: true
+  },
+  Awards:{
+    '*': 'studioSessionAuth',
+    find: true
+  },
+  Carrousel:{
+    '*': 'studioSessionAuth',
+    find: true
+  },
+  Quotation:{
+    findByStudio: 'studioSessionAuth'
+  },
+  Tattoo:{
+    add:'freelancerorStudioSessionAuth',
+    approve: 'adminSessionAuth',
+    find: true,
+    notApproved: 'adminSessionAuth'
+  },
+  FavoriteStudio:{
+    add: 'userSessionAuth',
+    remove:'userSessionAuth',
+    consult: 'userSessionAuth',
+    find:true
+  },
+  Flash:{
+    add: 'freelancerorStudioSessionAuth',
+    update: 'freelancerorStudioSessionAuth',
+    find: true,
+    notApproved:'adminSessionAuth'
+  }
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *
   * and its actions                                                          *
   *                                                                          *
   ***************************************************************************/
-
-  TattooController: {
-    find: true
-  }
 	// RabbitController: {
 
 		// Apply the `false` policy as the default for all of RabbitController's actions
@@ -83,7 +119,4 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
-
-//...
-
 };

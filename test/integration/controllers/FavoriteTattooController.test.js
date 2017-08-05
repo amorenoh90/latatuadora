@@ -32,14 +32,14 @@ describe('FavoriteTattooController', function() {
         }); 
     });
     it("should add a new Favorite Tattoo", function (done) {
-          request(sails.hooks.http.app)
-            .post('/tattoofav')
-            .set('X-Authorization', mockuser.token)
-            .send(mocktattoo)
-            .expect(function(res) {
-              assert.equal(res.body.message, 'favorite is added');
-            })
-            .expect(200, done);
+      request(sails.hooks.http.app)
+      .post('/tattoofav')
+      .set('X-Authorization', mockuser.token)
+      .send(mocktattoo)
+      .expect(function(res) {
+        assert.equal(res.body.message, 'favorite is added');
+      })
+      .expect(200, done);
     })
     it("should consult favorites Tattos by User", function (done) {
       request(sails.hooks.http.app)

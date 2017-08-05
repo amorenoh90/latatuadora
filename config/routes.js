@@ -50,8 +50,9 @@ module.exports.routes = {
 
   //>Routes Quotation
 
-  'post /quotation': 'QuotationController.createQuotation',
-     
+  'post /quotation': 'QuotationController.quotation',
+  'get /quotation/studio': 'QuotationController.findByStudio',
+  'get /quotation': 'QuotationController.find',
   //<Routes Quotation
 
   //>User login
@@ -62,6 +63,10 @@ module.exports.routes = {
   //>Tattoo Routes
   'post /tattoo': 'TattooController.add',
   'get /tattoo': 'TattooController.find',
+  'put /tattoo/approve/:id': 'TattooController.approve',
+  'put /tattoo/:id': 'TattooController.update',
+  'get /tattoo/notApproved': 'TattooController.notApproved',
+  'get /tattoo/studio/:id': 'TattooController.findByStudio',
     ////favorites
   'post /tattoofav': 'FavoriteTattoo.add',
   'get /tattoofav': 'FavoriteTattoo.consult',
@@ -71,6 +76,10 @@ module.exports.routes = {
   //>Flash Routes
   'post /flash': 'FlashController.add',
   'get /flash': 'FlashController.find',
+  'get /flash/studio/:id': 'FlashController.findByStudio',
+  'put /flash/approve/:id': 'FlashController.approve',
+  'put /flash/:id': 'FlashController.update',
+  'get /flash/notApproved': 'FlashController.notApproved',
     ////Favorites
   'post /flashfav': 'FavoriteFlash.add',
   'get /flashfav': 'FavoriteFlash.consult',
@@ -98,10 +107,21 @@ module.exports.routes = {
 
   //>Routes ComproPago
   'post /compropago': 'PaymentsController.compropagoCharge',
-  'post /compropagooptions': 'PaymentsController.compropagoOptions',
+  'get /compropagooptions': 'PaymentsController.compropagoOptions',
   'get /compropago': {
     view: 'compropagocharge'
   },
   'post /compropagopay': 'PaymentsController.compropagoPay',
   //<Routes ComproPago
+  //>Routes Artist
+  'put /artist': 'ArtistController.update',
+  //<Routes Artist  
+  //>Carrousel
+  'post /carrousel': 'CarrouselController.create',
+  //<Carrousel
+  //>Studio Favs
+  'post /studiofav': 'FavoriteStudio.add',
+  'get /studiofav': 'FavoriteStudio.consult',
+  'delete /studiofav': 'FavoriteStudio.remove',
+  //<Studio Favs
 };

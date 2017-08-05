@@ -34,5 +34,10 @@ module.exports = {
         active: 1,
         inactive: 2,
         locked: 3
+    },
+    studioStatus:{
+        pending:1,
+        publicate: 2,
+        block: 3,
     }
 };  

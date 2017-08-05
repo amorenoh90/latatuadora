@@ -8,15 +8,13 @@
 module.exports = {
 
   attributes: {
-
-    userId:{
-      model: "user",
-      required: true
+    name:{
+      type: 'String'
     },
     avatarUrl:{
       type: "string"
     },
-    description:{
+    bio:{
       type: "string",
       maxLength: 100
     },
@@ -28,7 +26,11 @@ module.exports = {
     },
     completeTattoos: {
       collection: 'tattoo',
-      via: 'artistId'
+      via: 'artist'
+    },
+    Flashes: {
+      collection: 'Flash',
+      via: 'artist'
     },
     styles:{
       collection: "artiststyle",
@@ -37,7 +39,7 @@ module.exports = {
     votes:{
       type: "string"
     },
-    studioId:{
+    studio:{
       model: "studio"
     },
     freelancerId:{
@@ -49,7 +51,39 @@ module.exports = {
     score:{
       collection: "score",
       via: "artistId"
+    },
+    awards:{
+      collection: "awards",
+      via: "artist"
     }
+  },
+  beforeUpdate : function (values, cb) {
+    if(values.file){
+      Artist.uploadAvatar(values, function (avatar) {
+        cb();
+      })
+    }
+    else{
+     cb(); 
+    }
+  },
+  uploadAvatar: function (values, cb) { 
+    values.file('avatar').upload({
+      maxBytes: 10000000,
+      dirname: require('path').resolve(sails.config.appPath, 'assets/Artist/images')
+    },function (err, uploadedFiles) {
+      if (err)
+        cb(err);
+      else{
+        if(uploadedFiles.length === 0){
+          return cb();
+        }
+        else{
+          values.avatarUrl = uploadedFiles[0].fd;
+          cb();
+        }
+      }
+    });
   }
 };
 

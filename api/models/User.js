@@ -46,6 +46,15 @@ module.exports = {
     },
     conekta:{
       type: 'string'
+    },
+    toJSON: function() {
+      var obj = this.toObject();
+      delete obj.password;
+      delete obj.id;
+      delete obj.conekta;
+      delete obj.userType;
+      delete obj.createdAt;
+      return obj;
     }
   },
   beforeCreate: function (values, cb) { 

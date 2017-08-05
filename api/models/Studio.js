@@ -40,7 +40,7 @@ module.exports = {
   	},
   	artist:{
   		collection: "artist",
-  		via: "studioId"
+  		via: "studio"
   	},
   	shedule:{
   		collection: "shedule",
@@ -58,6 +58,10 @@ module.exports = {
     },
     membershipExp:{
       type: "datetime"
+    },
+    carrousel:{
+      collection: 'Carrousel',
+      via: 'studio'
     }
   },
   beforeCreate: function (values, cb) {
@@ -88,6 +92,7 @@ module.exports = {
         }
       }
     });
-  }
+  },
+
 };
 
