@@ -11,7 +11,7 @@ describe('MembershipController', function () {
     recurrentId: 1
   };
   // TODO, find for the logic in other branches .... it's gone
-  xit("should add a new Membership", function (done) {
+  it("should add a new Membership", function (done) {
     this.timeout(7000);
     request(sails.hooks.http.app)
       .post('/memberships')
