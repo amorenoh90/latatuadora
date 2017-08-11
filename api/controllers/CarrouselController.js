@@ -7,20 +7,20 @@
 
 module.exports = {
   create: function (req, res) {
-    if(req.file){
+    if (req.file) {
       var values = req.body;
       values.file = req.file;
-      Carrousel.create(values).exec(function (err, carrousel){
-        if (err) { 
-          return res.serverError(err); 
+      Carrousel.create(values).exec(function (err, carrousel) {
+        if (err) {
+          return res.serverError(err);
         }
-        else{
+        else {
           return res.send(carrousel);
         }
       });
     }
-    else{
+    else {
       res.badRequest("Image Required");
     }
-  } 
+  }
 };

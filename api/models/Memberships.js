@@ -7,7 +7,7 @@
 var constants = require('../Constants.js');
 var paypal = require('paypal-rest-sdk');
 paypal.configure({
-  'mode': 'sandbox', //sandbox or live 
+  'mode': 'sandbox', //sandbox or live
   'client_id': 'AWCKGzQv2c29C-zyzlEFpAz5GljvGPbXqSptzJw7V4BuEQFMle3j54kYPFQLM-z-ug-IycznJvdngzns',
   'client_secret': 'EKOvENrICZilSHCE44wTyVZZQbwDsBoY5Hzk_UTbAW4LG3WLOtC79zbMZz7UTCLzAPnL7lNDvUGhmMZH'
 });
@@ -31,19 +31,19 @@ module.exports = {
       type: 'string',
       required: true
     },
-    conekta:{
+    conekta: {
       type: 'string'
     },
-    paypal:{
+    paypal: {
       type: 'string'
     }
   },
   beforeCreate: function (values, cb) {
     ConektaService.createPlan(values, function (err, plan) {
-      if(err){
+      if (err) {
         return cb(err);
       }
-      else{
+      else {
         values.conekta = plan.id;
       }
     });
@@ -82,18 +82,18 @@ module.exports = {
     paypal.billingPlan.create(billingPlanAttributes, function (err, billingPlan) {
       if (err) {
         cb(err);
-      } 
+      }
       else {
-        paypal.billingPlan.update(billingPlan.id, billingPlanUpdateAttributes, 
-            function(error, response){
+        paypal.billingPlan.update(billingPlan.id, billingPlanUpdateAttributes,
+          function (error, response) {
             if (error) {
-                throw cb(error);
-            } 
+              throw cb(error);
+            }
             else {
               values.paypal = billingPlan.id;
               cb();
             }
-        });
+          });
       }
     });
   }

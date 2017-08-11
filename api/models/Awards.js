@@ -6,12 +6,12 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-    artist:{
+    artist: {
       model: 'Artist'
     },
-    award:{
+    award: {
       type: "String"
     }
   }

@@ -6,13 +6,13 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-    styleId:{
-        model: "style"
+    styleId: {
+      model: "style"
     },
-    artistId:{
-        model: "artist"
+    artistId: {
+      model: "artist"
     }
   }
 };

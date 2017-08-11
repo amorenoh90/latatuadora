@@ -6,14 +6,14 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	studioId:{
-  		model: "studio"
-  	},
-  	styleId:{
-  		model: "style"
-  	}
+    studioId: {
+      model: "studio"
+    },
+    styleId: {
+      model: "style"
+    }
   }
 };
 

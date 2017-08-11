@@ -8,7 +8,7 @@ module.exports = {
       'Accept': 'application/compropago',
       'Content-type': 'application/json'
     };
-    var dataString = '{"order_id": "'+ values.item.id +'","order_price": '+ values.item.amount +',"order_name": "'+ values.item.name +'","customer_name": "'+ auth.name +'","customer_email": "'+ auth.email +'","payment_type":"'+ values.payment_type +'","currency": "MXN"}';
+    var dataString = '{"order_id": "' + values.item.id + '","order_price": ' + values.item.amount + ',"order_name": "' + values.item.name + '","customer_name": "' + auth.name + '","customer_email": "' + auth.email + '","payment_type":"' + values.payment_type + '","currency": "MXN"}';
     var options = {
       url: 'https://api.compropago.com/v1/charges',
       headers: headers,
@@ -18,26 +18,27 @@ module.exports = {
         'pass': ''
       }
     };
+    
     function callback(err, response, body) {
       var resp = JSON.parse(body);
-      if(err){
+      if (err) {
         return done(err);
       }
-      if(resp.type === 'error'){
+      if (resp.type === 'error') {
         done(resp.message);
       }
-      if(!err && response.statusCode == 200 && resp.type != 'error') {
+      if (!err && response.statusCode == 200 && resp.type != 'error') {
         Payments.create({
           user: auth.id,
           purchaseId: resp.id,
           status: constants.payment.pending,
           itemType: values.itemType,
           reference: resp.order_info.order_id
-        }).exec(function (err, payment){
-          if (err) { 
-            return done(err); 
+        }).exec(function (err, payment) {
+          if (err) {
+            return done(err);
           }
-          else{
+          else {
             var responsetosend = {
               status: resp.status,
               instructions: resp.instructions,
@@ -48,20 +49,21 @@ module.exports = {
           }
         });
       }
-      else{
+      else {
         done(response.body.message);
       }
     }
-    try{
+    
+    try {
       request.post(options, callback);
     }
-    catch(err){
+    catch (err) {
       done(err);
     }
   },
   pay: function (values, done) {
     var status;
-    switch(values.type){
+    switch (values.type) {
       case 'charge.success':
         status = constants.payment.paid;
         break;
@@ -75,17 +77,17 @@ module.exports = {
         status = constants.payment.undefined;
         break;
     }
-    Payments.update({purchaseId: values.id},{status: status})
-      .exec(function afterwards(err, updated){
-        if(err){
+    Payments.update({purchaseId: values.id}, {status: status})
+      .exec(function afterwards(err, updated) {
+        if (err) {
           done(err);
         }
-        else{
+        else {
           ComproPagoService.updateItem(updated[0], function (err, item) {
-            if(err){
+            if (err) {
               return done(err);
             }
-            else{
+            else {
               return done(null, item);
             }
           });
@@ -95,39 +97,39 @@ module.exports = {
   updateItem: function (values, done) {
     var exp = moment().add(1, 'y').format();
     var collection = constants.itemType[values.itemType];
-    switch(collection){
+    switch (collection) {
       case 'Flash':
-        Flash.update({id: values.reference},{sell: true}).exec(function afterwards(err, flash){
+        Flash.update({id: values.reference}, {sell: true}).exec(function afterwards(err, flash) {
           if (err) {
             return done(err);
           }
-          else{
+          else {
             done(null, flash);
           }
         });
         break;
       case 'StudioMembership':
-        Studio.update({userId: values.user},{
+        Studio.update({userId: values.user}, {
           status: constants.membershipStatus.active,
           membershipExp: exp
-        }).exec(function afterwards(err, studio){
+        }).exec(function afterwards(err, studio) {
           if (err) {
             return done(err);
           }
-          else{
+          else {
             return done(null, studio);
           }
         });
         break;
       case 'FreelanceMembership':
-        Freelancer.update({user: values.user},{
+        Freelancer.update({user: values.user}, {
           status: constants.membershipStatus.active,
           membershipExp: exp
-        }).exec(function afterwards(err, freelancer){
+        }).exec(function afterwards(err, freelancer) {
           if (err) {
             return res.negotiate(err);
           }
-          else{
+          else {
             return done(null, freelancer);
           }
         });

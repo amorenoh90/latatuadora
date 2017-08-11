@@ -6,15 +6,15 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	name:{
-  		type: "string",
-  		required: true
-  	},
-  	freelancerId:{
-  		model:"freelancer"
-  	}
+    name: {
+      type: "string",
+      required: true
+    },
+    freelancerId: {
+      model: "freelancer"
+    }
   }
 };
 

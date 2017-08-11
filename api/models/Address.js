@@ -6,32 +6,32 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	street:{
-  		type: "string",
-  	},
-  	numInt:{
-  		type: "int"
-  	},
-  	numExt:{
-  		type: "int"
-  	},
-  	lat:{
-  		type: "string"
-  	},
-  	long:{
-  		type: "string"
-  	},
-  	stateId:{
-  		model: "state"
-  	},
-  	suburbId:{
-  		model: "suburb"
-  	},
-  	zc:{
-  		type: "integer"
-  	}
+    street: {
+      type: "string",
+    },
+    numInt: {
+      type: "int"
+    },
+    numExt: {
+      type: "int"
+    },
+    lat: {
+      type: "string"
+    },
+    long: {
+      type: "string"
+    },
+    stateId: {
+      model: "state"
+    },
+    suburbId: {
+      model: "suburb"
+    },
+    zc: {
+      type: "integer"
+    }
   }
 };
 

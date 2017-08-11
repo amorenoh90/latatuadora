@@ -6,10 +6,10 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-    flashId:{
-      model:"flash"
+    flashId: {
+      model: "flash"
     },
     userId: {
       model: "user"

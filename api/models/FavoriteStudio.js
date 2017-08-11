@@ -6,10 +6,10 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-    studio:{
-      model:"studio"
+    studio: {
+      model: "studio"
     },
     user: {
       model: "user"

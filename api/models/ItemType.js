@@ -6,12 +6,12 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	itemType:{
-  		type:"string",
-  		unique: true
-  	}
+    itemType: {
+      type: "string",
+      unique: true
+    }
   }
 };
 

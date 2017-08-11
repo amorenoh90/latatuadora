@@ -6,22 +6,22 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-    name:{
+    name: {
       type: 'String'
     },
-    avatarUrl:{
+    avatarUrl: {
       type: "string"
     },
-    bio:{
+    bio: {
       type: "string",
       maxLength: 100
     },
-    rating:{
+    rating: {
       type: "string"
     },
-    responseTime:{
+    responseTime: {
       type: "string"
     },
     completeTattoos: {
@@ -32,53 +32,53 @@ module.exports = {
       collection: 'Flash',
       via: 'artist'
     },
-    styles:{
+    styles: {
       collection: "artiststyle",
-      via : "artistId"
+      via: "artistId"
     },
-    votes:{
+    votes: {
       type: "string"
     },
-    studio:{
+    studio: {
       model: "studio"
     },
-    freelancerId:{
+    freelancerId: {
       model: "freelancer"
     },
-    artisttype:{
+    artisttype: {
       model: "artisttype"
     },
-    score:{
+    score: {
       collection: "score",
       via: "artistId"
     },
-    awards:{
+    awards: {
       collection: "awards",
       via: "artist"
     }
   },
-  beforeUpdate : function (values, cb) {
-    if(values.file){
+  beforeUpdate: function (values, cb) {
+    if (values.file) {
       Artist.uploadAvatar(values, function (avatar) {
         cb();
       })
     }
-    else{
-     cb(); 
+    else {
+      cb();
     }
   },
-  uploadAvatar: function (values, cb) { 
+  uploadAvatar: function (values, cb) {
     values.file('avatar').upload({
       maxBytes: 10000000,
       dirname: require('path').resolve(sails.config.appPath, 'assets/Artist/images')
-    },function (err, uploadedFiles) {
+    }, function (err, uploadedFiles) {
       if (err)
         cb(err);
-      else{
-        if(uploadedFiles.length === 0){
+      else {
+        if (uploadedFiles.length === 0) {
           return cb();
         }
-        else{
+        else {
           values.avatarUrl = uploadedFiles[0].fd;
           cb();
         }

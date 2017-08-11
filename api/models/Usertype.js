@@ -6,13 +6,13 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	userType:{
-  		type: "String",
-  		unique: true,
-  		required: true
-  	}
+    userType: {
+      type: "String",
+      unique: true,
+      required: true
+    }
   }
 };
 

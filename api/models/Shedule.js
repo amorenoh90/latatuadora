@@ -6,20 +6,20 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	studioId:{
-  		model:"studio"
-  	},
-  	dayId:{
-  		model: "day"
-  	},
-  	start:{
-  		type: "string"
-  	},
-  	end:{
-  		type: "string"
-  	}	
+    studioId: {
+      model: "studio"
+    },
+    dayId: {
+      model: "day"
+    },
+    start: {
+      type: "string"
+    },
+    end: {
+      type: "string"
+    }
   }
 };
 

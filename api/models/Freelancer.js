@@ -6,44 +6,44 @@
  */
 var constants = require('../Constants.js');
 module.exports = {
-
+  
   attributes: {
-  	name:{
-  		type: "string",
-  		required: true
-  	},
-  	published:{
-  		type: "string",
-      default: false
-  	},
-  	about:{
-  		type: "string",
-  		maxLength: 250
-  	},
-  	rank:{
-  		type:"string"
-  	},
-    user:{
-      model:'user'
+    name: {
+      type: "string",
+      required: true
     },
-  	profileImgUrl:{
-  		type: "string"
-  	},
-  	zone:{
-  		collection: "zone",
-  		via: "freelancerId"
-  	},
-  	artist:{
-  		collection: "artist",
-  		via: "freelancerId"
-  	},
-    canGoHome:{
+    published: {
+      type: "string",
+      default: false
+    },
+    about: {
+      type: "string",
+      maxLength: 250
+    },
+    rank: {
+      type: "string"
+    },
+    user: {
+      model: 'user'
+    },
+    profileImgUrl: {
+      type: "string"
+    },
+    zone: {
+      collection: "zone",
+      via: "freelancerId"
+    },
+    artist: {
+      collection: "artist",
+      via: "freelancerId"
+    },
+    canGoHome: {
       type: "boolean"
     },
-    membership:{
+    membership: {
       model: 'memberships'
     },
-    membershipExp:{
+    membershipExp: {
       type: "datetime"
     }
   },
@@ -51,27 +51,27 @@ module.exports = {
     values.membership = constants.memberships.freelancer;
     cb();
   },
-  addProfileImg: function (image, freelancer, cb) { 
+  addProfileImg: function (image, freelancer, cb) {
     image('profileImg').upload({
       maxBytes: 10000000,
       dirname: require('path').resolve(sails.config.appPath, 'assets/Freelancer/images')
-    },function (err, uploadedFiles) {
+    }, function (err, uploadedFiles) {
       if (err)
         cb(err);
-      else{
-        if(uploadedFiles.length === 0){
+      else {
+        if (uploadedFiles.length === 0) {
           return cb();
         }
-        else{
-          Freelancer.update({id: freelancer},{profileImgUrl: uploadedFiles[0].fd})
-            .exec(function (err, updated){
-              if (err) { 
-                return cb(err); 
+        else {
+          Freelancer.update({id: freelancer}, {profileImgUrl: uploadedFiles[0].fd})
+            .exec(function (err, updated) {
+              if (err) {
+                return cb(err);
               }
-              else{
+              else {
                 return cb();
               }
-          });
+            });
         }
       }
     });

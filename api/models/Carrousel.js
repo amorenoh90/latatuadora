@@ -6,12 +6,12 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-    studio:{
+    studio: {
       model: 'Studio'
     },
-    url:{
+    url: {
       type: 'String'
     }
   },
@@ -19,14 +19,14 @@ module.exports = {
     values.file('image').upload({
       maxBytes: 10000000,
       dirname: require('path').resolve(sails.config.appPath, 'assets/Artist/images')
-    },function (err, uploadedFiles) {
+    }, function (err, uploadedFiles) {
       if (err)
         cb(err);
-      else{
-        if(uploadedFiles.length === 0){
+      else {
+        if (uploadedFiles.length === 0) {
           return cb();
         }
-        else{
+        else {
           values.url = uploadedFiles[0].fd;
           cb();
         }

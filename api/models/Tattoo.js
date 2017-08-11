@@ -17,7 +17,7 @@ module.exports = {
     element: {
       model: "element"
     },
-    partbody:{
+    partbody: {
       model: 'bodypart'
     },
     dimensionsX: {
@@ -39,40 +39,40 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
-    style:{
+    style: {
       model: 'style'
     },
-    artist:{
-      model:'artist'
+    artist: {
+      model: 'artist'
     },
-    freelancer:{
+    freelancer: {
       model: 'freelancer'
     },
-    votes:{
+    votes: {
       type: 'integer'
     }
   },
-  addImg: function (image, tattoo, cb) { 
+  addImg: function (image, tattoo, cb) {
     image('image').upload({
       maxBytes: 10000000,
       dirname: require('path').resolve(sails.config.appPath, 'assets/Tattoo/images')
-    },function (err, uploadedFiles) {
+    }, function (err, uploadedFiles) {
       if (err)
         return cb(err);
-      else{
-        if(uploadedFiles.length === 0){
+      else {
+        if (uploadedFiles.length === 0) {
           return cb(null, null);
         }
-        else{
-          Tattoo.update({id: tattoo},{image: uploadedFiles[0].fd})
-            .exec(function (err, updated){
-              if (err) { 
-                return cb(err); 
+        else {
+          Tattoo.update({id: tattoo}, {image: uploadedFiles[0].fd})
+            .exec(function (err, updated) {
+              if (err) {
+                return cb(err);
               }
-              else{
+              else {
                 return cb(null, updated);
               }
-          });
+            });
         }
       }
     });

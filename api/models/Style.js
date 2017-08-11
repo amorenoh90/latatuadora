@@ -1,4 +1,3 @@
-
 /**
  * Style.js
  *
@@ -9,7 +8,7 @@
 
 module.exports = {
   identity: 'Style',
-
+  
   attributes: {
     name: {
       type: 'string',
@@ -21,14 +20,14 @@ module.exports = {
       via: 'style'
     },
     calculatorText: {
-    	 type: "string"
+      type: "string"
     },
     quotation: {
-    	type: "boolean",
-    	defaultsTo: false
+      type: "boolean",
+      defaultsTo: false
     },
-    imgUrl : {
-    	type: "string"
+    imgUrl: {
+      type: "string"
     }
   }
 };

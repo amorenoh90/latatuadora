@@ -6,14 +6,14 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	freelancerId:{
-  		model: "freelancer"
-  	},
-  	zoneId:{
-  		model: "zone"
-  	}
+    freelancerId: {
+      model: "freelancer"
+    },
+    zoneId: {
+      model: "zone"
+    }
   }
 };
 

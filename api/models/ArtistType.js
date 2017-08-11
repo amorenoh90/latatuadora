@@ -6,12 +6,12 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	description:{
-  		type: "string",
-  		required: true
-  	}
+    description: {
+      type: "string",
+      required: true
+    }
   }
 };
 

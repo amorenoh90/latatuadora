@@ -6,17 +6,17 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	artistId:{
-  		model: "artist"
-  	},
-  	rank:{
-  		type: "string"
-  	},
-  	userId:{
-  		model: "user"
-  	}
+    artistId: {
+      model: "artist"
+    },
+    rank: {
+      type: "string"
+    },
+    userId: {
+      model: "user"
+    }
   }
 };
 

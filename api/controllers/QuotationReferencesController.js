@@ -2,7 +2,5 @@
  * QuotationReferencesController
  */
 
-module.exports = {
-	
-};
+module.exports = {};
 

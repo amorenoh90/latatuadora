@@ -8,7 +8,7 @@
 var bcrypt = require('bcryptjs');
 
 module.exports = {
-
+  
   attributes: {
     name: {
       type: 'string',
@@ -17,12 +17,12 @@ module.exports = {
     lastname: {
       type: "string"
     },
-    email:{
+    email: {
       type: 'email',
       unique: true,
       required: true
     },
-    password:{
+    password: {
       type: "string",
       minLength: 8
     },
@@ -32,22 +32,22 @@ module.exports = {
       unique: true,
       primaryKey: true
     },
-    telephone:{      
+    telephone: {
       type: "integer",
       maxLength: 11,
       minLength: 8
     },
-    userType:{
+    userType: {
       model: "usertype"
     },
-    quotation:{
+    quotation: {
       collection: "quotation",
       via: "userId"
     },
-    conekta:{
+    conekta: {
       type: 'string'
     },
-    toJSON: function() {
+    toJSON: function () {
       var obj = this.toObject();
       delete obj.password;
       delete obj.id;
@@ -57,19 +57,19 @@ module.exports = {
       return obj;
     }
   },
-  beforeCreate: function (values, cb) { 
-    if(values.password){
-      bcrypt.hash(values.password, 10, function(err, hash) {
-        if(err){
+  beforeCreate: function (values, cb) {
+    if (values.password) {
+      bcrypt.hash(values.password, 10, function (err, hash) {
+        if (err) {
           return cb(err);
-        } 
-        else{
+        }
+        else {
           values.password = hash;
-          cb(); 
+          cb();
         }
       });
     }
-    else{
+    else {
       cb();
     }
   },
@@ -77,22 +77,22 @@ module.exports = {
     User.create(values).exec(cb);
   },
   attemptLogin: function (values, cb) {
-    User.findOne({ email: values.email }).exec(function (err, user){
+    User.findOne({email: values.email}).exec(function (err, user) {
       if (err) {
         return cb(err);
       }
       if (!user) {
         return cb();
       }
-      else{
+      else {
         bcrypt.compare(values.password, user.password, function (err, res) {
-          if(err){
+          if (err) {
             return cb(err);
           }
-          if(res){
+          if (res) {
             return cb(null, user);
           }
-          else{
+          else {
             return cb();
           }
         })

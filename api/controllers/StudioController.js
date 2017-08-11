@@ -6,15 +6,15 @@
  */
 var constants = require('../Constants.js');
 module.exports = {
-	find: function (req, res) {
-		Studio.find({status: constants.studioStatus.publicate}).exec(function (err, studios){
+  find: function (req, res) {
+    Studio.find({status: constants.studioStatus.publicate}).exec(function (err, studios) {
       if (err) {
         return res.serverError(err);
       }
-      else{
+      else {
         res.send(studios);
       }
     });
-	}
+  }
 };
 

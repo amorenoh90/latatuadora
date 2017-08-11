@@ -6,101 +6,101 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-    realImageUrl:{
+    realImageUrl: {
       type: "string"
     },
-    sellImageUrl:{
+    sellImageUrl: {
       type: "string"
     },
-    amount:{
+    amount: {
       type: "float"
     },
-    sizeId:{
+    sizeId: {
       model: "size"
     },
-    significant:{
+    significant: {
       type: "string"
     },
-    artist:{
+    artist: {
       model: "artist"
     },
-    copyrigth:{
+    copyrigth: {
       type: "boolean"
     },
-    sell:{
+    sell: {
       type: "boolean",
       defaultsTo: false
     },
-    elementId:{
+    elementId: {
       collection: "flashelement",
       via: "flashId"
     },
-    styleId:{
+    styleId: {
       collection: "flashstyle",
       via: "flashId"
     },
-    freelancer:{
-      model:'freelancer'
+    freelancer: {
+      model: 'freelancer'
     },
-    studio:{
-      model:'studio'
+    studio: {
+      model: 'studio'
     },
-    publicate:{
+    publicate: {
       type: 'boolean',
       defaultsTo: false
     }
   },
-  addSellImg: function (image, flash, cb) { 
-  image('sellImage').upload({
-    maxBytes: 10000000,
-    dirname: require('path').resolve(sails.config.appPath, 'assets/Flash/images')
-  },function (err, uploadedFiles) {
-    if (err)
-      return cb(err);
-    else{
-      if(uploadedFiles.length === 0){
-        return cb(null, null);
+  addSellImg: function (image, flash, cb) {
+    image('sellImage').upload({
+      maxBytes: 10000000,
+      dirname: require('path').resolve(sails.config.appPath, 'assets/Flash/images')
+    }, function (err, uploadedFiles) {
+      if (err)
+        return cb(err);
+      else {
+        if (uploadedFiles.length === 0) {
+          return cb(null, null);
+        }
+        else {
+          Flash.update({id: flash}, {sellImageUrl: uploadedFiles[0].fd})
+            .exec(function (err, updated) {
+              if (err) {
+                return cb(err);
+              }
+              else {
+                return cb(null, updated);
+              }
+            });
+        }
       }
-      else{
-        Flash.update({id: flash},{sellImageUrl: uploadedFiles[0].fd})
-        .exec(function (err, updated){
-          if (err) { 
-            return cb(err); 
-          }
-          else{
-            return cb(null, updated);
-          }
-        });
-      }
-    }
-  });
+    });
   },
-  addRealImg: function (image, flash, cb) { 
-  image('realImage').upload({
-    maxBytes: 10000000,
-    dirname: require('path').resolve(sails.config.appPath, 'assets/Flash/images')
-  },function (err, uploadedFiles) {
-    if (err)
-    return cb(err);
-    else{
-    if(uploadedFiles.length === 0){
-      return cb(null, null);
-    }
-    else{
-      Flash.update({id: flash},{realImageUrl: uploadedFiles[0].fd})
-      .exec(function (err, updated){
-        if (err) { 
-        return cb(err); 
+  addRealImg: function (image, flash, cb) {
+    image('realImage').upload({
+      maxBytes: 10000000,
+      dirname: require('path').resolve(sails.config.appPath, 'assets/Flash/images')
+    }, function (err, uploadedFiles) {
+      if (err)
+        return cb(err);
+      else {
+        if (uploadedFiles.length === 0) {
+          return cb(null, null);
         }
-        else{
-        return cb(null, updated);
+        else {
+          Flash.update({id: flash}, {realImageUrl: uploadedFiles[0].fd})
+            .exec(function (err, updated) {
+              if (err) {
+                return cb(err);
+              }
+              else {
+                return cb(null, updated);
+              }
+            });
         }
-      });
-    }
-    }
-  });
+      }
+    });
   }
 };
 

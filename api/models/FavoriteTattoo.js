@@ -6,14 +6,14 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	tattooId:{
-  		model:"tattoo"
-  	},
-  	userId: {
-  		model: "user"
-  	}
+    tattooId: {
+      model: "tattoo"
+    },
+    userId: {
+      model: "user"
+    }
   }
 };
 
