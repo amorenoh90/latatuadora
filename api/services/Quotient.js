@@ -15,8 +15,7 @@ module.exports = {
     }).exec(function (err, records) {
       if (err) {
         done(err);
-      }
-      else {
+      } else {
         var minAmount, maxAmount;
         if (records.length == 0) {
           done(null, {message: "no data for your quotation"});

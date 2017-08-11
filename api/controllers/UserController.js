@@ -7,8 +7,7 @@ module.exports = {
     logupService.add(req.body, req.file, function (err, done) {
       if (err) {
         res.badRequest(err);
-      }
-      else {
+      } else {
         res.send({token: done});
       }
     })
@@ -23,17 +22,14 @@ module.exports = {
         if (!err) {
           if (!user) {
             res.badRequest("Invalid Email/Password combination");
-          }
-          else {
+          } else {
             res.send({token: jwt.createToken(user), usertype: user.userType});
           }
-        }
-        else {
+        } else {
           res.negotiate(err);
         }
       });
-    }
-    else {
+    } else {
       res.badRequest('Email and Password are required');
     }
   },
@@ -43,8 +39,7 @@ module.exports = {
     FavTattooFlashService.find(values, function (err, favs) {
       if (err) {
         res.serverError(err);
-      }
-      else {
+      } else {
         res.send(favs);
       }
     });

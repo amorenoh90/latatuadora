@@ -12,22 +12,19 @@ module.exports = function (req, res, next) {
     jwt.verifyToken(token, function (err, decoded) {
       if (err) {
         return res.forbidden({message: err.message});
-      }
-      else {
+      } else {
         if (decoded.typ == constants.userType.admin) {
           var user = {
             id: decoded.sub
-          }
+          };
           req.headers.user = user;
           return next();
-        }
-        else {
+        } else {
           return res.forbidden({message: 'This User Type not permitted to perform this action.'})
         }
       }
     });
-  }
-  else {
+  } else {
     return res.forbidden({message: forbiddenmessage});
   }
 };

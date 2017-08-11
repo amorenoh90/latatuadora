@@ -16,25 +16,21 @@ module.exports = {
       ConektaService.createCostumer(values, auth, function (err, customer) {
         if (err) {
           return done(err);
-        }
-        else {
+        } else {
           ConektaService.order(customer, values, function (err, order) {
             if (err) {
               return done(err);
-            }
-            else {
+            } else {
               return done(null, order);
             }
           });
         }
       });
-    }
-    else {
+    } else {
       ConektaService.order(values, auth, function (err, order) {
         if (err) {
           return done(err);
-        }
-        else {
+        } else {
           return done(null, order);
         }
       });
@@ -45,25 +41,21 @@ module.exports = {
       ConektaService.createCostumer(values, auth, function (err, customer) {
         if (err) {
           return done(err);
-        }
-        else {
+        } else {
           ConektaService.subscribe(values, customer, function (err, subscription) {
             if (err) {
               return done(err);
-            }
-            else {
+            } else {
               return done(null, subscription);
             }
           });
         }
       });
-    }
-    else {
+    } else {
       ConektaService.subscribe(values, auth, function (err, subscription) {
         if (err) {
           return done(err);
-        }
-        else {
+        } else {
           return done(null, subscription);
         }
       });
@@ -74,8 +66,7 @@ module.exports = {
       .then(function (flash) {
         if (!flash) {
           return done('Could not find Flash, sorry.');
-        }
-        else {
+        } else {
           return flash;
         }
       })
@@ -110,8 +101,7 @@ module.exports = {
           }).exec(function (err, payment) {
             if (err) {
               return done(err);
-            }
-            else {
+            } else {
               var response = {
                 payment_status: pay.payment_status,
                 amount: pay.amount / 100,
@@ -124,13 +114,11 @@ module.exports = {
                   .exec(function afterwards(err, updated) {
                     if (err) {
                       return done(err);
-                    }
-                    else {
+                    } else {
                       return done(null, response);
                     }
                   });
-              }
-              else {
+              } else {
                 return done(null, response);
               }
             }
@@ -152,14 +140,12 @@ module.exports = {
     }, function (err, customer) {
       if (err) {
         return done(err);
-      }
-      else {
+      } else {
         var custom = customer.toObject();
         User.update({id: user.id}, {conekta: custom.id}).exec(function afterwards(err, updated) {
           if (err) {
             return done(err);
-          }
-          else {
+          } else {
             return done(null, updated[0]);
           }
         });
@@ -174,8 +160,7 @@ module.exports = {
       }, function (err, res) {
         if (err) {
           return done(err);
-        }
-        else {
+        } else {
           var resp = res.toObject();
           return done(resp);
         }
@@ -200,8 +185,7 @@ module.exports = {
     }, function (err, res) {
       if (err) {
         return done(err);
-      }
-      else {
+      } else {
         var plan = res.toObject();
         return done(null, plan);
       }
@@ -222,14 +206,12 @@ module.exports = {
           }, function (err, res) {
             if (err) {
               return done(err);
-            }
-            else {
+            } else {
               subscription = res.toObject();
               var paymentstatus;
               if (membership.status == 'active') {
                 paymentstatus = constants.payment.paid;
-              }
-              else {
+              } else {
                 paymentstatus = constants.payment.pending;
               }
               Payments.create({
@@ -241,12 +223,11 @@ module.exports = {
               }).exec(function (err, payment) {
                 if (err) {
                   return done(err);
-                }
-                else {
+                } else {
                   var response = {
                     status: subscription.status,
                     purchaseId: subscription.id
-                  }
+                  };
                   return done(null, response);
                 }
               });
@@ -258,4 +239,4 @@ module.exports = {
         return done(err);
       });
   }
-}
+};

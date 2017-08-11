@@ -16,8 +16,7 @@ module.exports = {
         }
         if (!flash) {
           return done('Could not find Flash, sorry.');
-        }
-        else {
+        } else {
           var payment = {
             intent: "sale",
             payer: {
@@ -47,8 +46,7 @@ module.exports = {
           paypal.payment.create(payment, function (err, payment) {
             if (err) {
               done(err);
-            }
-            else {
+            } else {
               var res = {};
               if (payment.payer.payment_method === 'paypal') {
                 res.payment = payment;
@@ -83,8 +81,7 @@ module.exports = {
       .then(function (membsership) {
         if (!membsership) {
           return done('Could not find Membership, sorry.');
-        }
-        else {
+        } else {
           return membsership;
         }
       })
@@ -106,8 +103,7 @@ module.exports = {
         paypal.billingAgreement.create(billingAgreementAttributes, function (error, billingAgreement) {
           if (error) {
             return done(error);
-          }
-          else {
+          } else {
             var links = {};
             billingAgreement.links.forEach(function (linkObj) {
               links[linkObj.rel] = {
@@ -133,8 +129,7 @@ module.exports = {
                 .catch(function (err) {
                   done(err);
                 });
-            }
-            else {
+            } else {
               return done('no redirect URI present');
             }
           }
@@ -148,8 +143,7 @@ module.exports = {
     paypal.payment.execute(values.paymentId, values.details, function (error, payment) {
       if (error) {
         return done(error);
-      }
-      else {
+      } else {
         Payments.update({purchaseId: values.paymentId}, {status: constants.payment.paid})
           .then(function afterwards(localpayment) {
             return localpayment[0];
@@ -185,8 +179,7 @@ module.exports = {
       }, function (err, res) {
         if (err) {
           return done(err);
-        }
-        else {
+        } else {
           var resp = res.toObject();
           return done(resp);
         }
@@ -197,8 +190,7 @@ module.exports = {
     paypal.billingAgreement.execute(token, {}, function (err, billingAgreement) {
       if (err) {
         return done(err);
-      }
-      else {
+      } else {
         Payments.update({purchaseId: token}, {status: constants.payment.paid})
           .then(function afterwards(updated) {
             return updated[0];
@@ -212,8 +204,7 @@ module.exports = {
               }).exec(function afterwards(err, studio) {
                 if (err) {
                   return done(err);
-                }
-                else {
+                } else {
                   return done(null, updated);
                 }
               });
@@ -225,8 +216,7 @@ module.exports = {
               }).exec(function afterwards(err, flash) {
                 if (err) {
                   return done(err);
-                }
-                else {
+                } else {
                   return done(null, updated);
                 }
               });
@@ -238,4 +228,4 @@ module.exports = {
       }
     });
   }
-}
+};

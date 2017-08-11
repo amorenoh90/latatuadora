@@ -10,8 +10,7 @@ module.exports = {
     Studio.find({status: constants.studioStatus.publicate}).exec(function (err, studios) {
       if (err) {
         return res.serverError(err);
-      }
-      else {
+      } else {
         res.send(studios);
       }
     });

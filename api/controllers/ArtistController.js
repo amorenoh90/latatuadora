@@ -14,8 +14,7 @@ module.exports = {
     Artist.update({id: values.id}, values).exec(function afterwards(err, updated) {
       if (err) {
         return res.negotiate(err);
-      }
-      else {
+      } else {
         return res.send(updated);
       }
     });

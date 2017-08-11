@@ -36,8 +36,7 @@ module.exports = {
             ConektaService.buyFlash(values, user, function (err, flashbuyed) {
               if (err) {
                 return res.serverError(err);
-              }
-              else {
+              } else {
                 return res.send(flashbuyed);
               }
             });
@@ -47,8 +46,7 @@ module.exports = {
               .then(function (studio) {
                 if (!studio) {
                   return res.notFound('Could not find Studio, sorry.');
-                }
-                else {
+                } else {
                   user.member = studio;
                   return user;
                 }
@@ -57,8 +55,7 @@ module.exports = {
                 ConektaService.buyMembership(values, user, function (err, membership) {
                   if (err) {
                     return res.serverError(err);
-                  }
-                  else {
+                  } else {
                     if (membership.status == 'active') {
                       var exp = moment().add(1, 'y').format();
                       Studio.update({userId: auth.id}, {
@@ -83,8 +80,7 @@ module.exports = {
               .then(function (freelancer) {
                 if (!freelancer) {
                   return res.notFound('Could not find Freelancer, sorry.');
-                }
-                else {
+                } else {
                   user.member = freelancer;
                   return user;
                 }
@@ -93,8 +89,7 @@ module.exports = {
                 ConektaService.buyMembership(values, user, function (err, membership) {
                   if (err) {
                     return res.serverError(err);
-                  }
-                  else {
+                  } else {
                     if (membership.status == 'active') {
                       var exp = moment().add(1, 'y').format();
                       Freelancer.update({user: auth.id}, {
@@ -146,8 +141,7 @@ module.exports = {
               .then(function (studio) {
                 if (!studio) {
                   return res.notFound('Could not find Studio, sorry.');
-                }
-                else {
+                } else {
                   user.member = studio;
                   return user;
                 }
@@ -156,8 +150,7 @@ module.exports = {
                 PayPalService.buyMembership(values, user, function (err, redirectUrl) {
                   if (err) {
                     return res.serverError(err);
-                  }
-                  else {
+                  } else {
                     res.redirect(redirectUrl);
                   }
                 });
@@ -171,8 +164,7 @@ module.exports = {
               .then(function (freelance) {
                 if (!freelance) {
                   return res.notFound('Could not find Freelance, sorry.');
-                }
-                else {
+                } else {
                   user.member = freelance;
                   return user;
                 }
@@ -181,8 +173,7 @@ module.exports = {
                 PayPalService.buyMembership(values, user, function (err, redirectUrl) {
                   if (err) {
                     return res.serverError(err);
-                  }
-                  else {
+                  } else {
                     res.redirect(redirectUrl);
                   }
                 });
@@ -207,8 +198,7 @@ module.exports = {
     PayPalService.execute(paypal, function (err, payment) {
       if (err) {
         return res.serverError(err);
-      }
-      else {
+      } else {
         return res.send(payment);
       }
     });
@@ -256,8 +246,7 @@ module.exports = {
       }
       if (!err && response.statusCode == 200) {
         res.send({points: body});
-      }
-      else {
+      } else {
         res.send({message: body});
       }
     }
@@ -285,15 +274,13 @@ module.exports = {
           }
           if (!flash) {
             return res.notFound('Could not find Flash, sorry.');
-          }
-          else {
+          } else {
             flash.name = 'flash-' + flash.id;
             values.item = flash;
             ComproPagoService.order(values, auth, function (err, order) {
               if (err) {
                 return res.serverError(err);
-              }
-              else {
+              } else {
                 return res.send(order);
               }
             });
@@ -315,14 +302,12 @@ module.exports = {
               }
               if (!membership) {
                 return res.notFound('Could not find Membership, sorry.');
-              }
-              else {
+              } else {
                 values.item = membership;
                 ComproPagoService.order(values, auth, function (err, order) {
                   if (err) {
                     return res.serverError(err);
-                  }
-                  else {
+                  } else {
                     return res.send(order);
                   }
                 });
@@ -348,14 +333,12 @@ module.exports = {
               }
               if (!membership) {
                 return res.notFound('Could not find Membership, sorry.');
-              }
-              else {
+              } else {
                 values.item = membership;
                 ComproPagoService.order(values, auth, function (err, order) {
                   if (err) {
                     return res.serverError(err);
-                  }
-                  else {
+                  } else {
                     return res.send(order);
                   }
                 });
@@ -376,8 +359,7 @@ module.exports = {
     ComproPagoService.pay(values, function (err, pay) {
       if (err) {
         res.serverError(err);
-      }
-      else {
+      } else {
         res.send(pay);
       }
     })

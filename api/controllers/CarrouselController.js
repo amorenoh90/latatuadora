@@ -13,13 +13,11 @@ module.exports = {
       Carrousel.create(values).exec(function (err, carrousel) {
         if (err) {
           return res.serverError(err);
-        }
-        else {
+        } else {
           return res.send(carrousel);
         }
       });
-    }
-    else {
+    } else {
       res.badRequest("Image Required");
     }
   }

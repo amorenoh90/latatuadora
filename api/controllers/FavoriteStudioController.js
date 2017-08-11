@@ -13,8 +13,7 @@ module.exports = {
     }).exec(function (err, favorite) {
       if (err) {
         return res.serverError(err);
-      }
-      else {
+      } else {
         return res.send({message: 'favorite is added'});
       }
     });
@@ -23,8 +22,7 @@ module.exports = {
     FavoriteStudio.find({user: req.headers.user.id}).populate('studio').exec(function (err, favorites) {
       if (err) {
         return res.serverError(err);
-      }
-      else {
+      } else {
         return res.send(favorites);
       }
     });
@@ -36,8 +34,7 @@ module.exports = {
     }).exec(function (err) {
       if (err) {
         return res.negotiate(err);
-      }
-      else {
+      } else {
         return res.send({message: 'favorite is removed'});
       }
     });

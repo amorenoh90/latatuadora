@@ -1,6 +1,0 @@
-/**
- * QuotationReferencesController
- */
-
-module.exports = {};
-

@@ -1,5 +1,5 @@
 /**
- * studioSessionAuth
+ * freelancerSessionAuth
  */
 var constants = require('../Constants');
 module.exports = function (req, res, next) {
@@ -9,22 +9,20 @@ module.exports = function (req, res, next) {
     jwt.verifyToken(token, function (err, decoded) {
       if (err) {
         return res.forbidden({message: err.message});
-      }
-      else {
-        if (decoded.typ == constants.userType.studio) {
+      } else {
+        if (decoded.typ == constants.userType.freelancer) {
           var user = {
             id: decoded.sub
-          }
+          };
           req.headers.user = user;
-          Studio.findOne({userId: user.id})
-            .then(function (studio) {
-              if (!studio) {
-                res.notFound({message: 'Could not find Studio, sorry.'});
-              }
-              else {
-                req.headers.studio = studio;
+          Freelancer.findOne({userId: user.id})
+            .then(function (freelancer) {
+              if (!freelancer) {
+                return res.notFound({message: 'Could not find Freelancer, sorry.'});
+              } else {
+                req.headers.freelancer = freelancer;
                 if (req.body) {
-                  req.body.studio = studio.id;
+                  req.body.freelancer = freelancer.id;
                 }
                 return next();
               }
@@ -32,14 +30,12 @@ module.exports = function (req, res, next) {
             .catch(function (err) {
               return res.serverError(err);
             });
-        }
-        else {
+        } else {
           return res.forbidden({message: 'This User Type not permitted to perform this action.'})
         }
       }
     });
-  }
-  else {
+  } else {
     return res.forbidden({message: forbiddenmessage});
   }
 };

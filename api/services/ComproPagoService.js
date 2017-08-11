@@ -37,8 +37,7 @@ module.exports = {
         }).exec(function (err, payment) {
           if (err) {
             return done(err);
-          }
-          else {
+          } else {
             var responsetosend = {
               status: resp.status,
               instructions: resp.instructions,
@@ -48,8 +47,7 @@ module.exports = {
             done(null, responsetosend);
           }
         });
-      }
-      else {
+      } else {
         done(response.body.message);
       }
     }
@@ -72,7 +70,7 @@ module.exports = {
         break;
       case 'charge.expired':
         status = constants.payment.expired;
-        break
+        break;
       default:
         status = constants.payment.undefined;
         break;
@@ -81,13 +79,11 @@ module.exports = {
       .exec(function afterwards(err, updated) {
         if (err) {
           done(err);
-        }
-        else {
+        } else {
           ComproPagoService.updateItem(updated[0], function (err, item) {
             if (err) {
               return done(err);
-            }
-            else {
+            } else {
               return done(null, item);
             }
           });
@@ -102,8 +98,7 @@ module.exports = {
         Flash.update({id: values.reference}, {sell: true}).exec(function afterwards(err, flash) {
           if (err) {
             return done(err);
-          }
-          else {
+          } else {
             done(null, flash);
           }
         });
@@ -115,8 +110,7 @@ module.exports = {
         }).exec(function afterwards(err, studio) {
           if (err) {
             return done(err);
-          }
-          else {
+          } else {
             return done(null, studio);
           }
         });
@@ -128,15 +122,14 @@ module.exports = {
         }).exec(function afterwards(err, freelancer) {
           if (err) {
             return res.negotiate(err);
-          }
-          else {
+          } else {
             return done(null, freelancer);
           }
         });
         break;
       default:
-        done('Unknow Item Type')
+        done('Unknow Item Type');
         break;
     }
   }
-}
+};

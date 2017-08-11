@@ -8,6 +8,7 @@ module.exports = {
   /**
    * (POST /quotation)
    */
+  // TODO add wrapper or middleware for token verification if needed
   quotation: function (req, res) {
     if (req.headers['x-authorization']) {
       var token = req.headers['x-authorization'];
@@ -17,23 +18,20 @@ module.exports = {
         }
         if (decoded.typ != constants.userType.user) {
           return res.forbidden({message: 'This User Type not permitted to perform this action.'});
-        }
-        else {
+        } else {
           User.findOne({id: decoded.sub}).exec(function (err, user) {
             if (err) {
               return res.serverError(err);
             }
             if (!user) {
               return res.notFound('Could not find User, sorry.');
-            }
-            else {
+            } else {
               req.body.newUser = user;
               req.body.file = req.file;
               QuotationService.createQuotation(req.body, function (err, quotation) {
                 if (err) {
                   return res.serverError(err);
-                }
-                else {
+                } else {
                   return res.send(quotation);
                 }
               });
@@ -41,8 +39,7 @@ module.exports = {
           });
         }
       });
-    }
-    else {
+    } else {
       var newuser = {
         name: req.body.name,
         email: req.body.email,
@@ -54,8 +51,7 @@ module.exports = {
       QuotationService.createQuotation(req.body, function (err, quotation) {
         if (err) {
           return res.serverError(err);
-        }
-        else {
+        } else {
           return res.send(quotation);
         }
       });
@@ -66,8 +62,7 @@ module.exports = {
     Quotation.find({studioId: studio}).populate('styleId').populate('bodypartId').populate('userId').exec(function (err, quotations) {
       if (err) {
         return res.serverError(err);
-      }
-      else {
+      } else {
         return res.send(quotations);
       }
     });
@@ -76,8 +71,7 @@ module.exports = {
     Quotation.find({studioId: null}).exec(function (err, quotations) {
       if (err) {
         return res.serverError(err);
-      }
-      else {
+      } else {
         return res.send(quotations);
       }
     });

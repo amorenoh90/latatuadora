@@ -9,19 +9,17 @@ module.exports = function (req, res, next) {
     jwt.verifyToken(token, function (err, decoded) {
       if (err) {
         return res.forbidden({message: err.message});
-      }
-      else {
+      } else {
         if (decoded.typ == constants.userType.freelancer) {
           var user = {
             id: decoded.sub
-          }
+          };
           req.headers.user = user;
           Freelancer.findOne({userId: user.id})
             .then(function (freelancer) {
               if (!freelancer) {
                 return res.notFound({message: 'Could not find Freelancer, sorry.'});
-              }
-              else {
+              } else {
                 req.headers.freelancer = freelancer;
                 if (req.body) {
                   req.body.freelancer = freelancer.id;
@@ -36,14 +34,13 @@ module.exports = function (req, res, next) {
         if (decoded.typ == constants.userType.studio) {
           var user = {
             id: decoded.sub
-          }
+          };
           req.headers.user = user;
           Studio.findOne({userId: user.id})
             .then(function (studio) {
               if (!studio) {
                 return res.notFound({message: 'Could not find Studio, sorry.'});
-              }
-              else {
+              } else {
                 req.headers.studio = studio;
                 if (req.body) {
                   req.body.studio = studio.id;
@@ -54,14 +51,12 @@ module.exports = function (req, res, next) {
             .catch(function (err) {
               return res.serverError(err);
             });
-        }
-        else {
+        } else {
           return res.forbidden({message: 'This User Type not permitted to perform this action.'})
         }
       }
     });
-  }
-  else {
+  } else {
     return res.forbidden({message: forbiddenmessage});
   }
 };

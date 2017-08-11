@@ -38,8 +38,7 @@ module.exports = {
             }
             if (sell === null) {
               return res.send(flash);
-            }
-            else {
+            } else {
               flash.sellImageUrl = sell[0].sellImageUrl;
               return res.send(flash);
             }
@@ -62,8 +61,7 @@ module.exports = {
         }
         return res.send(flash);
       });
-    }
-    else {
+    } else {
       sql = 'select *, flash.id from flash where publicate = true';
       if (req.query.style) {
         sql = sql + ' left join flashstyle on flashstyle.flashId = flash.id';
@@ -77,8 +75,7 @@ module.exports = {
         if (!used) {
           sql = sql + " WHERE ";
           used = true;
-        }
-        else {
+        } else {
           sql = sql + " AND ";
         }
         sql = sql + "flashstyle.style = ?";
@@ -89,8 +86,7 @@ module.exports = {
         if (!used) {
           sql = sql + " WHERE ";
           used = true;
-        }
-        else {
+        } else {
           sql = sql + " AND ";
         }
         sql = sql + "flashelement.element = ?";
@@ -100,8 +96,7 @@ module.exports = {
       Flash.query(sql, values, function (err, flash) {
         if (err) {
           return res.serverError(err);
-        }
-        else {
+        } else {
           if (req.query.skip && !req.query.page) {
             return res.send(flash.slice(0, req.query.skip));
           }
@@ -110,8 +105,7 @@ module.exports = {
             var skiper = parseInt(req.query.skip) + parseInt(paginator);
             
             return res.send(flash.slice(paginator, skiper))
-          }
-          else {
+          } else {
             return res.send(flash);
           }
         }
@@ -122,8 +116,7 @@ module.exports = {
     Flash.find({publicate: false}).exec(function (err, tattoos) {
       if (err) {
         return res.serverError(err);
-      }
-      else {
+      } else {
         return res.send(tattoos);
       }
     });
@@ -133,8 +126,7 @@ module.exports = {
     Flash.find({studio: studio}).exec(function (err, flashes) {
       if (err) {
         return res.serverError(err);
-      }
-      else {
+      } else {
         return res.send(flashes);
       }
     });
@@ -144,8 +136,7 @@ module.exports = {
     Flash.update({id: req.params.id}, values).exec(function afterwards(err, updated) {
       if (err) {
         return res.negotiate(err);
-      }
-      else {
+      } else {
         return res.send(updated[0]);
       }
     });
@@ -158,8 +149,7 @@ module.exports = {
     Flash.update({id: req.params.id}, values).exec(function afterwards(err, updated) {
       if (err) {
         return res.negotiate(err);
-      }
-      else {
+      } else {
         return res.send(updated[0]);
       }
     });

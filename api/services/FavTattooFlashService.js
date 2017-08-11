@@ -12,8 +12,7 @@ module.exports = {
           .exec(function (err, favtattoo) {
             if (err) {
               return done(err);
-            }
-            else {
+            } else {
               favs.tattoos = favtattoo;
               return done(null, favs);
             }
@@ -23,4 +22,4 @@ module.exports = {
         return done(err);
       });
   }
-}
+};

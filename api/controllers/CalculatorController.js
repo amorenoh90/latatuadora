@@ -10,17 +10,14 @@ module.exports = {
     Tattoo.create(req.body).exec(function (err, tattoo) {
       if (err) {
         return res.serverError(err);
-      }
-      else {
+      } else {
         Tattoo.addImg(req.file, tattoo.id, function (err, done) {
           if (err) {
             res.badRequest(err);
-          }
-          else {
+          } else {
             if (done === null) {
               return res.send([tattoo])
-            }
-            else {
+            } else {
               return res.send(done)
             }
           }
