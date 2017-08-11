@@ -12,7 +12,7 @@ module.exports = {
   quotation: function (req, res) {
     if (req.headers['x-authorization']) {
       var token = req.headers['x-authorization'];
-      jwt.verifyToken(token, function (err, decoded) {
+      JWT.verifyToken(token, function (err, decoded) {
         if (err) {
           return res.forbidden({message: err.message});
         }

@@ -18,7 +18,7 @@ module.exports = {
             return done(err);
           }
           else {
-            return done(null, jwt.createToken(user));
+            return done(null, JWT.createToken(user));
           }
         }
       });
@@ -87,7 +87,7 @@ module.exports = {
                       }
                     }
                     Studio.addProfileImg(image, studio.id, function (cb) {
-                      done(null, jwt.createToken(studioUser));
+                      done(null, JWT.createToken(studioUser));
                     });
                   }
                 });
@@ -136,7 +136,7 @@ module.exports = {
                       });
                     }
                     Freelancer.addProfileImg(image, freelancer.id, function (cb) {
-                      return done(null, jwt.createToken(freelanceruser));
+                      return done(null, JWT.createToken(freelanceruser));
                     })
                   }
                 });

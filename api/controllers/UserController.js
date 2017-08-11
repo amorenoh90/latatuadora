@@ -4,7 +4,7 @@
 var constants = require('../Constants');
 module.exports = {
   logup: function (req, res) {
-    logupService.add(req.body, req.file, function (err, done) {
+    LogUpService.add(req.body, req.file, function (err, done) {
       if (err) {
         res.badRequest(err);
       } else {
@@ -16,14 +16,14 @@ module.exports = {
     var loginuser = {
       email: req.body.email,
       password: req.body.password
-    }
+    };
     if (loginuser.email && loginuser.password) {
       User.attemptLogin(loginuser, function (err, user) {
         if (!err) {
           if (!user) {
             res.badRequest("Invalid Email/Password combination");
           } else {
-            res.send({token: jwt.createToken(user), usertype: user.userType});
+            res.send({token: JWT.createToken(user), usertype: user.userType});
           }
         } else {
           res.negotiate(err);

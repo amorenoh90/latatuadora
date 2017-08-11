@@ -1,7 +1,7 @@
 var mocha = require("mocha");
 var assert = require("assert");
 
-describe('emailService', function () {
+describe('EmailService', function () {
   
   var mockemail = {
     to: 'alberto@blick.mx',
@@ -9,7 +9,7 @@ describe('emailService', function () {
     text: 'mock Text'
   };
   it("should send an email", function (done) {
-    emailService.send(mockemail, function (err, email) {
+    EmailService.send(mockemail, function (err, email) {
       if (err) {
         done(err);
       }

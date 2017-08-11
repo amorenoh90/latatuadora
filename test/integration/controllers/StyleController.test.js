@@ -10,7 +10,7 @@ describe('StyleController', function () {
       },
       mockStyleUpdate = {
         name: "milenial"
-      }
+      };
     it('should to add a new Style ', function (done) {
       Style.create({name: 'Shurado'}).exec(function (err, res, style) {
       });

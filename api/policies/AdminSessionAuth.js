@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
   var forbiddenmessage = 'You are not permitted to perform this action.';
   var token = req.headers["x-authorization"];
   if (token) {
-    jwt.verifyToken(token, function (err, decoded) {
+    JWT.verifyToken(token, function (err, decoded) {
       if (err) {
         return res.forbidden({message: err.message});
       } else {

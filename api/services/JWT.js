@@ -1,4 +1,4 @@
-var jwt = require('jsonwebtoken');
+var jsonWebToken = require('jsonwebtoken');
 var moment = require('moment');
 var constants = require('../Constants');
 module.exports = {
@@ -8,11 +8,11 @@ module.exports = {
       typ: user.userType,
       iat: moment().unix(),
       exp: moment().add(7, 'days').unix()
-    }
-    return jwt.sign(payload, constants.SECRET_TOKEN);
+    };
+    return jsonWebToken.sign(payload, constants.SECRET_TOKEN);
   },
   verifyToken: function (token, done) {
-    jwt.verify(token, constants.SECRET_TOKEN, function (err, decoded) {
+    jsonWebToken.verify(token, constants.SECRET_TOKEN, function (err, decoded) {
       if (err) {
         return done(err);
       } else {
