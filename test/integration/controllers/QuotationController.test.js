@@ -50,7 +50,7 @@ describe('QuotationController', function () {
       studio: 4
     }
   var mockStudio = {
-      shedule: [
+      schedule: [
         {
           dayId: 1,
           start: 8,

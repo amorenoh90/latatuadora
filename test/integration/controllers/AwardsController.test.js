@@ -3,13 +3,13 @@ var request = require('supertest'),
   fs = require('fs');
 
 describe('AwardsController', function () {
-  
+
   var mockartist = {
       name: 'The Artist',
       bio: 'I Am Artist, The Artist'
     },
     mockStudio = {
-      shedule: [
+      schedule: [
         {
           dayId: 1,
           start: 8,
@@ -80,6 +80,6 @@ describe('AwardsController', function () {
         assert.equal(res.body.award, mockAward.award);
       })
       .expect(201, done);
-    
+
   });
 });

@@ -2,7 +2,7 @@ var request = require('supertest'),
   assert = require('assert');
 
 describe('FlashController', function () {
-  
+
   var mockflash = {
       amount: 300.00,
       sizeId: 1,
@@ -23,7 +23,7 @@ describe('FlashController', function () {
     }
   flashlength = 0;
   var mockStudio = {
-    shedule: [
+    schedule: [
       {
         dayId: 1,
         start: 8,

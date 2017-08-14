@@ -68,9 +68,9 @@ module.exports = {
                     return done(err);
                   }
                   else {
-                    for (i in values.shedule) {
-                      values.shedule[i].studioId = studio.id;
-                      Shedule.create(values.shedule[i])
+                    for (i in values.schedule) {
+                      values.schedule[i].studioId = studio.id;
+                      Schedule.create(values.schedule[i])
                         .exec(function (err, shedule) {
                           if (err) {
                             return done(err);
@@ -91,7 +91,7 @@ module.exports = {
                     });
                   }
                 });
-                
+
               }
             }
           });
@@ -141,11 +141,11 @@ module.exports = {
                   }
                 });
             }
-            
+
           });
         }
       });
-      
+
     }
   }
 }

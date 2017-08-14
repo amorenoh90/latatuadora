@@ -4,7 +4,7 @@ var request = require('supertest'),
 describe('ArtistController', function () {
   
   var mockStudio = {
-      shedule: [
+      schedule: [
         {
           dayId: 1,
           start: 8,

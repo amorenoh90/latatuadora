@@ -8,7 +8,7 @@ describe('ArtistController', function () {
       bio: 'I Am Artist, The Artist'
     },
     mockStudio = {
-      shedule: [
+      schedule: [
         {
           dayId: 1,
           start: 8,

@@ -2,7 +2,7 @@ var request = require('supertest'),
   assert = require('assert');
 
 describe('TattooController', function () {
-  
+
   var mocktattoo = {
       dimensionsX: 3,
       dimensionsY: 4,
@@ -29,7 +29,7 @@ describe('TattooController', function () {
       userType: 1
     },
     mockStudio = {
-      shedule: [
+      schedule: [
         {
           dayId: 1,
           start: 8,
@@ -72,7 +72,7 @@ describe('TattooController', function () {
       })
       .expect(200, done);
   });
-  
+
   it("should create a new Tattoo", function (done) {
     request(sails.hooks.http.app)
       .post('/tattoo')

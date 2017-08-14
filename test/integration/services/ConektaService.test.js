@@ -2,7 +2,7 @@ var mocha = require('mocha'),
   assert = require('assert');
 request = require('supertest');
 describe('Conekta Service', function () {
-  
+
   var mockitem = {
       itemType: 1,
       itemId: 1,
@@ -21,7 +21,7 @@ describe('Conekta Service', function () {
       amount: 3500
     },
     mockstudio = {
-      "shedule": [{"dayId": 1, "start": 8, "end": 15}, {"dayId": 2, "start": 8, "end": 15}, {
+      "schedule": [{"dayId": 1, "start": 8, "end": 15}, {"dayId": 2, "start": 8, "end": 15}, {
         "dayId": 3,
         "start": 8,
         "end": 15
