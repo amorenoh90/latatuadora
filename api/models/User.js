@@ -38,10 +38,10 @@ module.exports = {
       minLength: 8
     },
     userType: {
-      model: "usertype"
+      model: "UserType"
     },
     quotation: {
-      collection: "quotation",
+      collection: "Quotation",
       via: "userId"
     },
     conekta: {
@@ -57,6 +57,7 @@ module.exports = {
       return obj;
     }
   },
+  tableName: 'User',
   beforeCreate: function (values, cb) {
     if (values.password) {
       bcrypt.hash(values.password, 10, function (err, hash) {

@@ -15,10 +15,10 @@ module.exports = {
       unique: true
     },
     element: {
-      model: "element"
+      model: "Element"
     },
     partbody: {
-      model: 'bodypart'
+      model: 'BodyPart'
     },
     dimensionsX: {
       type: 'float',
@@ -40,18 +40,19 @@ module.exports = {
       defaultsTo: false
     },
     style: {
-      model: 'style'
+      model: 'Style'
     },
     artist: {
-      model: 'artist'
+      model: 'Artist'
     },
     freelancer: {
-      model: 'freelancer'
+      model: 'Freelancer'
     },
     votes: {
       type: 'integer'
     }
   },
+  tableName: 'Tattoo',
   addImg: function (image, tattoo, cb) {
     image('image').upload({
       maxBytes: 10000000,

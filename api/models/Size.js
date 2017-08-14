@@ -11,7 +11,7 @@ module.exports = {
     description: {
       type: "string"
     }
-    
-  }
+  },
+  tableName: 'Size'
 };
 

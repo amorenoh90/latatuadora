@@ -9,11 +9,12 @@ module.exports = {
   
   attributes: {
     freelancerId: {
-      model: "freelancer"
+      model: "Freelancer"
     },
     zoneId: {
-      model: "zone"
+      model: "Zone"
     }
-  }
+  },
+  tableName: 'FreelancerZone'
 };
 

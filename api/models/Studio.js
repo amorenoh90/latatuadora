@@ -17,7 +17,7 @@ module.exports = {
       defaultsTo: false
     },
     addressId: {
-      model: "address"
+      model: "Address"
     },
     publication: {
       type: "datetime"
@@ -36,25 +36,25 @@ module.exports = {
       maxLength: 250
     },
     userId: {
-      model: "user"
+      model: "User"
     },
     artist: {
-      collection: "artist",
+      collection: "Artist",
       via: "studio"
     },
-    shedule: {
-      collection: "shedule",
+    schedule: {
+      collection: "Schedule",
       via: "studioId"
     },
     styles: {
-      collection: "studiostyle",
+      collection: "StudioStyle",
       via: "studioId"
     },
     status: {
-      model: "studiostatus"
+      model: "StudioStatus"
     },
     membership: {
-      model: 'memberships'
+      model: 'Memberships'
     },
     membershipExp: {
       type: "datetime"
@@ -64,6 +64,7 @@ module.exports = {
       via: 'studio'
     }
   },
+  tableName: 'Studio',
   beforeCreate: function (values, cb) {
     values.membership = constants.memberships.studio;
     cb();

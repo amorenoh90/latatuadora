@@ -13,8 +13,9 @@ module.exports = {
       required: true
     },
     freelancerId: {
-      model: "freelancer"
+      model: "Freelancer"
     }
-  }
+  },
+  tableName: 'Zone'
 };
 

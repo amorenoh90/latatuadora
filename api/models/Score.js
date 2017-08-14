@@ -9,14 +9,15 @@ module.exports = {
   
   attributes: {
     artistId: {
-      model: "artist"
+      model: "Artist"
     },
     rank: {
       type: "string"
     },
     userId: {
-      model: "user"
+      model: "User"
     }
-  }
+  },
+  tableName: 'Score'
 };
 

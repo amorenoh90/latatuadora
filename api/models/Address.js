@@ -24,14 +24,16 @@ module.exports = {
       type: "string"
     },
     stateId: {
-      model: "state"
+      model: "State"
     },
     suburbId: {
-      model: "suburb"
+      model: "Suburb"
     },
     zc: {
       type: "integer"
     }
-  }
+  },
+  tableName: 'Address'
+  
 };
 

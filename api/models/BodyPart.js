@@ -17,9 +17,10 @@ module.exports = {
       size: 40
     },
     tattos: {
-      collection: 'tattoo',
+      collection: 'Tattoo',
       via: 'partbody'
     }
-  }
+  },
+  tableName: 'BodyPart'
 };
 

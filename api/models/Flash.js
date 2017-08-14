@@ -34,24 +34,25 @@ module.exports = {
       defaultsTo: false
     },
     elementId: {
-      collection: "flashelement",
+      collection: "FlashElement",
       via: "flashId"
     },
     styleId: {
-      collection: "flashstyle",
+      collection: "FlashStyle",
       via: "flashId"
     },
     freelancer: {
-      model: 'freelancer'
+      model: 'Freelancer'
     },
     studio: {
-      model: 'studio'
+      model: 'Studio'
     },
     publicate: {
       type: 'boolean',
       defaultsTo: false
     }
   },
+  tableName: 'Flash',
   addSellImg: function (image, flash, cb) {
     image('sellImage').upload({
       maxBytes: 10000000,

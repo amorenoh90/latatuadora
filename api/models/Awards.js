@@ -14,6 +14,7 @@ module.exports = {
     award: {
       type: "String"
     }
-  }
+  },
+  tableName: 'Awards'
 };
 

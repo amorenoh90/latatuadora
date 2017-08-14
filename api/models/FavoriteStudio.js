@@ -9,12 +9,13 @@ module.exports = {
   
   attributes: {
     studio: {
-      model: "studio"
+      model: "Studio"
     },
     user: {
-      model: "user"
+      model: "User"
     }
-  }
+  },
+  tableName: 'FavoriteStudio'
 };
 
 

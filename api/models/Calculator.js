@@ -4,7 +4,7 @@ module.exports = {
       model: 'style'
     },
     bodypartId: {
-      model: 'bodypart'
+      model: 'BodyPart'
     },
     minAmount: {
       type: 'float'
@@ -21,6 +21,7 @@ module.exports = {
     maxRange: {
       type: "float"
     }
-  }
+  },
+  tableName: 'Calculator'
 };
 

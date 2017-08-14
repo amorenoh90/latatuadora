@@ -15,6 +15,7 @@ module.exports = {
     townId: {
       model: "town"
     }
-  }
+  },
+  tableName: 'Suburb'
 };
 

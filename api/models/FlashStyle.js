@@ -9,11 +9,12 @@ module.exports = {
   
   attributes: {
     flashId: {
-      model: "flash"
+      model: "Flash"
     },
     style: {
-      model: "style"
+      model: "Style"
     }
-  }
+  },
+  tableName: 'FlashStyle'
 };
 

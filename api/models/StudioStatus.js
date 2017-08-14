@@ -12,6 +12,7 @@ module.exports = {
       type: "string",
       unique: true
     }
-  }
+  },
+  tableName: 'StudioStatus'
 };
 

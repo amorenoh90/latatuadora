@@ -15,6 +15,7 @@ module.exports = {
       type: 'String'
     }
   },
+  tableName: 'Carrousel',
   beforeCreate: function (values, cb) {
     values.file('image').upload({
       maxBytes: 10000000,

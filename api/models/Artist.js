@@ -25,7 +25,7 @@ module.exports = {
       type: "string"
     },
     completeTattoos: {
-      collection: 'tattoo',
+      collection: 'Tattoo',
       via: 'artist'
     },
     Flashes: {
@@ -33,30 +33,31 @@ module.exports = {
       via: 'artist'
     },
     styles: {
-      collection: "artiststyle",
+      collection: "ArtistStyle",
       via: "artistId"
     },
     votes: {
       type: "string"
     },
     studio: {
-      model: "studio"
+      model: "Studio"
     },
     freelancerId: {
-      model: "freelancer"
+      model: "Freelancer"
     },
     artisttype: {
-      model: "artisttype"
+      model: "ArtistType"
     },
     score: {
-      collection: "score",
+      collection: "Score",
       via: "artistId"
     },
     awards: {
-      collection: "awards",
+      collection: "Awards",
       via: "artist"
     }
   },
+  tableName: 'Artist',
   beforeUpdate: function (values, cb) {
     if (values.file) {
       Artist.uploadAvatar(values, function (avatar) {

@@ -9,10 +9,10 @@ module.exports = {
   
   attributes: {
     studioId: {
-      model: "studio"
+      model: "Studio"
     },
     dayId: {
-      model: "day"
+      model: "Day"
     },
     start: {
       type: "string"
@@ -20,6 +20,7 @@ module.exports = {
     end: {
       type: "string"
     }
-  }
+  },
+  tableName: 'Schedule'
 };
 

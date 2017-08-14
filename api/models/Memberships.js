@@ -14,14 +14,14 @@ paypal.configure({
 module.exports = {
   attributes: {
     userTypeId: {
-      model: 'usertype'
+      model: 'UserType'
     },
     amount: {
       type: 'float',
       required: true
     },
     recurrentId: {
-      model: 'recurrent'
+      model: 'Recurrent'
     },
     description: {
       type: 'string',
@@ -38,6 +38,7 @@ module.exports = {
       type: 'string'
     }
   },
+  tableName: 'Memberships',
   beforeCreate: function (values, cb) {
     ConektaService.createPlan(values, function (err, plan) {
       if (err) {

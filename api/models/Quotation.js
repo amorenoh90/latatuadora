@@ -19,24 +19,24 @@ module.exports = {
       required: true
     },
     styleId: {
-      model: 'style'
+      model: 'Style'
     },
     comments: {
       type: "string",
       maxLength: 265
     },
     userId: {
-      model: "user"
+      model: "User"
     },
     references: {
-      collection: 'quotationreferences',
+      collection: 'QuotationReferences',
       via: 'quotation'
     },
     bodypartId: {
-      model: 'bodypart'
+      model: 'BodyPart'
     },
     studioId: {
-      model: 'studio'
+      model: 'Studio'
     },
     used: {
       type: "boolean",
@@ -44,6 +44,7 @@ module.exports = {
     }
     
   },
+  tableName: 'Quotation',
   beforeCreate: function (values, cb) {
     if (values.style) {
       Style.findOne({id: values.style}).exec(function (err, style) {

@@ -15,10 +15,11 @@ module.exports = {
       type: 'string',
       size: 40
     },
-    elemento: {
-      collection: 'tattoo',
+    element: {
+      collection: 'Tattoo',
       via: 'element'
     }
-  }
+  },
+  tableName: 'Element'
 };
 

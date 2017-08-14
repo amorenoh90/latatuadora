@@ -16,7 +16,7 @@ module.exports = {
       maxLength: 40,
     },
     tattoos: {
-      collection: 'tattoo',
+      collection: 'Tattoo',
       via: 'style'
     },
     calculatorText: {
@@ -29,5 +29,6 @@ module.exports = {
     imgUrl: {
       type: "string"
     }
-  }
+  },
+  tableName: 'Style'
 };

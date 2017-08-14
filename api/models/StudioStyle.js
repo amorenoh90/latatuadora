@@ -9,11 +9,12 @@ module.exports = {
   
   attributes: {
     studioId: {
-      model: "studio"
+      model: "Studio"
     },
     styleId: {
-      model: "style"
+      model: "Style"
     }
-  }
+  },
+  tableName: 'StudioStyle'
 };
 

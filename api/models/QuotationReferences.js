@@ -13,9 +13,10 @@ module.exports = {
       required: true
     },
     quotation: {
-      model: "quotation",
+      model: "Quotation",
       required: true
     }
-  }
+  },
+  tableName: 'QuotationReferences'
 };
 

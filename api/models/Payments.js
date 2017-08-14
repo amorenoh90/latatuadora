@@ -1,20 +1,21 @@
 module.exports = {
   attributes: {
     user: {
-      model: 'user'
+      model: 'User'
     },
     purchaseId: {
       type: 'string',
       unique: true
     },
     status: {
-      model: 'paymentstatus'
+      model: 'PaymentStatus'
     },
     itemType: {
-      model: 'itemtype'
+      model: 'ItemType'
     },
     reference: {
       type: "integer"
     }
-  }
+  },
+  tableName: 'Payments'
 };

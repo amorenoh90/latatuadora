@@ -24,29 +24,30 @@ module.exports = {
       type: "string"
     },
     user: {
-      model: 'user'
+      model: 'User'
     },
     profileImgUrl: {
       type: "string"
     },
     zone: {
-      collection: "zone",
+      collection: "Zone",
       via: "freelancerId"
     },
     artist: {
-      collection: "artist",
+      collection: "Artist",
       via: "freelancerId"
     },
     canGoHome: {
       type: "boolean"
     },
     membership: {
-      model: 'memberships'
+      model: 'Memberships'
     },
     membershipExp: {
       type: "datetime"
     }
   },
+  tableName: 'Freelancer',
   beforeCreate: function (values, cb) {
     values.membership = constants.memberships.freelancer;
     cb();

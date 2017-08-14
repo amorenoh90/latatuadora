@@ -9,11 +9,12 @@ module.exports = {
   
   attributes: {
     tattooId: {
-      model: "tattoo"
+      model: "Tattoo"
     },
     userId: {
-      model: "user"
+      model: "User"
     }
-  }
+  },
+  tableName: 'FavoriteTattoo'
 };
 
