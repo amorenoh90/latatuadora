@@ -67,6 +67,7 @@ module.exports.routes = {
   'put /tattoo/:id': 'TattooController.update',
   'get /tattoo/notApproved': 'TattooController.notApproved',
   'get /tattoo/studio/:id': 'TattooController.findByStudio',
+  'get /tattoo/bodyParts': 'BodyPartController.find',
     ////favorites
   'post /tattoofav': 'FavoriteTattoo.add',
   'get /tattoofav': 'FavoriteTattoo.consult',
@@ -115,7 +116,7 @@ module.exports.routes = {
   //<Routes ComproPago
   //>Routes Artist
   'put /artist': 'ArtistController.update',
-  //<Routes Artist  
+  //<Routes Artist
   //>Carrousel
   'post /carrousel': 'CarrouselController.create',
   //<Carrousel
