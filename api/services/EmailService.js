@@ -1,7 +1,7 @@
 module.exports = {
   send: function (values, done) {
-    var api_key = 'key-eb656047b090ea091ef7c5d2fbd83dc5';
-    var domain = 'sandbox3bfa1334fbee4dcca5b08a9b34b46337.mailgun.org';
+    var api_key = 'key-5de07e0e2df132f47cfade8f2e52b89a';
+    var domain = 'sandbox066fdbbdf16943069d9b0c3f92882717.mailgun.org';
     var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
     
     var data = {
