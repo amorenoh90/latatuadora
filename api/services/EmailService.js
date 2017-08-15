@@ -20,4 +20,5 @@ module.exports = {
       }
     });
   }
+  // TODO read and use templates for content in emails
 }

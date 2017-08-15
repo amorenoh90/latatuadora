@@ -43,19 +43,20 @@ module.exports = {
                     if (err) {
                       return done(err);
                     }
-                    if (!style) {
-                      return done('Could not find Style, sorry.');
-                    } else {
-                      calculated.styleText = style.calculatorText;
-                      return done(null, calculated);
-                    }
+                    calculated.styleText = style.calculatorText;
+                    return done(null, calculated);
                   });
+                  // TODO send mail to admin@latatuadora.com
+                  var emailContent = {
+                    to: user.email,
+                    subject: 'Example',
+                    text: "HolaMundo desde cotizacion" // TODO Use the mail service instead
+                  };
+                  EmailService.send(emailContent, function(err, content) {});
                 }
               });
-
             } else {
               return done(null, {message: "Are you quoting with study"});
-
             }
           }
         });
