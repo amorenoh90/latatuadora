@@ -134,7 +134,7 @@ module.exports = {
             PayPalService.buyFlash(values, user, function (err, response) {
               req.session.paymentId = response.payment.id;
               res.redirect(response.redirectUrl);
-            })
+            });
             break;
           case 'StudioMembership':
             Studio.findOne({userId: auth.id})

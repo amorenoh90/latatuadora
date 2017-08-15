@@ -8,7 +8,7 @@ describe('UserController', function () {
     email: "blick@lick.com",
     password: "password",
     form: "user"
-  }
+  };
   it("should logup a normal User", function (done) {
     request(sails.hooks.http.app)
       .post('/logup')

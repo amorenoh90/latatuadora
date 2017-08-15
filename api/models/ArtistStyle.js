@@ -15,6 +15,6 @@ module.exports = {
       model: "Artist"
     }
   },
-  tableName: 'Address'
+  tableName: 'ArtistStyle'
 };
 

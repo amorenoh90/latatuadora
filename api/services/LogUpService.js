@@ -109,7 +109,7 @@ module.exports = {
         newfreelancer = {
           name: values.name,
           about: values.about
-        }
+        };
       User.create(newfreelancerUser).exec(function (err, freelanceruser) {
         if (err) {
           return done(err);
@@ -148,4 +148,4 @@ module.exports = {
 
     }
   }
-}
+};

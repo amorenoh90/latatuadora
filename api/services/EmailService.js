@@ -15,10 +15,10 @@ module.exports = {
         done(err)
       }
       else {
-        var message = {"message": "email sended"}
+        var message = {"message": "email sended"};
         done(null, message);
       }
     });
   }
   // TODO read and use templates for content in emails
-}
+};

@@ -62,7 +62,6 @@ module.exports = {
                     return done(err);
                   }
                 });
-                ;
                 for (var i = 0; i < payment.links.length; i++) {
                   var link = payment.links[i];
                   if (link.method === 'REDIRECT') {

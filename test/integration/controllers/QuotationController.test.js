@@ -12,7 +12,7 @@ describe('QuotationController', function () {
     BodyPart.create({name: 'Pierna'}).exec(function (err, style) {
     });
     done();
-  })
+  });
   
   var id,
     quotation = {
@@ -48,7 +48,7 @@ describe('QuotationController', function () {
       telephone: 92050923,
       bodypart: 1,
       studio: 4
-    }
+    };
   var mockStudio = {
       schedule: [
         {

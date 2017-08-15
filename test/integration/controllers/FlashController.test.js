@@ -20,7 +20,7 @@ describe('FlashController', function () {
       copyrigth: true,
       styleId: 4,
       elementId: 3
-    }
+    };
   flashlength = 0;
   var mockStudio = {
     schedule: [
@@ -61,7 +61,7 @@ describe('FlashController', function () {
     name: 'admin',
     password: 'password',
     userType: 1
-  }
+  };
   it("should create a new Studio (prerequisites)", function (done) {
     request(sails.hooks.http.app)
       .post('/logup')
