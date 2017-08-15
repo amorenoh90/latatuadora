@@ -39,5 +39,11 @@ module.exports = {
     pending: 1,
     publicate: 2,
     block: 3,
+  },
+  email: {
+    quotation: {
+      subject: "Haz recibido una nueva cotizacion",
+      content: ""
+    }
   }
 };
