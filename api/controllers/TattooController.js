@@ -37,9 +37,9 @@ var find = function find(req, res) {
       return res.send(tattos);
     });
   } else {
-    sql = 'SELECT * FROM tattoo where publicate = true';
+    sql = 'SELECT * FROM Tattoo where publicate = true';
     values = [];
-    used = false;
+    used = true;
     if (req.query.style) {
       if (!used) {
         sql = sql + " WHERE ";
@@ -48,9 +48,8 @@ var find = function find(req, res) {
         sql = sql + " AND ";
       }
       sql = sql + "style = ?";
-      values.push(req.query.style);
+      values.push(parseInt(req.query.style));
     }
-    ;
     if (req.query.bodypart) {
       if (!used) {
         sql = sql + " WHERE ";
@@ -59,9 +58,8 @@ var find = function find(req, res) {
         sql = sql + " AND ";
       }
       sql = sql + "partbody = ?";
-      values.push(req.query.bodypart);
+      values.push(parseInt(req.query.bodypart));
     }
-    ;
     if (req.query.element) {
       if (!used) {
         sql = sql + " WHERE ";
@@ -70,9 +68,8 @@ var find = function find(req, res) {
         sql = sql + " AND ";
       }
       sql = sql + "element = ?";
-      values.push(req.query.element);
+      values.push(parseInt(req.query.element));
     }
-    ;
     Tattoo.query(sql, values, function (err, tattoos) {
       if (err) {
         return res.serverError(err);
