@@ -6,10 +6,15 @@ describe('EmailService', function () {
   var mockemail = {
     to: 'alberto@blick.mx',
     subject: "Test Email Service",
-    text: 'mock Text'
+    text: 'mock Text',
+    model: {
+      user: {
+        name: "Juan Alberto"
+      }
+    }
   };
-  it("should send an email", function (done) {
-    EmailService.send(mockemail, function (err, email) {
+  it("should send a welcome email", function (done) {
+    EmailService.sendWelcomePage(mockemail, function (err, email) {
       if (err) {
         done(err);
       }
