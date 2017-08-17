@@ -20,7 +20,7 @@ describe('TattooController', function () {
       partbody: 5,
       style: 7,
       artistId: 8
-    }
+    };
   tattoolength = 0,
     mockadmin = {
       email: 'admin@latatoadora.com',

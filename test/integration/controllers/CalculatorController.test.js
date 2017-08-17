@@ -12,7 +12,7 @@ describe('CalculatorController', function () {
     BodyPart.create({name: 'Brazo'}).exec(function (err, style) {
     });
     done();
-  })
+  });
   
   var id,
     calc = [{

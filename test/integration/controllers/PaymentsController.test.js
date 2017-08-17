@@ -47,7 +47,7 @@ describe('PaymentsControllerTest', function () {
         "customer_email": "pepito@gmail.com",
         "customer_phone": "5555555555"
       }
-    }
+    };
   var mockuser = {
       form: "user",
       name: "usertest",
@@ -79,7 +79,7 @@ describe('PaymentsControllerTest', function () {
         return done(err);
       }
       else {
-        mock.name = "flash-" + flash.id
+        mock.name = "flash-" + flash.id;
         mock.itemId = flash.id;
       }
       return done();

@@ -16,6 +16,9 @@ module.exports = {
       type: 'string',
       size: 40
     },
+    section : { // describes front/back
+      type: "integer"
+    },
     tattos: {
       collection: 'Tattoo',
       via: 'partbody'

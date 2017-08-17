@@ -29,6 +29,9 @@ module.exports = {
     suburbId: {
       model: "Suburb"
     },
+    townId: {
+      model: "Town"
+    },
     zc: {
       type: "integer"
     }

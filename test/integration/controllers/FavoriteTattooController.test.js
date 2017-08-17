@@ -40,7 +40,7 @@ describe('FavoriteTattooController', function () {
         assert.equal(res.body.message, 'favorite is added');
       })
       .expect(200, done);
-  })
+  });
   it("should consult favorites Tattos by User", function (done) {
     request(sails.hooks.http.app)
       .get('/tattoofav')

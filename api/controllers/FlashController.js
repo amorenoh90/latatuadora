@@ -7,7 +7,6 @@
 
 module.exports = {
   add: function (req, res) {
-    console.log(req.body);
     var sellimg;
     Flash.create(req.body)
       .then(function (flash) {
@@ -62,15 +61,15 @@ module.exports = {
         return res.send(flash);
       });
     } else {
-      sql = 'select *, flash.id from flash where publicate = true';
+      sql = 'select *, Flash.id from Flash where publicate = true';
       if (req.query.style) {
-        sql = sql + ' left join flashstyle on flashstyle.flashId = flash.id';
+        sql = sql + ' left join FlashStyle on FlashStyle.flashId = flash.id';
       }
       if (req.query.element) {
-        sql = sql + ' left join flashelement on flashelement.flashId = flash.id';
+        sql = sql + ' left join FlashElement on FlashElement.flashId = flash.id';
       }
       values = [];
-      used = false;
+      used = true;
       if (req.query.style) {
         if (!used) {
           sql = sql + " WHERE ";
@@ -78,10 +77,9 @@ module.exports = {
         } else {
           sql = sql + " AND ";
         }
-        sql = sql + "flashstyle.style = ?";
-        values.push(req.query.style);
+        sql = sql + " FlashStyle.style = ? ";
+        values.push(parseInt(req.query.style));
       }
-      ;
       if (req.query.element) {
         if (!used) {
           sql = sql + " WHERE ";
@@ -89,10 +87,9 @@ module.exports = {
         } else {
           sql = sql + " AND ";
         }
-        sql = sql + "flashelement.element = ?";
-        values.push(req.query.element);
+        sql = sql + " FlashElement.element = ? ";
+        values.push(parseInt(req.query.element));
       }
-      ;
       Flash.query(sql, values, function (err, flash) {
         if (err) {
           return res.serverError(err);

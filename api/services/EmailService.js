@@ -37,4 +37,5 @@ module.exports = {
     values.template = 'quotation.ejs';
     return send(values, done);
   }
-};
+  // TODO read and use templates for content in emails
+}
