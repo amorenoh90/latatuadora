@@ -8,12 +8,27 @@
 
 module.exports = {
   identity: 'Style',
-
+  
   attributes: {
     name: {
       type: 'string',
       alphanumeric: true,
       maxLength: 40,
+    },
+    tattoos: {
+      collection: 'Tattoo',
+      via: 'style'
+    },
+    calculatorText: {
+      type: "string"
+    },
+    quotation: {
+      type: "boolean",
+      defaultsTo: false
+    },
+    imgUrl: {
+      type: "string"
     }
-  }
+  },
+  tableName: 'Style'
 };

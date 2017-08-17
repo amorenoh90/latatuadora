@@ -6,56 +6,61 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	dimensionsX: {
+    dimensionsX: {
       type: 'float',
       size: 5,
       required: true
     },
     dimensionsY: {
-      type: 'float',    
+      type: 'float',
       size: 5,
       required: true
     },
-    styleId:{
-      model: 'style'
+    styleId: {
+      model: 'Style'
     },
-    comments:{
+    comments: {
       type: "string",
       maxLength: 265
     },
-    userId:{
-      model: "user"
+    userId: {
+      model: "User"
     },
     references: {
-      collection: 'quotationreferences',
+      collection: 'QuotationReferences',
       via: 'quotation'
     },
-    bodypartId:{
-      model: 'bodypart'
+    bodypartId: {
+      model: 'BodyPart'
     },
-    studioId:{
-      model: 'studio'
+    studioId: {
+      model: 'Studio'
+    },
+    used: {
+      type: "boolean",
+      defaultsTo: false
     }
-
+    
   },
-  beforeCreate: function (values, cb) { 
-    if(values.style){
-      Style.findOne({ id: values.style }).exec(function (err, style){
+  tableName: 'Quotation',
+  beforeCreate: function (values, cb) {
+    if (values.style) {
+      Style.findOne({id: values.style}).exec(function (err, style) {
         if (err) {
           return cb(err);
         }
         if (!style) {
           cb('Could not find Style, sorry.');
         }
-        if(style){
-          values.style= style.id;
+        if (style) {
+          values.style = style.id;
           cb();
-        } 
-      }); 
+        }
+      });
     }
-    else{
+    else {
       cb();
     }
   }

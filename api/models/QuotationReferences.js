@@ -6,16 +6,17 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	imgUrl:{
+    imgUrl: {
       type: 'string',
       required: true
     },
-    quotation:{
-    	model: "quotation",
-    	required: true
+    quotation: {
+      model: "Quotation",
+      required: true
     }
-  }
+  },
+  tableName: 'QuotationReferences'
 };
 

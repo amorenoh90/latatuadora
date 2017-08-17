@@ -6,11 +6,24 @@
  */
 
 module.exports = {
-
+  
   attributes: {
-  	name:{
-  		type: 'string'
-  	}
-  }
+    id: {
+      type: "integer",
+      primaryKey: true
+    },
+    name: {
+      type: 'string',
+      size: 40
+    },
+    section : { // describes front/back
+      type: "integer"
+    },
+    tattos: {
+      collection: 'Tattoo',
+      via: 'partbody'
+    }
+  },
+  tableName: 'BodyPart'
 };
 
