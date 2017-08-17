@@ -36,6 +36,14 @@ module.exports = {
                 }
               }
             });
+            var emailContent = {
+              model: {
+                quotation: (quotation || {})
+              },
+              subject: 'Example',
+              text: "HolaMundo desde cotizacion" // TODO Use the mail service instead
+            };
+            // Quoting with LaTatuadora
             if (!quotation.studioId) {
               Quotient.calculate(quotation, function (err, calculated) {
                 if (err) done(err); else {
@@ -44,18 +52,25 @@ module.exports = {
                       return done(err);
                     }
                     calculated.styleText = style.calculatorText;
+                    EmailService.sendQuotation(emailContent, function (err, content) {
+                    });
                     return done(null, calculated);
                   });
-                  // TODO send mail to admin@latatuadora.com
-                  var emailContent = {
-                    to: user.email,
-                    subject: 'Example',
-                    text: "HolaMundo desde cotizacion" // TODO Use the mail service instead
-                  };
-                  EmailService.send(emailContent, function(err, content) {});
+                  
+                  EmailService.sendQuotation(emailContent, function (err, content) {
+                  });
                 }
               });
             } else {
+              Studio.findOne({userId: quotation.studioId}).populate("userId")
+                .then(function (studio) {
+                  sails.log.error(studio);
+                  if(studio.userId.email) {
+                    emailContent.to = studio.user.email;
+                  }
+                  EmailService.sendQuotation(emailContent, function (err, content) {
+                })
+                });
               return done(null, {message: "Are you quoting with study"});
             }
           }
@@ -63,4 +78,4 @@ module.exports = {
       }
     });
   }
-}
+};
