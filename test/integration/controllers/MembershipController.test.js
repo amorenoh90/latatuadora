@@ -12,7 +12,7 @@ describe('MembershipController', function () {
   };
   // TODO, find for the logic in other branches .... it's gone
   it("should add a new Membership", function (done) {
-    this.timeout(7000);
+    //this.timeout(10000);
     request(sails.hooks.http.app)
       .post('/memberships')
       .send(mockmembership)
