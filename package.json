@@ -33,8 +33,8 @@
     "sails-mysql": "0.11.5"
   },
   "scripts": {
-    "debug": "node debug app.js",
-    "start": "node app.js",
+    "debug": "LOG_QUERIES=true node debug app.js",
+    "start": "LOG_QUERIES=true node app.js",
     "test": "NODE_ENV=test node ./node_modules/mocha/bin/mocha --timeout 60000 test/bootstrap.test.js test/*/**/*.test.js"
   },
   "main": "app.js",
