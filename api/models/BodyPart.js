@@ -19,6 +19,9 @@ module.exports = {
     section : { // describes front/back
       type: "integer"
     },
+    path: {
+      type: 'string'
+    },
     tattos: {
       collection: 'Tattoo',
       via: 'partbody'
