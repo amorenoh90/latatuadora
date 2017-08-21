@@ -17,33 +17,20 @@ module.exports = {
       newstate = {
         name: values.state
       };
-    Town.findOrCreate(newtown).exec(function (err, town) {
-      if (err) {
-        return done(err);
-      } else {
-        newsuburb.townId = town.id;
-        Suburb.findOrCreate(newsuburb).exec(function (err, suburb) {
-          if (err) {
-            return done(err);
-          } else {
-            newAddress.suburbId = suburb.id;
-            State.findOrCreate(newstate).exec(function (err, state) {
-              if (err) {
-                return done(err);
-              } else {
-                newAddress.stateId = state.id;
-                Address.create(newAddress).exec(function (err, address) {
-                  if (err) {
-                    return done(err);
-                  } else {
-                    done(null, address.id);
-                  }
-                });
-              }
-            });
-          }
+    State.findOrCreate(newstate).then(function (state) {
+      newsuburb.stateId = state.id;
+      Suburb.findOrCreate(newsuburb).then(function (suburb) {
+        Town.findOrCreate(newtown).then(function (town) {
+          newAddress.stateId = state.id;
+          newAddress.suburbId = suburb.id;
+          newAddress.townId = town.id;
+          Address.create(newAddress).then(function (address) {
+            done(null, address.id);
+          });
         });
-      }
+      });
+    }).catch(function (err) {
+      if (err) return done(err);
     });
   }
 };

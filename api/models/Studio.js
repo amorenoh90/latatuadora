@@ -62,6 +62,18 @@ module.exports = {
     carrousel: {
       collection: 'Carrousel',
       via: 'studio'
+    },
+    rank: {
+      type: "float",
+      defaultsTo : 1.0
+    },
+    count: {
+      type: "integer",
+      defaultsTo : 1
+    },
+    totalSum: {
+      type: "integer",
+      defaultsTo : 1
     }
   },
   tableName: 'Studio',
@@ -94,6 +106,9 @@ module.exports = {
       }
     });
   },
-  
+  beforeUpdate: function (values, cb) {
+    values.rank = values.totalSum / values.count;
+    cb();
+  }
 };
 

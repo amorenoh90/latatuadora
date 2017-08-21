@@ -12,8 +12,8 @@ module.exports = {
       type: "string",
       required: true
     },
-    townId: {
-      model: "town"
+    stateId: {
+      model: "State"
     }
   },
   tableName: 'Suburb'
