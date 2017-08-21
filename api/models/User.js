@@ -33,12 +33,13 @@ module.exports = {
       primaryKey: true
     },
     telephone: {
-      type: "integer",
-      maxLength: 11,
-      minLength: 8
+      type: "string",
     },
     userType: {
       model: "UserType"
+    },
+    addressId: {
+      model: "Address"
     },
     quotation: {
       collection: "Quotation",
