@@ -32,8 +32,7 @@ module.exports = {
       type: "string"
     },
     about: {
-      type: "string",
-      maxLength: 250
+      type: "text"
     },
     userId: {
       model: "User"
@@ -74,6 +73,18 @@ module.exports = {
     totalSum: {
       type: "integer",
       defaultsTo : 1
+    },
+    websiteUrl: {
+      type: "text"
+    },
+    fbUrl: {
+      type: "text"
+    },
+    twUrl: {
+      type: "text"
+    },
+    insUrl: {
+      type: "text"
     }
   },
   tableName: 'Studio',
