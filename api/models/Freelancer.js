@@ -17,8 +17,7 @@ module.exports = {
       default: false
     },
     about: {
-      type: "string",
-      maxLength: 250
+      type: "text"
     },
     rank: {
       type: "float",
@@ -42,10 +41,6 @@ module.exports = {
       collection: "Zone",
       via: "freelancerId"
     },
-    artist: {
-      collection: "Artist",
-      via: "freelancerId"
-    },
     canGoHome: {
       type: "boolean"
     },
@@ -54,6 +49,22 @@ module.exports = {
     },
     membershipExp: {
       type: "datetime"
+    },
+    styles: {
+      collection: "FreelanceStyle",
+      via: "freelanceId"
+    },
+    websiteUrl: {
+      type: "text"
+    },
+    fbUrl: {
+      type: "text"
+    },
+    twUrl: {
+      type: "text"
+    },
+    insUrl: {
+      type: "text"
     }
   },
   tableName: 'Freelancer',

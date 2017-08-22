@@ -125,9 +125,12 @@ module.exports.routes = {
   'get /studiofav': 'FavoriteStudio.consult',
   'delete /studiofav': 'FavoriteStudio.remove',
   //<Studio Favs
-  //>Studio Favs
+  //>address
   'get /address/studioAddress': 'AddressController.studioAddress',
   'get /address/freelanceAddress': 'AddressController.freelanceAddress',
   'get /address/userAddress': 'AddressController.userAddress',
-  //<Studio Favs
+  //<address
+  //>styles
+  'get /styles': 'StyleController.find'
+  //<style
 };
