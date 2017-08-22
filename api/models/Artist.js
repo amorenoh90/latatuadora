@@ -15,11 +15,7 @@ module.exports = {
       type: "string"
     },
     bio: {
-      type: "string",
-      maxLength: 100
-    },
-    rating: {
-      type: "string"
+      type: "text"
     },
     responseTime: {
       type: "string"
@@ -36,21 +32,8 @@ module.exports = {
       collection: "ArtistStyle",
       via: "artistId"
     },
-    votes: {
-      type: "string"
-    },
     studio: {
       model: "Studio"
-    },
-    freelancerId: {
-      model: "Freelancer"
-    },
-    artisttype: {
-      model: "ArtistType"
-    },
-    score: {
-      collection: "Score",
-      via: "artistId"
     },
     awards: {
       collection: "Awards",
