@@ -91,7 +91,7 @@ module.exports = {
                     });
                   }
                 });
-
+                
               }
             }
           });
@@ -119,33 +119,23 @@ module.exports = {
           Freelancer.create(newfreelancer).exec(function (err, freelancer) {
             if (err) {
               return done(err);
-            }
-            else {
-              Artist.create({freelancerId: freelancer.id})
-                .exec(function (err, artist) {
+            } else {
+              for (i in values.zones) {
+                values.zones[i].freelancerId = freelancer.id;
+                Zone.create(values.zones[i]).exec(function (err) {
                   if (err) {
                     return done(err);
                   }
-                  else {
-                    for (i in values.zones) {
-                      values.zones[i].freelancerId = freelancer.id;
-                      Zone.create(values.zones[i]).exec(function (err) {
-                        if (err) {
-                          return done(err);
-                        }
-                      });
-                    }
-                    Freelancer.addProfileImg(image, freelancer.id, function (cb) {
-                      return done(null, JWT.createToken(freelanceruser));
-                    })
-                  }
                 });
+              }
+              Freelancer.addProfileImg(image, freelancer.id, function (cb) {
+                return done(null, JWT.createToken(freelanceruser));
+              });
             }
-
           });
         }
       });
-
+      
     }
   }
 };
