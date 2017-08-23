@@ -39,8 +39,13 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
-    style: {
-      model: 'Style'
+    styles: {
+      collection: "TattooStyle",
+      via: "tattooId"
+    },
+    elements: {
+      collection: "TattooElement",
+      via: "tattooId"
     },
     artist: {
       model: 'Artist'
