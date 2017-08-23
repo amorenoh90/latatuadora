@@ -60,7 +60,7 @@ var find = function find(req, res) {
       } else {
         sql = sql + " AND ";
       }
-      sql = sql + "tattooStyle.style = ?";
+      sql = sql + "tattooStyle.styleId = ?";
       values.push(parseInt(req.query.style));
     }
     if (req.query.bodypart) {
@@ -83,7 +83,7 @@ var find = function find(req, res) {
       sql = sql + "tattooElement.elementId = ?";
       values.push(parseInt(req.query.element));
     }
-    query += "GROUP BY tattoo.id";
+    sql += " GROUP BY tattoo.id";
     Tattoo.query(sql, values, function (err, tattoos) {
       if (err) {
         return res.serverError(err);
