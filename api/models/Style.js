@@ -15,10 +15,6 @@ module.exports = {
       alphanumeric: true,
       maxLength: 40,
     },
-    tattoos: {
-      collection: 'Tattoo',
-      via: 'style'
-    },
     calculatorText: {
       type: "string"
     },
