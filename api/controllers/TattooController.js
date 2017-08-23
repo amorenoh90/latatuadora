@@ -37,7 +37,20 @@ var find = function find(req, res) {
       return res.send(tattos);
     });
   } else {
-    sql = 'SELECT * FROM Tattoo where publicate = true';
+    sql = "SELECT " +
+        "tattoo.id," +
+        "tattoo.partbody," +
+        "tattoo.dimensionsX," +
+        "tattoo.dimensionsY," +
+        "tattoo.image," +
+        "tattoo.name," +
+        "tattoo.publicate," +
+        "tattoo.artist," +
+        "tattoo.freelancer," +
+        "tattoo.votes " +
+      "FROM Tattoo tattoo " +
+      "INNER JOIN TattooStyle tattooStyle ON tattooStyle.tattooId = tattoo.id " +
+      "LEFT JOIN TattooElement tattooElement ON tattooElement.tattooId = tattoo.id ";
     values = [];
     used = true;
     if (req.query.style) {
@@ -47,7 +60,7 @@ var find = function find(req, res) {
       } else {
         sql = sql + " AND ";
       }
-      sql = sql + "style = ?";
+      sql = sql + "tattooStyle.style = ?";
       values.push(parseInt(req.query.style));
     }
     if (req.query.bodypart) {
@@ -57,7 +70,7 @@ var find = function find(req, res) {
       } else {
         sql = sql + " AND ";
       }
-      sql = sql + "partbody = ?";
+      sql = sql + "tattoo.partbody = ?";
       values.push(parseInt(req.query.bodypart));
     }
     if (req.query.element) {
@@ -67,9 +80,10 @@ var find = function find(req, res) {
       } else {
         sql = sql + " AND ";
       }
-      sql = sql + "element = ?";
+      sql = sql + "tattooElement.elementId = ?";
       values.push(parseInt(req.query.element));
     }
+    query += "GROUP BY tattoo.id";
     Tattoo.query(sql, values, function (err, tattoos) {
       if (err) {
         return res.serverError(err);
