@@ -29,11 +29,10 @@ module.exports = {
       size: 5
     },
     image: {
-      type: 'string'
+      type: 'text'
     },
     name: {
-      type: 'string',
-      size: 40
+      type: 'text'
     },
     publicate: {
       type: 'boolean',
