@@ -131,6 +131,12 @@ module.exports.routes = {
   'get /address/userAddress': 'AddressController.userAddress',
   //<address
   //>styles
-  'get /styles': 'StyleController.find'
+  'get /styles': 'StyleController.find',
   //<style
+  //>Studio
+  'post /studio/rate': 'StudioController.rateStudio',
+  //<Studio
+  //>Freelancer
+  'post /freelancer/rate': 'FreelancerController.rateFreelancer',
+  //<Freelancer
 };

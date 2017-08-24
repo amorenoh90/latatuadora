@@ -144,7 +144,9 @@ var findByStudio = function findByStudio(req, res) {
     }
   });
 };
+var voteForTattoo = function (req, res) {
 
+};
 module.exports = {
   add: add,
   find: find,
