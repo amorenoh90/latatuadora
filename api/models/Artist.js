@@ -46,8 +46,7 @@ module.exports = {
       Artist.uploadAvatar(values, function (avatar) {
         cb();
       })
-    }
-    else {
+    } else {
       cb();
     }
   },
