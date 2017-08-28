@@ -71,7 +71,7 @@ module.exports.routes = {
     ////favorites
   'post /tattoofav': 'FavoriteTattoo.add',
   'get /tattoofav': 'FavoriteTattoo.consult',
-  'get /tattoofav/count': 'FavoriteTattoo.count',
+  'get /tattoofav/count': 'FavoriteTattoo.countFavorites',
   'delete /tattoofav': 'FavoriteTattoo.remove',
   //<Tattoo Routes
 
