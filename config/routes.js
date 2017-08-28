@@ -147,4 +147,7 @@ module.exports.routes = {
   //>Freelancer
   'post /freelancer/rate': 'FreelancerController.rateFreelancer',
   //<Freelancer
+  //>Artists
+  'post /artist/rate': 'ArtistsController.rateArtists'
+  //<Artists
 };
