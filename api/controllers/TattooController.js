@@ -144,7 +144,6 @@ var findByStudio = function findByStudio(req, res) {
     }
   });
 };
-
 module.exports = {
   add: add,
   find: find,

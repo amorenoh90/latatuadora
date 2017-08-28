@@ -1,15 +1,8 @@
-/**
- * FavoriteTattooController
- *
- * @description :: Server-side logic for managing Favoritetattoos
- * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
- */
-
 module.exports = {
   add: function (req, res) {
-    FavoriteTattoo.findOrCreate({
-      userId: req.headers.user.id,
-      tattooId: req.body.tattooId
+    FavoriteFreelancer.findOrCreate({
+      user: req.headers.user.id,
+      freelancer: req.body.freelancer
     }).exec(function (err, favorite) {
       if (err) {
         return res.serverError(err);
@@ -19,7 +12,7 @@ module.exports = {
     });
   },
   consult: function (req, res) {
-    FavoriteTattoo.find({userId: req.headers.user.id}).populate('tattooId').exec(function (err, favorites) {
+    FavoriteFreelancer.find({user: req.headers.user.id}).populate('freelancer').exec(function (err, favorites) {
       if (err) {
         return res.serverError(err);
       } else {
@@ -28,9 +21,9 @@ module.exports = {
     });
   },
   remove: function (req, res) {
-    FavoriteTattoo.destroy({
-      userId: req.headers.user.id,
-      tattooId: req.body.tattooId
+    FavoriteFreelancer.destroy({
+      user: req.headers.user.id,
+      freelancer: req.body.freelancer
     }).exec(function (err) {
       if (err) {
         return res.negotiate(err);
@@ -41,13 +34,12 @@ module.exports = {
   },
   countFavorites: function (req, res) {
     var values = {
-      tattooId: req.query.tattooId
+      freelancer: req.query.freelancer
     };
-    FavoriteTattoo.count(values).then(function (numberOfFavorites) {
+    FavoriteFreelancer.count(values).then(function (numberOfFavorites) {
       res.send({count: numberOfFavorites});
     }).catch(function (err) {
       res.serverError(err);
     });
   }
 };
-

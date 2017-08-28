@@ -64,15 +64,19 @@ module.exports = {
     },
     rank: {
       type: "float",
-      defaultsTo : 1.0
+      defaultsTo: 1.0
+    },
+    averageRank: {
+      type: "float",
+      defaultsTo: 1.0
     },
     count: {
       type: "integer",
-      defaultsTo : 1
+      defaultsTo: 1
     },
     totalSum: {
       type: "integer",
-      defaultsTo : 1
+      defaultsTo: 1
     },
     websiteUrl: {
       type: "text"
@@ -120,6 +124,25 @@ module.exports = {
   beforeUpdate: function (values, cb) {
     values.rank = values.totalSum / values.count;
     cb();
+  },
+  updateStudioRankBasedOnArtists: function (studioId, cb) {
+    Artists.find({studio: studioId}).then(function (artists) {
+      var artistRank;
+      var totalArtistSum = 0;
+      var totalArtistCount = artists.length;
+      for (var i = 0; i < totalArtistCount; i++) {
+        totalArtistSum = +artists[i].rank
+      }
+      
+      artistRank = totalArtistSum / totalArtistCount;
+      
+      var updatedAverageRank = {
+        averageRank: artistRank
+      };
+      Studio.update({id: studioId}, updatedAverageRank).then(function (result) {
+        cb();
+      });
+    });
   }
 };
 

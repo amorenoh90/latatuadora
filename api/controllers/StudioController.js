@@ -14,6 +14,28 @@ module.exports = {
         res.send(studios);
       }
     });
+  },
+  rateStudio: function (req, res) {
+    var values = {
+      id: req.query.id,
+      rank: (req.query.rank || 0)
+    };
+    
+    var query = {
+      status: constants.studioStatus.publicate,
+      id: values.id
+    };
+    Studio.findOne(query).then(function (studio) {
+      var updatedProperties = {
+        count: studio.count + 1,
+        totalSum: studio.totalSum + parseFloat(values.rank)
+      };
+      Studio.update(query, updatedProperties).then(function (result) {
+        return res.send(result);
+      });
+    }).catch(function (err) {
+      return res.serverError(err);
+    });
   }
 };
 

@@ -38,6 +38,18 @@ module.exports = {
     awards: {
       collection: "Awards",
       via: "artist"
+    },
+    rank: {
+      type: "float",
+      defaultsTo: 1.0
+    },
+    count: {
+      type: "integer",
+      defaultsTo: 1
+    },
+    totalSum: {
+      type: "integer",
+      defaultsTo: 1
     }
   },
   tableName: 'Artist',
@@ -46,8 +58,7 @@ module.exports = {
       Artist.uploadAvatar(values, function (avatar) {
         cb();
       })
-    }
-    else {
+    } else {
       cb();
     }
   },

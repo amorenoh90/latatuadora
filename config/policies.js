@@ -93,6 +93,12 @@ module.exports.policies = {
     consult: 'userSessionAuth',
     find:true
   },
+  FavoriteFreelancer:{
+    add: 'userSessionAuth',
+    remove:'userSessionAuth',
+    consult: 'userSessionAuth',
+    find:true
+  },
   Flash:{
     add: 'freelancerorStudioSessionAuth',
     update: 'freelancerorStudioSessionAuth',
