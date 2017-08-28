@@ -71,6 +71,7 @@ module.exports.routes = {
     ////favorites
   'post /tattoofav': 'FavoriteTattoo.add',
   'get /tattoofav': 'FavoriteTattoo.consult',
+  'get /tattoofav/count': 'FavoriteTattoo.count',
   'delete /tattoofav': 'FavoriteTattoo.remove',
   //<Tattoo Routes
 
@@ -123,8 +124,15 @@ module.exports.routes = {
   //>Studio Favs
   'post /studiofav': 'FavoriteStudio.add',
   'get /studiofav': 'FavoriteStudio.consult',
+  'get /studiofav/count': 'FavoriteStudio.countFavorites',
   'delete /studiofav': 'FavoriteStudio.remove',
   //<Studio Favs
+  //>Freelancer Favs
+  'post /freelancerfav': 'FavoriteFreelancer.add',
+  'get /freelancerfav': 'FavoriteFreelancer.consult',
+  'get /freelancerfav/count': 'FavoriteFreelancer.countFavorites',
+  'delete /freelancerfav': 'FavoriteFreelancer.remove',
+  //<Freelancer Favs
   //>address
   'get /address/studioAddress': 'AddressController.studioAddress',
   'get /address/freelanceAddress': 'AddressController.freelanceAddress',
