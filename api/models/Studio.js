@@ -66,6 +66,10 @@ module.exports = {
       type: "float",
       defaultsTo: 1.0
     },
+    averageRank: {
+      type: "float",
+      defaultsTo: 1.0
+    },
     count: {
       type: "integer",
       defaultsTo: 1
@@ -123,23 +127,20 @@ module.exports = {
   },
   updateStudioRankBasedOnArtists: function (studioId, cb) {
     Artists.find({studio: studioId}).then(function (artists) {
-      var artistRank = 0;
+      var artistRank;
       var totalArtistSum = 0;
       var totalArtistCount = artists.length;
-      for(var i=0; i < totalArtistCount; i++) {
-        // TODO create process to calculate the rank based on the number of artist per studio
-        totalArtistSum =+ artists[i].rank
+      for (var i = 0; i < totalArtistCount; i++) {
+        totalArtistSum = +artists[i].rank
       }
       
-      artistRank = totalArtistSum/totalArtistCount;
+      artistRank = totalArtistSum / totalArtistCount;
       
-      Studio.findOne({id: studioId}).then(function (currentStudio) {
-        var updatedAverageRank = {
-          averageRank: artistsRank
-        };
-        Studio.update({id: studioId}, updatedAverageRank).then(function (result) {
-          cb();
-        })
+      var updatedAverageRank = {
+        averageRank: artistRank
+      };
+      Studio.update({id: studioId}, updatedAverageRank).then(function (result) {
+        cb();
       });
     });
   }
