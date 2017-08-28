@@ -21,6 +21,6 @@ module.exports = {
     migrate: 'drop'
   },
   port: 1337,
-  
+  hookTimeout: 100000
 };
 

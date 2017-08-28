@@ -20,6 +20,6 @@ module.exports = {
   models: {
     connection: 'latatuadoraMysqlServer'
   },
-  hookTimeout: 40000
+  hookTimeout: 100000
 };
 
