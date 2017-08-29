@@ -54,6 +54,9 @@ module.exports = {
   },
   tableName: 'Artist',
   beforeUpdate: function (values, cb) {
+    if (values.totalSum && values.count) {
+      values.rank = values.totalSum / values.count;
+    }
     if (values.file) {
       Artist.uploadAvatar(values, function (avatar) {
         cb();
