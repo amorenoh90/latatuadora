@@ -32,10 +32,10 @@ module.exports = {
     Artist.findOne(query).then(function (artist) {
       var updatedProperties = {
         count: artist.count + 1,
-        totalSum: artist.totalSum + parseFloat(0)
+        totalSum: artist.totalSum + values.rank
       };
       Artist.update(query, updatedProperties).then(function (updatedArtist) {
-        Studio.updateStudioRankBasedOnArtists(updatedArtist.id, function(updatedStudio) {
+        Studio.updateStudioRankBasedOnArtists(artist.studio, function(updatedStudio) {
           return res.send(artist);
         });
       });
