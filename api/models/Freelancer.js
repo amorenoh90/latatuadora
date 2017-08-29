@@ -98,7 +98,9 @@ module.exports = {
     });
   },
   beforeUpdate: function (values, cb) {
-    values.rank = values.totalSum / values.count;
+    if(values.totalSum && values.count) {
+      values.rank = values.totalSum / values.count;
+    }
     cb();
   }
 };
