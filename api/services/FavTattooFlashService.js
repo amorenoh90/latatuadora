@@ -5,7 +5,6 @@ module.exports = {
       .then(function (favorites) {
         favs.flashes = favorites;
         return favs;
-        console.log("flash", favs);
       })
       .then(function (favs) {
         FavoriteTattoo.find({userId: values.user.id}).populate('tattooId')

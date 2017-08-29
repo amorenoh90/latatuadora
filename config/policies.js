@@ -65,10 +65,12 @@ module.exports.policies = {
     paypalCancelPlan: true,
     paypalCancel: true
   },
-  Artist:{
-    '*': 'studioSessionAuth',
+  ArtistController:{
+    'update': 'studioSessionAuth',
     find: true,
-    findOne: true
+    findOne: true,
+    rateArtist: true,
+    rate: true
   },
   Awards:{
     '*': 'studioSessionAuth',

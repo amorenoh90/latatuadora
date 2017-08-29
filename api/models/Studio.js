@@ -122,16 +122,18 @@ module.exports = {
     });
   },
   beforeUpdate: function (values, cb) {
-    values.rank = values.totalSum / values.count;
+    if(values.totalSum && values.count) {
+      values.rank = values.totalSum / values.count;
+    }
     cb();
   },
   updateStudioRankBasedOnArtists: function (studioId, cb) {
-    Artists.find({studio: studioId}).then(function (artists) {
+    Artist.find({studio: studioId}).then(function (artists) {
       var artistRank;
       var totalArtistSum = 0;
       var totalArtistCount = artists.length;
       for (var i = 0; i < totalArtistCount; i++) {
-        totalArtistSum = +artists[i].rank
+        totalArtistSum = artists[i].rank + totalArtistSum;
       }
       
       artistRank = totalArtistSum / totalArtistCount;
