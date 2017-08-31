@@ -61,7 +61,7 @@ module.exports = {
         return res.send(flash);
       });
     } else {
-      sql = 'select *, Flash.id from Flash where publicate = true';
+      sql = 'select *, Flash.id from Flash ';
       if (req.query.style) {
         sql = sql + ' left join FlashStyle on FlashStyle.flashId = flash.id';
       }
@@ -90,6 +90,12 @@ module.exports = {
         sql = sql + " FlashElement.element = ? ";
         values.push(parseInt(req.query.element));
       }
+      if(!used) {
+        sql = " WHERE publicate = true ";
+      } else {
+        sql = " AND publicate = true";
+      }
+      sails.log.error(">>>>>>> ", sql);
       Flash.query(sql, values, function (err, flash) {
         if (err) {
           return res.serverError(err);
