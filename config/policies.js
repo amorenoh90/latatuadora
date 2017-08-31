@@ -38,9 +38,6 @@ module.exports.policies = {
     'add':'sessionAuth',
     'consult': 'sessionAuth',
     'remove': 'sessionAuth',
-    'add':'userSessionAuth',
-    'consult': 'userSessionAuth',
-    'remove': 'userSessionAuth',
     'find': true,
     findOne: true
   },
