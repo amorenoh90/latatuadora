@@ -5,7 +5,8 @@ describe('FlashController', function () {
 
   var mockflash = {
       amount: 300.00,
-      sizeId: 1,
+      dimensionsX: 1,
+      dimensionsY: 1,
       significant: 'mylife',
       artistId: 1,
       copyrigth: true,
@@ -14,7 +15,8 @@ describe('FlashController', function () {
     },
     mockflash2 = {
       amount: 560.00,
-      sizeId: 2,
+      dimensionsX: 1,
+      dimensionsY: 1,
       significant: 'mylife flash 2',
       artistId: 1,
       copyrigth: true,
