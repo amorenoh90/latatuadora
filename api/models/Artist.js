@@ -32,6 +32,10 @@ module.exports = {
       collection: "ArtistStyle",
       via: "artistId"
     },
+    tattoos: {
+      collection: "Tattoo",
+      via: "artist"
+    },
     studio: {
       model: "Studio"
     },
