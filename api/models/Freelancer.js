@@ -54,6 +54,10 @@ module.exports = {
       collection: "FreelanceStyle",
       via: "freelanceId"
     },
+    tattoos: {
+      collection: "Tattoo",
+      via: "freelancer"
+    },
     websiteUrl: {
       type: "text"
     },
