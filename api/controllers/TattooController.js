@@ -25,7 +25,7 @@ var add = function add(req, res) {
   });
 };
 var find = function find(req, res) {
-  if (!req.query.style && !req.query.element && !req.query.bodypart) {
+  if (!req.query.style && !req.query.element && !req.query.partbody) {
     skiper = 6;
     paginator = 0;
     if (req.query.skip) skiper = req.query.skip;
@@ -49,10 +49,10 @@ var find = function find(req, res) {
         "tattoo.freelancer," +
         "tattoo.votes " +
       "FROM Tattoo tattoo " +
-      "INNER JOIN TattooStyle tattooStyle ON tattooStyle.tattooId = tattoo.id " +
+      "LEFT JOIN TattooStyle tattooStyle ON tattooStyle.tattooId = tattoo.id " +
       "LEFT JOIN TattooElement tattooElement ON tattooElement.tattooId = tattoo.id ";
     values = [];
-    used = true;
+    used = false;
     if (req.query.style) {
       if (!used) {
         sql = sql + " WHERE ";
@@ -63,7 +63,7 @@ var find = function find(req, res) {
       sql = sql + "tattooStyle.styleId = ?";
       values.push(parseInt(req.query.style));
     }
-    if (req.query.bodypart) {
+    if (req.query.partbody) {
       if (!used) {
         sql = sql + " WHERE ";
         used = true;
@@ -71,7 +71,7 @@ var find = function find(req, res) {
         sql = sql + " AND ";
       }
       sql = sql + "tattoo.partbody = ?";
-      values.push(parseInt(req.query.bodypart));
+      values.push(parseInt(req.query.partbody));
     }
     if (req.query.element) {
       if (!used) {
