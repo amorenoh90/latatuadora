@@ -56,7 +56,8 @@ describe('PaymentsControllerTest', function () {
     },
     mockflash = {
       amount: 300.00,
-      sizeId: 1,
+      dimensionsX: 1,
+      dimensionsY: 1,
       significant: 'mylife',
       artistId: 1,
       copyrigth: true,

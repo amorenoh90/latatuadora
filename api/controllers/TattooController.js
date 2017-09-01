@@ -25,12 +25,12 @@ var add = function add(req, res) {
   });
 };
 var find = function find(req, res) {
-  if (!req.query.style && !req.query.element && !req.query.bodypart) {
+  if (!req.query.style && !req.query.element && !req.query.partbody) {
     skiper = 6;
     paginator = 0;
     if (req.query.skip) skiper = req.query.skip;
     if (req.query.page) paginator = req.query.page;
-    Tattoo.find({publicate: true}).paginate({page: paginator, limit: skiper}).exec(function (err, tattos) {
+    Tattoo.find({publicate: true}).paginate({page: paginator, limit: skiper}).populate('styles').populate('elements').exec(function (err, tattos) {
       if (err) {
         return res.serverError(err);
       }
@@ -38,21 +38,12 @@ var find = function find(req, res) {
     });
   } else {
     sql = "SELECT " +
-        "tattoo.id," +
-        "tattoo.partbody," +
-        "tattoo.dimensionsX," +
-        "tattoo.dimensionsY," +
-        "tattoo.image," +
-        "tattoo.name," +
-        "tattoo.publicate," +
-        "tattoo.artist," +
-        "tattoo.freelancer," +
-        "tattoo.votes " +
+      "DISTINCT tattoo.id " +
       "FROM Tattoo tattoo " +
-      "INNER JOIN TattooStyle tattooStyle ON tattooStyle.tattooId = tattoo.id " +
+      "LEFT JOIN TattooStyle tattooStyle ON tattooStyle.tattooId = tattoo.id " +
       "LEFT JOIN TattooElement tattooElement ON tattooElement.tattooId = tattoo.id ";
     values = [];
-    used = true;
+    used = false;
     if (req.query.style) {
       if (!used) {
         sql = sql + " WHERE ";
@@ -63,7 +54,7 @@ var find = function find(req, res) {
       sql = sql + "tattooStyle.styleId = ?";
       values.push(parseInt(req.query.style));
     }
-    if (req.query.bodypart) {
+    if (req.query.partbody) {
       if (!used) {
         sql = sql + " WHERE ";
         used = true;
@@ -71,7 +62,7 @@ var find = function find(req, res) {
         sql = sql + " AND ";
       }
       sql = sql + "tattoo.partbody = ?";
-      values.push(parseInt(req.query.bodypart));
+      values.push(parseInt(req.query.partbody));
     }
     if (req.query.element) {
       if (!used) {
@@ -83,28 +74,44 @@ var find = function find(req, res) {
       sql = sql + "tattooElement.elementId = ?";
       values.push(parseInt(req.query.element));
     }
+    // just all published tattoos
+    if (!used) {
+      sql = sql + " WHERE ";
+      used = true;
+    } else {
+      sql = sql + " AND ";
+    }
+    sql = sql + " tattoo.publicate = true";
+    
     sql += " GROUP BY tattoo.id";
-    Tattoo.query(sql, values, function (err, tattoos) {
+    Tattoo.query(sql, values, function (err, tattooIds) {
       if (err) {
         return res.serverError(err);
       } else {
-        if (req.query.skip && !req.query.page) {
-          return res.send(tattoos.slice(0, req.query.skip));
-        }
-        if (req.query.page) {
-          var paginator = (req.query.page - 1) * req.query.skip;
-          var skiper = parseInt(req.query.skip) + parseInt(paginator);
-          
-          return res.send(tattoos.slice(paginator, skiper))
-        } else {
-          return res.send(tattoos);
-        }
+        var tattooIdsList = [];
+        tattooIds.forEach(function (rawElement) {
+          tattooIdsList.push(rawElement.id);
+        });
+        //
+        Tattoo.find().where({id: tattooIdsList}).populate('styles').populate('elements').then(function (tattoos) {
+          if (req.query.skip && !req.query.page) {
+            return res.send(tattoos.slice(0, req.query.skip));
+          }
+          if (req.query.page) {
+            var paginator = (req.query.page - 1) * req.query.skip;
+            var skiper = parseInt(req.query.skip) + parseInt(paginator);
+            
+            return res.send(tattoos.slice(paginator, skiper))
+          } else {
+            return res.send(tattoos);
+          }
+        });
       }
     });
   }
 };
 var notApproved = function notApproved(req, res) {
-  Tattoo.find({publicate: false}).exec(function (err, tattoos) {
+  Tattoo.find({publicate: false}).populate('styles').populate('elements').exec(function (err, tattoos) {
     if (err) {
       return res.serverError(err);
     } else {
@@ -136,13 +143,22 @@ var update = function update(req, res) {
   });
 };
 var findByStudio = function findByStudio(req, res) {
-  Tattoo.find({studio: req.param('id')}).exec(function (err, tattoos) {
-    if (err) {
-      return res.serverError(err);
-    } else {
-      return res.send(tattoos);
-    }
+  var artistsIds = [];
+  Artist.find({studio: req.param('id')}).then(function (artists) {
+    artists.forEach(function (artist) {
+      artistsIds.push(artist.id)
+    });
+    Tattoo.find().where({artist: artistsIds}).populate('styles').populate('elements').exec(function (err, tattoos) {
+      if (err) {
+        return res.serverError(err);
+      } else {
+        return res.send(tattoos);
+      }
+    });
+  }).catch(function (err) {
+    return res.serverError(err);
   });
+  
 };
 module.exports = {
   add: add,

@@ -20,10 +20,6 @@ module.exports = {
     responseTime: {
       type: "string"
     },
-    completeTattoos: {
-      collection: 'Tattoo',
-      via: 'artist'
-    },
     Flashes: {
       collection: 'Flash',
       via: 'artist'
@@ -31,6 +27,10 @@ module.exports = {
     styles: {
       collection: "ArtistStyle",
       via: "artistId"
+    },
+    tattoos: {
+      collection: "Tattoo",
+      via: "artist"
     },
     studio: {
       model: "Studio"

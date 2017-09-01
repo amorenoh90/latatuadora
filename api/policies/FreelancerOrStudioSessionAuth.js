@@ -10,10 +10,10 @@ module.exports = function (req, res, next) {
       if (err) {
         return res.forbidden({message: err.message});
       } else {
+        var user = {
+          id: decoded.sub
+        };
         if (decoded.typ == constants.userType.freelancer) {
-          var user = {
-            id: decoded.sub
-          };
           req.headers.user = user;
           Freelancer.findOne({userId: user.id})
             .then(function (freelancer) {
@@ -32,9 +32,6 @@ module.exports = function (req, res, next) {
             });
         }
         if (decoded.typ == constants.userType.studio) {
-          var user = {
-            id: decoded.sub
-          };
           req.headers.user = user;
           Studio.findOne({userId: user.id})
             .then(function (studio) {

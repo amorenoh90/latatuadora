@@ -17,14 +17,19 @@ module.exports = {
     amount: {
       type: "float"
     },
-    sizeId: {
-      model: "size"
+    dimensionsX: {
+      type: 'float',
+      size: 5
+    },
+    dimensionsY: {
+      type: 'float',
+      size: 5
     },
     significant: {
       type: "string"
     },
     artist: {
-      model: "artist"
+      model: "Artist"
     },
     copyrigth: {
       type: "boolean"
