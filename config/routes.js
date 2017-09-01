@@ -11,6 +11,7 @@ module.exports.routes = {
   //>User login
   'post /logup': 'UserController.logup',
   'post /login': 'UserController.login',
+  'get /user/findBy': 'UserController.findBy',
   //<User login
   
   //>Tattoo Routes
