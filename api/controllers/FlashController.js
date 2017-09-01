@@ -139,7 +139,6 @@ module.exports = {
     }).catch(function (err) {
       return res.serverError(err);
     });
-    var studio = req.param('id');
   },
   approve: function (req, res) {
     var values = req.body;
