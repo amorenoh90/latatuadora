@@ -2,6 +2,19 @@
  * UserController
  */
 var constants = require('../Constants');
+var baseQuery = "select " +
+  "User.name," +
+  "User.lastname," +
+  "User.email," +
+  "User.password," +
+  "User.id," +
+  "User.telephone," +
+  "User.userType," +
+  "User.addressId," +
+  "User.conekta," +
+  "User.createdAt," +
+  "User.updatedAt" +
+  " from User where User.userType in ("+constants.userType.studio+", "+constants.userType.freelance+") ";
 module.exports = {
   logup: function (req, res) {
     LogUpService.add(req.body, req.file, function (err, done) {
@@ -41,6 +54,19 @@ module.exports = {
         res.serverError(err);
       } else {
         res.send(favs);
+      }
+    });
+  },
+  findBy: function (req, res) {
+    var nameOrEmailQuery = baseQuery + " AND (LOWER(CONCAT(TRIM(User.name),' ',TRIM(User.lastname))) like ? OR LOWER(User.email) like ?)";
+    var nameOrEmailParam = req.param('queryParam') || '';
+    nameOrEmailParam = "%" +  nameOrEmailParam.toLowerCase().trim() + "%";
+    var escapedValues = [nameOrEmailParam, nameOrEmailParam];
+    User.query(nameOrEmailQuery, escapedValues, function (err, results) {
+      if (err) {
+        res.serverError(err);
+      } else {
+        res.send(results);
       }
     });
   }
