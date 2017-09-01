@@ -87,7 +87,6 @@ describe('TattooController', function () {
   });
   
   it("should create a new Tattoo", function (done) {
-    console.log("MockTattoo >> ", mockTattoo);
     request(sails.hooks.http.app)
       .post('/tattoo')
       .set('X-Authorization', mockStudio.token)
@@ -110,7 +109,6 @@ describe('TattooController', function () {
         tattoolength = tattoos.length - 1;
       }
     });
-    console.log("MockTattoo2 >> ", mockTattoo2);
     request(sails.hooks.http.app)
       .post('/tattoo')
       .set('X-Authorization', mockStudio.token)
