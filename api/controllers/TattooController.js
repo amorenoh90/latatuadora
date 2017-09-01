@@ -84,7 +84,6 @@ var find = function find(req, res) {
     sql = sql + " tattoo.publicate = true";
     
     sql += " GROUP BY tattoo.id";
-    console.log("SQL >> ", sql);
     Tattoo.query(sql, values, function (err, tattooIds) {
       if (err) {
         return res.serverError(err);

@@ -95,7 +95,6 @@ module.exports = {
       } else {
         sql = " AND publicate = true";
       }
-      sails.log.error(">>>>>>> ", sql);
       Flash.query(sql, values, function (err, flash) {
         if (err) {
           return res.serverError(err);
