@@ -52,7 +52,8 @@ module.exports.policies = {
     //'create': 'adminSessionAuth'
   },
   UserController: {
-    'favs': 'userSessionAuth'
+    'favs': 'userSessionAuth',
+    findBy:'adminSessionAuth'
   },
   'PaymentsController': {
     '*': 'sessionAuth',
