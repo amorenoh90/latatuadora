@@ -20,10 +20,6 @@ module.exports = {
     responseTime: {
       type: "string"
     },
-    completeTattoos: {
-      collection: 'Tattoo',
-      via: 'artist'
-    },
     Flashes: {
       collection: 'Flash',
       via: 'artist'
