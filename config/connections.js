@@ -43,9 +43,9 @@ module.exports.connections = {
    ***************************************************************************/
   latatuadoraMysqlServer: {
     adapter: 'sails-mysql',
-    host: 'localhost', //'35.161.232.194',
-    user: 'root', //optional
-    password: 'n0m3l0s3', //optional
+    host: 'sandbox.latatuadora.getmore.mx', //'35.161.232.194',
+    user: 'latatuadora', //optional
+    password: 'latatuadora', //optional
     database: 'latatuadora_core' //optional
   },
   testInMemoryDatabase: {

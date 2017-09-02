@@ -124,13 +124,20 @@ module.exports = {
     });
   },
   findByStudio: function (req, res) {
-    var studio = req.param('id');
-    Flash.find({studio: studio}).exec(function (err, flashes) {
-      if (err) {
-        return res.serverError(err);
-      } else {
-        return res.send(flashes);
-      }
+    var artistsIds = [];
+    Artist.find({studio: req.param('id')}).then(function (artists) {
+      artists.forEach(function (artist) {
+        artistsIds.push(artist.id)
+      });
+      Flash.find().where({artist: artistsIds}).exec(function (err, flashes) {
+        if (err) {
+          return res.serverError(err);
+        } else {
+          return res.send(flashes);
+        }
+      });
+    }).catch(function (err) {
+      return res.serverError(err);
     });
   },
   approve: function (req, res) {

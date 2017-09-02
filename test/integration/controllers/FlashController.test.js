@@ -2,62 +2,65 @@ var request = require('supertest'),
   assert = require('assert');
 
 describe('FlashController', function () {
-
+  
   var mockflash = {
       amount: 300.00,
       dimensionsX: 1,
       dimensionsY: 1,
       significant: 'mylife',
-      artistId: 1,
+      artist: 1,
       copyrigth: true,
-      styleId: 1,
-      elementId: 2
+      styles: [{styleId: 1}, {styleId: 2}, {styleId: 3}],
+      elements: [{elementId: 1}, {elementId: 2}, {elementId: 3}],
     },
     mockflash2 = {
       amount: 560.00,
       dimensionsX: 1,
       dimensionsY: 1,
       significant: 'mylife flash 2',
-      artistId: 1,
+      artist: 1,
       copyrigth: true,
-      styleId: 4,
-      elementId: 3
+      styles: [{styleId: 1}, {styleId: 2}, {styleId: 3}],
+      elements: [{elementId: 1}, {elementId: 2}, {elementId: 3}],
+    },
+    flashlength = 0,
+    mockStudio = {
+      schedule: [
+        {
+          dayId: 1,
+          start: 8,
+          end: 15
+        },
+        {
+          dayId: 2,
+          start: 8,
+          end: 15
+        },
+        {
+          dayId: 3,
+          start: 8,
+          end: 15
+        }
+      ],
+      styles: [
+        {
+          styleId: 1
+        },
+        {
+          styleId: 2
+        }
+      ],
+      form: "studio",
+      name: "Studio-Test",
+      email: "studioflash@latatuadora.com",
+      password: "password",
+      state: "CDMX",
+      suburb: "Roma",
+      town: "Cuahutemoc"
+    },
+    mockArtist = {
+      name: "Awesome Artist"
     };
-  flashlength = 0;
-  var mockStudio = {
-    schedule: [
-      {
-        dayId: 1,
-        start: 8,
-        end: 15
-      },
-      {
-        dayId: 2,
-        start: 8,
-        end: 15
-      },
-      {
-        dayId: 3,
-        start: 8,
-        end: 15
-      }
-    ],
-    styles: [
-      {
-        styleId: 1
-      },
-      {
-        styleId: 2
-      }
-    ],
-    form: "studio",
-    name: "Studio-Test",
-    email: "studioflash@latatuadora.com",
-    password: "password",
-    state: "CDMX",
-    suburb: "Roma",
-    town: "Cuahutemoc"
-  };
   var mockadmin = {
     email: 'adminFlashes@latatoadora.com',
     name: 'admin',
@@ -71,6 +74,16 @@ describe('FlashController', function () {
       .expect(function (res) {
         assert.notEqual(res.body.token, null);
         mockStudio.token = res.body.token;
+        User.findOne({email: mockStudio.email}).then(function (user) {
+          Studio.findOne({userId: user.id}).then(function (studio) {
+            mockStudio.id = studio.id;
+            mockArtist.studio = mockStudio.id;
+            Artist.create(mockArtist).then(function (artist) {
+              mockflash.artist = artist.id;
+              mockflash2.artist = artist.id;
+            });
+          });
+        });
       })
       .expect(200, done);
   });
@@ -100,7 +113,6 @@ describe('FlashController', function () {
         assert.equal(res.body.copyrigth, mockflash.copyrigth);
         assert.notEqual(res.body.studio, null);
         mockflash.id = res.body.id;
-        mockStudio.id = res.body.studio;
       })
       .expect(200, done);
   });
@@ -198,6 +210,23 @@ describe('FlashController', function () {
         assert.equal(res.body[flashlength].element, mockflash2.element);
         assert.equal(res.body[flashlength].partbody, mockflash2.partbody);
         assert.equal(res.body[flashlength].style, mockflash2.style);
+      })
+      .expect(200, done);
+  });
+  it("should create a new Flash", function (done) {
+    request(sails.hooks.http.app)
+      .post('/flash')
+      .set('X-Authorization', mockStudio.token)
+      .send(mockflash)
+      .expect(function (res) {
+        assert.notEqual(res.body.id, null);
+        assert.equal(res.body.amount, mockflash.amount);
+        assert.equal(res.body.sizeId, mockflash.sizeId);
+        assert.equal(res.body.significant, mockflash.significant);
+        assert.equal(res.body.copyrigth, mockflash.copyrigth);
+        assert.notEqual(res.body.studio, null);
+        mockflash.id = res.body.id;
+        mockStudio.id = res.body.studio;
       })
       .expect(200, done);
   });
