@@ -13,7 +13,7 @@ module.exports = {
           studioId: values.studio,
           userId: user.id
         };
-        Quotation.create(quotation).exec(function (err, quotation) {
+        Quotation.create(quotation).exec(function (err, createdQuotation) {
           if (err) {
             return done(err);
           } else {
@@ -27,7 +27,7 @@ module.exports = {
                 for (i in uploadedFiles) {
                   QuotationReferences.create({
                     imgUrl: uploadedFiles[i].fd,
-                    quotation: quotation.id
+                    quotation: createdQuotation.id
                   }).exec(function (err, refrence) {
                     if (err) {
                       return done(err);
@@ -36,40 +36,44 @@ module.exports = {
                 }
               }
             });
+            createdQuotation.user = user;
             var emailContent = {
               model: {
-                quotation: (quotation || {})
-              },
-              subject: 'Example',
-              text: "HolaMundo desde cotizacion" // TODO Use the mail service instead
+                quotation: (createdQuotation || {})
+              }
             };
             // Quoting with LaTatuadora
-            if (!quotation.studioId) {
-              Quotient.calculate(quotation, function (err, calculated) {
+            if (!createdQuotation.studioId) {
+              Quotient.calculate(createdQuotation, function (err, calculated) {
                 if (err) done(err); else {
-                  Style.findOne({id: quotation.styleId}).exec(function (err, style) {
+                  Style.findOne({id: createdQuotation.styleId}).exec(function (err, style) {
                     if (err) {
                       return done(err);
                     }
+                    
                     calculated.styleText = style.calculatorText;
-                    EmailService.sendQuotation(emailContent, function (err, content) {
-                    });
+                    emailContent.model.quotation.maxAmount = calculated.maxAmount;
+                    emailContent.model.quotation.minAmount = calculated.minAmount;
+                    emailContent.model.quotation.style = style.name;
+                    
+                    EmailService.sendUserQuotation(emailContent, function (err, content) {});
+                    EmailService.sendAdminQuotation(emailContent, function (err, content) {});
+                    
                     return done(null, calculated);
-                  });
-                  
-                  EmailService.sendQuotation(emailContent, function (err, content) {
                   });
                 }
               });
             } else {
-              Studio.findOne({userId: quotation.studioId}).populate("userId")
+              Studio.findOne({id: createdQuotation.studioId}).populate("userId")
                 .then(function (studio) {
-                  sails.log.error(studio);
                   if(studio.userId.email) {
-                    emailContent.to = studio.user.email;
+                    emailContent.to = studio.userId.email;
+                    emailContent.model.quotation.studio = studio;
                   }
-                  EmailService.sendQuotation(emailContent, function (err, content) {
-                })
+                  
+                  EmailService.sendUserQuotation(emailContent, function (err, content) {});
+                  EmailService.sendAdminQuotation(emailContent, function (err, content) {});
+                  EmailService.sendStudioQuotation(emailContent, function (err, content) {});
                 });
               return done(null, {message: "Are you quoting with study"});
             }

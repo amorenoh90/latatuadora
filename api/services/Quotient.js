@@ -12,7 +12,7 @@ module.exports = {
       styleId: quotation.styleId,
       minRange: {'<=': area},
       maxRange: {'>=': area}
-    }).exec(function (err, records) {
+    }).populateAll().exec(function (err, records) {
       if (err) {
         done(err);
       } else {
