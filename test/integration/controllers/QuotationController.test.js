@@ -121,10 +121,12 @@ describe('QuotationController', function () {
       .expect(function (res) {
         assert.notEqual(res.body.token, null);
         mockStudio.token = res.body.token;
-        Studio.find().exec(function (err, studios) {
+        Studio.findOne({email: mockStudio.email}).exec(function (err, studio) {
           if (err) {
             done(err);
           }
+          mockStudio.id = studio.id;
+          quotation3.studio = studio.id;
         });
       })
       .expect(200, done);
