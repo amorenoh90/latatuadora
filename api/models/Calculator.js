@@ -1,7 +1,7 @@
 module.exports = {
   attributes: {
     styleId: {
-      model: 'style'
+      model: 'Style'
     },
     bodypartId: {
       model: 'BodyPart'
@@ -13,7 +13,7 @@ module.exports = {
       type: 'float'
     },
     studioId: {
-      model: 'studio'
+      model: 'Studio'
     },
     minRange: {
       type: "float"
