@@ -18,12 +18,13 @@ var send = function (values, done) {
     html: contentHtml ? contentHtml : values.text
   };
   mailgun.messages().send(data, function (err, body) {
-    if (err) {
-      done(err, null)
-    }
-    else {
-      var message = {"message": "email sended"};
-      done(null, message);
+    if (done) {
+      if (err) {
+        done(err, null)
+      } else {
+        var message = {"message": "email sended"};
+        done(null, message);
+      }
     }
   });
 };
