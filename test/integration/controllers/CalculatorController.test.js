@@ -5,41 +5,50 @@ var request = require('supertest'),
   assert = require('assert');
 
 describe('CalculatorController', function () {
+  var calcValue1 = {
+    minAmount: 800,
+    maxAmount: 1000,
+    styleId: 1,
+    bodypartId: 1,
+    minRange: 20,
+    maxRange: 25
+  };
+  var calcValue2 = {
+    minAmount: 1000,
+    maxAmount: 1200,
+    styleId: 1,
+    bodypartId: 1,
+    minRange: 20,
+    maxRange: 25
+  };
+  var calcValue3 = {
+    minAmount: 600,
+    maxAmount: 800,
+    styleId: 1,
+    bodypartId: 1,
+    minRange: 15,
+    maxRange: 20
+  };
+  var calc = [
+    calcValue1,
+    calcValue2,
+    calcValue3
+  ];
   
-  it("should add Style, BodyPart", function (done) {
-    Style.create({name: 'Religioso'}).exec(function (err, style) {
+  before(function () {
+    Style.findOrCreate({name: 'Religioso'}).exec(function (err, style) {
+      BodyPart.findOrCreate({name: 'Brazo'}).exec(function (err, bodyPart) {
+        calcValue1.bodypartId = bodyPart.id;
+        calcValue1.styleId = style.id;
+        
+        calcValue2.bodypartId = bodyPart.id;
+        calcValue2.styleId = style.id;
+        
+        calcValue3.bodypartId = bodyPart.id;
+        calcValue3.styleId = style.id;
+      });
     });
-    BodyPart.create({name: 'Brazo'}).exec(function (err, style) {
-    });
-    done();
   });
-  
-  var id,
-    calc = [{
-      minAmount: 800,
-      maxAmount: 1000,
-      styleId: 1,
-      bodypartId: 1,
-      minRange: 20,
-      maxRange: 25
-    },
-      {
-        minAmount: 1000,
-        maxAmount: 1200,
-        styleId: 1,
-        bodypartId: 1,
-        minRange: 20,
-        maxRange: 25
-      },
-      {
-        minAmount: 600,
-        maxAmount: 800,
-        styleId: 1,
-        bodypartId: 1,
-        minRange: 15,
-        maxRange: 20
-      }
-    ];
   
   it("should add new Calculator", function (done) {
     request(sails.hooks.http.app)
