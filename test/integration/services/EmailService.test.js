@@ -14,7 +14,7 @@ describe('EmailService', function () {
     }
   };
   it("should send a welcome email", function (done) {
-    EmailService.sendWelcomePage(mockemail, function (err, email) {
+    EmailService.sendUserWelcomeMail(mockemail, function (err, email) {
       if (err) {
         done(err);
       }

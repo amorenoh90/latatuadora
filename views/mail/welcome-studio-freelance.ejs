@@ -2,12 +2,13 @@
 <html lang="en">
 <body class="container">
 <header>
-  <% include _header.ejs %>
+  <%- include _header.ejs %>
 </header>
 
 <main>
   <div class="jumbotron">
-    <p><%= JSON.stringify(quotation) %></p>
+    <p><%= user.name %></p>
+    <p><%= JSON.stringify(user) %></p>
   </div>
 </main>
 

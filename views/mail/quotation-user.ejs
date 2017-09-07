@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<body class="container">
+<header>
+  <% include _header.ejs %>
+</header>
+<main>
+  <div class="jumbotron">
+    Hola, <%= quotation.user.name %> <%= quotation.user.lastname %>
+
+    <% if(quotation.freelancer || quotation.studio){ %>
+    Estamos encantados de contarte que el estudio / tatuador recibió tu solicitud de cotización a su correo.
+
+    Esperemos que te contacte de forma rápida, si no recibiste respuesta en las próximas horas,
+    puedes encontrar los datos del estudio o tatuador independiente para contactarlo en el siguiente enlace :
+    <!-- TODO add studio/freelance link -->
+    <!-- TODO add link to studio/freelance -->
+
+    <% } else { %>
+    Estamos encantados de contarte que los mejores tatuadores de tu zona ya pueden ver tu solicitud de cotización.
+
+    Esta es tu solicitud:
+
+    <br>
+    <p>Ancho: <%= quotation.dimensionsY %></p>
+    <p>Largo: <%= quotation.dimensionsX %></p>
+    <p>Comentarios: <%= quotation.comments %></p>
+    <p>Estilo: <%= quotation.styleId.name %></p>
+    <p>Parte del cuerpo: <%= quotation.bodypartId.name %></p>
+    <br>
+
+    <% if(quotation.minAmount && quotation.maxAmount){ %>
+    Tu tatuaje tiene un rango de precio estimado a <%= quotation.minAmount %> - <%= quotation.maxAmount %>.
+    <% } %>
+
+    Consulta tu solicitud en la página.
+
+    *El rango de precio es un estimado de los precios medios de la totalidad de los tatuadores en la plataforma, es un
+    indicador y en ningún momento un precio definitivo.
+
+    Para pedir una cotización personalizada a un estudio de tatuaje o tatuador independiente de tu zona, de click aquí :
+
+    <!--TODO add link to studio search page-->
+
+    La media de tatuadores que se interesan por anuncios de tu misma zona y servicio es de 2. Esperamos que recibas
+    respuestas pronto. Nosotros siempre te iremos informando por email de qué profesional se ha interesado por tu
+    solicitud.
+
+    <% } %>
+
+    Nos puedes contactar por whatsapp al 55 43 36 53 03 para acelerar el proceso de respuesta con el estudio o tatuador
+    independiente o por mail a contacto@latatuadora.com de lunes a viernes de 9 a 18.
+
+    Quieres comprar un diseño único para tu próximo tatuaje, da click aquí
+
+    <!-- TODO add link to flashes gallery-->
+
+  </div>
+</main>
+
+<footer>
+  <% include _footer.ejs %>
+</footer>
+
+</body>
+</html>
