@@ -67,9 +67,21 @@ module.exports = {
       }
     });
   },
+  findByFreelance: function (req, res) {
+    var freelancerId = req.headers.freelancer.id;
+    Quotation.find({freelancerId: freelancerId}).populate(['styleId', 'bodypartId', 'userId']).exec(function (err, quotations) {
+      if (err) {
+        return res.serverError(err);
+      } else {
+        return res.send(quotations);
+      }
+    });
+  },
   find: function (req, res) {
-    var studio = req.headers.studio.id;
-    Quotation.find({studioId: studio}).populate(['styleId', 'bodypartId', 'userId']).exec(function (err, quotations) {
+    Quotation.find().paginate({
+      page: req.query.page,
+      limit: req.query.limit
+    }).populate(['styleId', 'bodypartId', 'userId', 'freelancerId', 'studioId']).exec(function (err, quotations) {
       if (err) {
         return res.serverError(err);
       } else {
