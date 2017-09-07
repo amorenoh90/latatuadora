@@ -5,17 +5,7 @@ var request = require('supertest'),
   assert = require('assert');
 
 describe('QuotationController', function () {
-  
-  it("should add Style, BodyPart", function (done) {
-    Style.create({name: 'Shurado'}).exec(function (err, style) {
-    });
-    BodyPart.create({name: 'Pierna'}).exec(function (err, style) {
-    });
-    done();
-  });
-  
-  var id,
-    quotation = {
+  var quotation = {
       dimensionsX: 4,
       dimensionsY: 4,
       style: 1,
@@ -76,6 +66,7 @@ describe('QuotationController', function () {
         }
       ],
       form: "studio",
+      userId: 1,
       name: "Studio-Test",
       email: "Quotationstudio@latatuadora.com",
       password: "password",
@@ -84,15 +75,22 @@ describe('QuotationController', function () {
       town: "Cuahutemoc"
     },
     mockImage = {};
-  it("Studios", function (done) {
-    Studio.find().exec(function (err, studios) {
-      if (err) {
-        done(err);
-      }
-      quotation3.studio = studios.length + 1;
-      done();
+  
+  before(function () {
+    BodyPart.findOrCreate({name: 'Brazo'}).exec(function (err, bodyPart) {
+      Style.findOrCreate({name: 'Religioso'}).exec(function (err, style) {
+        quotation.bodypart = bodyPart.id;
+        quotation.style = style.id;
+        
+        quotation2.bodypart = bodyPart.id;
+        quotation2.style = style.id;
+        
+        quotation3.bodypart = bodyPart.id;
+        quotation3.style = style.id;
+      });
     });
   });
+  
   it("should add new Quotation with one match", function (done) {
     request(sails.hooks.http.app)
       .post('/quotation')
@@ -121,12 +119,11 @@ describe('QuotationController', function () {
       .expect(function (res) {
         assert.notEqual(res.body.token, null);
         mockStudio.token = res.body.token;
-        Studio.findOne({email: mockStudio.email}).exec(function (err, studio) {
-          if (err) {
-            done(err);
-          }
-          mockStudio.id = studio.id;
-          quotation3.studio = studio.id;
+        User.findOne({email: mockStudio.email}).then(function (user) {
+          Studio.findOne({userId: user.id}).then(function (studio) {
+            mockStudio.id = studio.id;
+            quotation3.studio = studio.id;
+          });
         });
       })
       .expect(200, done);
