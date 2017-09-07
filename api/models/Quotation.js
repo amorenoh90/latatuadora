@@ -28,6 +28,9 @@ module.exports = {
     userId: {
       model: "User"
     },
+    freelancerId: {
+      model: "Freelancer"
+    },
     references: {
       collection: 'QuotationReferences',
       via: 'quotation'
@@ -41,27 +44,13 @@ module.exports = {
     used: {
       type: "boolean",
       defaultsTo: false
+    },
+    id: {
+      autoIncrement: true,
+      type: 'integer',
+      unique: true,
+      primaryKey: true
     }
-    
   },
-  tableName: 'Quotation',
-  beforeCreate: function (values, cb) {
-    if (values.style) {
-      Style.findOne({id: values.style}).exec(function (err, style) {
-        if (err) {
-          return cb(err);
-        }
-        if (!style) {
-          cb('Could not find Style, sorry.');
-        }
-        if (style) {
-          values.style = style.id;
-          cb();
-        }
-      });
-    }
-    else {
-      cb();
-    }
-  }
+  tableName: 'Quotation'
 };
