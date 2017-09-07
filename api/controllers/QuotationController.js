@@ -59,7 +59,7 @@ module.exports = {
   },
   findByStudio: function (req, res) {
     var studio = req.headers.studio.id;
-    Quotation.find({studioId: studio}).populate('styleId').populate('bodypartId').populate('userId').exec(function (err, quotations) {
+    Quotation.find({studioId: studio}).populate(['styleId', 'bodypartId', 'userId']).exec(function (err, quotations) {
       if (err) {
         return res.serverError(err);
       } else {
@@ -68,7 +68,8 @@ module.exports = {
     });
   },
   find: function (req, res) {
-    Quotation.find({studioId: null}).exec(function (err, quotations) {
+    var studio = req.headers.studio.id;
+    Quotation.find({studioId: studio}).populate(['styleId', 'bodypartId', 'userId']).exec(function (err, quotations) {
       if (err) {
         return res.serverError(err);
       } else {
