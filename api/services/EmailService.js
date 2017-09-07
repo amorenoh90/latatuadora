@@ -51,7 +51,7 @@ module.exports = {
   sendAdminQuotation: function (values, done) {
     values.template = 'quotation-latatuadora.ejs';
     values.subject = "COTIZACION #" + values.model.quotation.id;
-    if (values.model.quotation.minAmount && values.model.quotation.maxAmountQ) {
+    if (values.model.quotation.minAmount && values.model.quotation.maxAmount) {
       values.subject = values.subject + " RANGO DE PRECIO: " + values.model.quotation.minAmount + " - " + values.model.quotation.maxAmount;
     }
     return send(values, done);
