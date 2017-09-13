@@ -38,6 +38,27 @@ module.exports = {
     }).catch(function (err) {
       return res.serverError(err);
     });
-  }
+  },
+  states: function (req, res) {
+    State.find().then(function (results) {
+      res.send(results);
+    });
+  },
+  suburbs: function (req, res) {
+    var stateId = req.param('stateId');
+    Suburb.find({stateId: stateId}).then(function (results) {
+      res.send(results)
+    });
+  },
+  towns: function (req, res) {
+    var townQuery = "select town.id, town.name from Town as town where lower(town.name) like ?";
+    var townName = req.param('name') || '';
+    townName = "%" + townName.toLowerCase().trim() + "%";
+    var escapedValues = [townName];
+    Town.query(townQuery, escapedValues, function (err, results) {
+      if (err) return res.serverError(err);
+      res.send(results);
+    })
+  },
 };
 
