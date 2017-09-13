@@ -98,6 +98,9 @@ module.exports.routes = {
   'get /address/studioAddress': 'AddressController.studioAddress',
   'get /address/freelanceAddress': 'AddressController.freelanceAddress',
   'get /address/userAddress': 'AddressController.userAddress',
+  'get /address/states': 'AddressController.states',
+  'get /address/suburbs': 'AddressController.suburbs',
+  'get /address/towns': 'AddressController.towns',
   //<address
   //>styles
   'get /styles': 'StyleController.find',
