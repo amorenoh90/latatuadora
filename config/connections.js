@@ -20,7 +20,7 @@
  */
 
 module.exports.connections = {
-  
+
   /***************************************************************************
    *                                                                          *
    * Local disk storage for DEVELOPMENT ONLY                                  *
@@ -32,7 +32,7 @@ module.exports.connections = {
     adapter: 'sails-disk',
     schema: true
   },
-  
+
   /***************************************************************************
    *                                                                          *
    * MySQL is the world's most popular relational database.                   *
@@ -51,7 +51,7 @@ module.exports.connections = {
   testInMemoryDatabase: {
     adapter: 'sails-memory',
   }
-  
+
   /***************************************************************************
    *                                                                          *
    * MongoDB is the leading NoSQL database.                                   *
@@ -68,7 +68,7 @@ module.exports.connections = {
   //   password: 'password', //optional
   //   database: 'your_mongo_db_name_here' //optional
   // },
-  
+
   /***************************************************************************
    *                                                                          *
    * PostgreSQL is another officially supported relational database.          *
@@ -85,12 +85,12 @@ module.exports.connections = {
   //   password: 'YOUR_POSTGRES_PASSWORD', // optional
   //   database: 'YOUR_POSTGRES_DB' //optional
   // }
-  
-  
+
+
   /***************************************************************************
    *                                                                          *
    * More adapters: https://github.com/balderdashy/sails                      *
    *                                                                          *
    ***************************************************************************/
-  
+
 };
