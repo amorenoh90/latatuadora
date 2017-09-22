@@ -6,7 +6,7 @@
  */
 var constants = require('../Constants');
 module.exports = {
-  
+
   attributes: {
     name: {
       type: "string",
@@ -106,14 +106,16 @@ module.exports = {
       else {
         if (uploadedFiles.length === 0) {
           return cb();
-        }
-        else {
-          Studio.update({id: studio}, {profileImgUrl: uploadedFiles[0].fd})
+        } else {
+          Studio.update({
+              id: studio
+            }, {
+              profileImgUrl: uploadedFiles[0].fd
+            })
             .exec(function (err, updated) {
               if (err) {
                 return cb(err);
-              }
-              else {
+              } else {
                 return cb(null, updated);
               }
             });
@@ -122,29 +124,32 @@ module.exports = {
     });
   },
   beforeUpdate: function (values, cb) {
-    if(values.totalSum && values.count) {
+    if (values.totalSum && values.count) {
       values.rank = values.totalSum / values.count;
     }
     cb();
   },
   updateStudioRankBasedOnArtists: function (studioId, cb) {
-    Artist.find({studio: studioId}).then(function (artists) {
+    Artist.find({
+      studio: studioId
+    }).then(function (artists) {
       var artistRank;
       var totalArtistSum = 0;
       var totalArtistCount = artists.length;
       for (var i = 0; i < totalArtistCount; i++) {
         totalArtistSum = artists[i].rank + totalArtistSum;
       }
-      
+
       artistRank = totalArtistSum / totalArtistCount;
-      
+
       var updatedAverageRank = {
         averageRank: artistRank
       };
-      Studio.update({id: studioId}, updatedAverageRank).then(function (result) {
+      Studio.update({
+        id: studioId
+      }, updatedAverageRank).then(function (result) {
         cb();
       });
     });
   }
 };
-
