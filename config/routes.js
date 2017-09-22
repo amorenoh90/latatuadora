@@ -7,13 +7,14 @@ module.exports.routes = {
   'get /quotation/studio': 'QuotationController.findByStudio',
   'get /quotation': 'QuotationController.find',
   //<Routes Quotation
-  
+
   //>User login
   'post /logup': 'UserController.logup',
+  'post /edit': 'UserController.edit',
   'post /login': 'UserController.login',
   'get /user/findBy': 'UserController.findBy',
   //<User login
-  
+
   //>Tattoo Routes
   'post /tattoo': 'TattooController.add',
   'get /tattoo': 'TattooController.find',
@@ -23,14 +24,14 @@ module.exports.routes = {
   'get /tattoo/studio/:id': 'TattooController.findByStudio',
   'get /tattoo/bodyParts': 'BodyPartController.find',
   //<Tattoo Routes
-  
+
   //>TattooFavorites
   'post /tattoofav': 'FavoriteTattoo.add',
   'get /tattoofav': 'FavoriteTattoo.consult',
   'get /tattoofav/count': 'FavoriteTattoo.countFavorites',
   'delete /tattoofav': 'FavoriteTattoo.remove',
   //<TattooFavorites
-  
+
   //>Flash Routes
   'post /flash': 'FlashController.add',
   'get /flash': 'FlashController.find',
@@ -39,17 +40,17 @@ module.exports.routes = {
   'put /flash/:id': 'FlashController.update',
   'get /flash/notApproved': 'FlashController.notApproved',
   //<Flash Routes
-  
+
   //>FlashFavorites
   'post /flashfav': 'FavoriteFlash.add',
   'get /flashfav': 'FavoriteFlash.consult',
   'delete /flashfav': 'FavoriteFlash.remove',
   //<FlashFavorites
-  
+
   //>Favs
   'get /favs': 'UserController.favs',
   //<Favs
-  
+
   //Routes Conekta
   'get /conekta': {
     view: 'pagoconekta'
@@ -66,7 +67,7 @@ module.exports.routes = {
   'get /aceptplan': 'PaymentsController.paypalAceptPlan',
   'get /cancelplan': 'PaymentsController.paypalCancelPlan',
   //<Routes PayPal
-  
+
   //>Routes ComproPago
   'post /compropago': 'PaymentsController.compropagoCharge',
   'get /compropagooptions': 'PaymentsController.compropagoOptions',
