@@ -12,12 +12,10 @@ module.exports = {
       User.signUp(newuser, function (err, user) {
         if (err) {
           return done(err);
-        }
-        else {
+        } else {
           if (!user) {
             return done(err);
-          }
-          else {
+          } else {
             return done(null, JWT.createToken(user));
           }
         }
@@ -46,28 +44,25 @@ module.exports = {
           state: values.state,
           town: values.town,
           suburb: values.suburb
-        }, studioId;
+        },
+        studioId;
       AddressService.add(addressStudio, function (err, newaddressId) {
         if (err) {
           return done(err);
-        }
-        else {
+        } else {
           User.signUp(newstudioUser, function (err, studioUser) {
             if (err) {
               return done(err);
-            }
-            else {
+            } else {
               if (!studioUser) {
                 return done(err);
-              }
-              else {
+              } else {
                 newstudio.userId = studioUser.id;
                 newstudio.addressId = newaddressId;
                 Studio.create(newstudio).exec(function (err, studio) {
                   if (err) {
                     return done(err);
-                  }
-                  else {
+                  } else {
                     for (i in values.schedule) {
                       values.schedule[i].studioId = studio.id;
                       Schedule.create(values.schedule[i])
@@ -86,12 +81,12 @@ module.exports = {
                           });
                       }
                     }
+
                     Studio.addProfileImg(image, studio.id, function (cb) {
                       done(null, JWT.createToken(studioUser));
                     });
                   }
                 });
-                
               }
             }
           });
@@ -113,8 +108,7 @@ module.exports = {
       User.create(newfreelancerUser).exec(function (err, freelanceruser) {
         if (err) {
           return done(err);
-        }
-        else {
+        } else {
           newfreelancer.user = freelanceruser.id;
           Freelancer.create(newfreelancer).exec(function (err, freelancer) {
             if (err) {
@@ -135,7 +129,7 @@ module.exports = {
           });
         }
       });
-      
+
     }
   }
 };
