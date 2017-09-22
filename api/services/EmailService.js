@@ -1,16 +1,22 @@
 var send = function (values, done) {
+  // var api_key = 'key-5de07e0e2df132f47cfade8f2e52b89a';
+  // var domain = 'sandbox066fdbbdf16943069d9b0c3f92882717.mailgun.org';
   var api_key = 'key-5de07e0e2df132f47cfade8f2e52b89a';
-  var domain = 'sandbox066fdbbdf16943069d9b0c3f92882717.mailgun.org';
-  var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+  var domain = 'https://api.mailgun.net/v3/mg.neopraxis.mx';
+  var mailgun = require('mailgun-js')({
+    apiKey: api_key,
+    domain: domain
+  });
   var contentHtml;
-  
+
   //var toRecipients = ['latatuadora@latatuadora.com', (values.to || '')].join(",");
-  var toRecipients = ['alberto@blick.mx', (values.to || '')].join(",");
-  
+  //var toRecipients = ['alberto@blick.mx', (values.to || '')].join(",");
+  var toRecipients = ['dyll240719@gmail.com', (values.to || '')].join(",");
+
   if (values.template) {
     contentHtml = TemplateService.retrieveContent(values.template, values.model);
   }
-  
+
   var data = {
     from: 'latatuadora@latatuadora.com',
     to: toRecipients,
@@ -22,7 +28,9 @@ var send = function (values, done) {
       if (err) {
         done(err, null)
       } else {
-        var message = {"message": "email sended"};
+        var message = {
+          "message": "email sended"
+        };
         done(null, message);
       }
     }
@@ -65,7 +73,7 @@ module.exports = {
     } else {
       values.subject = "Tu cotización se ha enviado con éxito";
     }
-    
+
     return send(values, done);
   }
 };
