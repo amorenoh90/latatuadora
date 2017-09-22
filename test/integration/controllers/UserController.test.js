@@ -30,27 +30,31 @@ describe('UserController', function () {
     },
     mockstudio = {
       form: "studio",
-      id: 1,
       "schedule": [{
-        "dayId": 2,
-        "start": 7,
-        "end": 16
-      }, {
-        "dayId": 3,
-        "start": 9,
-        "end": 16
-      }, {
-        "dayId": 4,
-        "start": 9,
-        "end": 16
-      }],
+          "dayId": 2,
+          "start": 7,
+          "end": 16
+        },
+        {
+          "dayId": 3,
+          "start": 9,
+          "end": 16
+        },
+        {
+          "dayId": 4,
+          "start": 9,
+          "end": 16
+        }
+      ],
       "styles": [{
-        "styleId": 2
-      }, {
-        "styleId": 3
-      }],
+          "styleId": 2
+        },
+        {
+          "styleId": 3
+        }
+      ],
       "name": "Studio",
-      "email": "studio@latatuadora.com",
+      "email": "createdstudio@latatuadora.com",
       "password": "contraseña",
       "state": "CDMX",
       "suburb": "Condesa",
