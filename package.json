@@ -29,6 +29,7 @@
     "rc": "1.0.1",
     "sails": "~0.12.13",
     "sails-disk": "~0.10.9",
+    "sails-hook-autoreload": "^0.14.1",
     "sails-memory": "^0.10.7",
     "sails-mysql": "0.11.5"
   },
