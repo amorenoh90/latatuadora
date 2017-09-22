@@ -6,7 +6,7 @@
  */
 var constants = require('../Constants.js');
 module.exports = {
-  
+
   attributes: {
     name: {
       type: "string",
@@ -86,14 +86,16 @@ module.exports = {
       else {
         if (uploadedFiles.length === 0) {
           return cb();
-        }
-        else {
-          Freelancer.update({id: freelancer}, {profileImgUrl: uploadedFiles[0].fd})
+        } else {
+          Freelancer.update({
+              id: freelancer
+            }, {
+              profileImgUrl: uploadedFiles[0].fd
+            })
             .exec(function (err, updated) {
               if (err) {
                 return cb(err);
-              }
-              else {
+              } else {
                 return cb();
               }
             });
@@ -102,10 +104,9 @@ module.exports = {
     });
   },
   beforeUpdate: function (values, cb) {
-    if(values.totalSum && values.count) {
+    if (values.totalSum && values.count) {
       values.rank = values.totalSum / values.count;
     }
     cb();
   }
 };
-
