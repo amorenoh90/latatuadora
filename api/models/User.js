@@ -8,7 +8,7 @@
 var bcrypt = require('bcryptjs');
 
 module.exports = {
-  
+
   attributes: {
     name: {
       type: 'string',
@@ -64,14 +64,26 @@ module.exports = {
       bcrypt.hash(values.password, 10, function (err, hash) {
         if (err) {
           return cb(err);
-        }
-        else {
+        } else {
           values.password = hash;
           cb();
         }
       });
+    } else {
+      cb();
     }
-    else {
+  },
+  beforeUpdate: function (values, cb) {
+    if (values.password) {
+      bcrypt.hash(values.password, 10, function (err, hash) {
+        if (err) {
+          return cb(err);
+        } else {
+          values.password = hash;
+          cb();
+        }
+      });
+    } else {
       cb();
     }
   },
@@ -79,22 +91,22 @@ module.exports = {
     User.create(values).exec(cb);
   },
   attemptLogin: function (values, cb) {
-    User.findOne({email: values.email}).exec(function (err, user) {
+    User.findOne({
+      email: values.email
+    }).exec(function (err, user) {
       if (err) {
         return cb(err);
       }
       if (!user) {
         return cb();
-      }
-      else {
+      } else {
         bcrypt.compare(values.password, user.password, function (err, res) {
           if (err) {
             return cb(err);
           }
           if (res) {
             return cb(null, user);
-          }
-          else {
+          } else {
             return cb();
           }
         })
