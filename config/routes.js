@@ -10,7 +10,7 @@ module.exports.routes = {
 
   //>User login
   'post /logup': 'UserController.logup',
-  'post /edit': 'UserController.edit',
+  'put /edit': 'UserController.edit',
   'post /login': 'UserController.login',
   'get /user/findBy': 'UserController.findBy',
   //<User login
@@ -112,4 +112,8 @@ module.exports.routes = {
   //>Freelancer
   'post /freelancer/rate': 'FreelancerController.rateFreelancer',
   //<Freelancer
+
+  // Itinerary
+  'post /itinerary/add': 'ItineraryController.add',
+
 };
