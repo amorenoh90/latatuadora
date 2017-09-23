@@ -45,5 +45,9 @@ module.exports = {
       subject: "Haz recibido una nueva cotizacion",
       content: ""
     }
+  },
+  messages: {
+    NO_SUCH_USER: "No existe tal usuario",
+    ADDED_ITINERARY: "Se agregó el itinerario"
   }
 };
