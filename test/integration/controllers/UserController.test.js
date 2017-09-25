@@ -180,7 +180,7 @@ describe('UserController', function () {
 
   it("should edit a User", function (done) {
     request(sails.hooks.http.app)
-      .post('/edit')
+      .put('/edit')
       .send(mockuserEdition)
       .expect(function (res) {
         mockstudio.token = res.body.token;
@@ -191,7 +191,7 @@ describe('UserController', function () {
 
   it("should edit a Studio (prerequisites)", function (done) {
     request(sails.hooks.http.app)
-      .post('/edit')
+      .put('/edit')
       .send(mockstudioEdition)
       .expect(function (res) {
         mockstudio.token = res.body.token;
@@ -202,7 +202,7 @@ describe('UserController', function () {
 
   it("should edit a Studio (prerequisites)", function (done) {
     request(sails.hooks.http.app)
-      .post('/edit')
+      .put('/edit')
       .send(mockfreelancerEdition)
       .expect(function (res) {
         mockstudio.token = res.body.token;
