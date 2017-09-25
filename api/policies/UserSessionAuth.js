@@ -9,7 +9,7 @@
  */
 var constants = require('../Constants');
 module.exports = function (req, res, next) {
-  
+
   // User is allowed, proceed to the next policy,
   // or if this is the last policy, the controller
   var forbiddenmessage = 'You are not permitted to perform this action.';
@@ -17,7 +17,9 @@ module.exports = function (req, res, next) {
   if (token) {
     JWT.verifyToken(token, function (err, decoded) {
       if (err) {
-        return res.forbidden({message: err.message});
+        return res.forbidden({
+          message: err.message
+        });
       } else {
         if (decoded.typ == constants.userType.user) {
           var user = {
@@ -26,11 +28,15 @@ module.exports = function (req, res, next) {
           req.headers.user = user;
           return next();
         } else {
-          return res.forbidden({message: 'This User Type not permitted to perform this action.'})
+          return res.forbidden({
+            message: 'This User Type not permitted to perform this action.'
+          })
         }
       }
     });
   } else {
-    return res.forbidden({message: forbiddenmessage});
+    return res.forbidden({
+      message: forbiddenmessage
+    });
   }
 };
