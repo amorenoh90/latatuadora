@@ -12,9 +12,18 @@ describe('ItineraryService', function () {
     ItineraryService
       .add({
         input: schedule
-      }, function (result) {
-        assert.equal(result.messages.length > 0, true);
-        assert.equal(result.errors.length < 1, true);
+      }, function (err, result) {
+        assert.equal(err, null);
+        assert.notEqual(result, null);
+        done();
+      });
+  });
+
+  it("should check getting Itineraries", function (done) {
+    ItineraryService
+      .getAll({}, function (err, result) {
+        assert.equal(result.json_response.itineraries.length > 0, true);
+        assert.deepEqual(result.errors, []);
         done();
       });
   });
