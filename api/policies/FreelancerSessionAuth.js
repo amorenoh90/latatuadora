@@ -3,7 +3,6 @@
  */
 var constants = require('../Constants');
 module.exports = function (req, res, next) {
-  var forbiddenmessage = 'You are not permitted to perform this action.';
   var token = req.headers["x-authorization"];
   if (token) {
     JWT.verifyToken(token, function (err, decoded) {
