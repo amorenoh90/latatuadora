@@ -23,7 +23,7 @@ module.exports = function (req, res, next) {
             .then(function (freelancer) {
               if (!freelancer) {
                 return res.notFound({
-                  message: 'Could not find Freelancer, sorry.'
+                  message: constants.messages.NO_SUCH_USER
                 });
               } else {
                 req.headers.freelancer = freelancer;
@@ -38,14 +38,14 @@ module.exports = function (req, res, next) {
             });
         } else {
           return res.forbidden({
-            message: 'This User Type not permitted to perform this action.'
+            message: constants.messages.ACCESS_FORBIDDEN
           })
         }
       }
     });
   } else {
     return res.forbidden({
-      message: forbiddenmessage
+      message: constants.messages.ACCESS_FORBIDDEN
     });
   }
 };
