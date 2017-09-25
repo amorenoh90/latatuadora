@@ -217,6 +217,27 @@ module.exports = {
       done(null, "No form specified");
     }
   },
+  get: function (req, res) {
+    var args = {
+        req: req,
+        input: req.allParams()
+      },
+      result = {};
+
+    UserService
+      .get(args, function (err, result) {
+        if (err) {
+          res.serverError({
+            err: err,
+            result: result
+          });
+        } else {
+          res.send({
+            result: result
+          });
+        }
+      });
+  },
   logup: function (req, res) {
     LogUpService.add(req.body, req.file, function (err, done) {
       if (err) {
