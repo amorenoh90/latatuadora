@@ -8,17 +8,23 @@ module.exports = function (req, res, next) {
   if (token) {
     JWT.verifyToken(token, function (err, decoded) {
       if (err) {
-        return res.forbidden({message: err.message});
+        return res.forbidden({
+          message: err.message
+        });
       } else {
-        if (decoded.typ == constants.userType.freelancer) {
+        if (decoded.typ == constants.userType.freelance) {
           var user = {
             id: decoded.sub
           };
           req.headers.user = user;
-          Freelancer.findOne({userId: user.id})
+          Freelancer.findOne({
+              user: user.id
+            })
             .then(function (freelancer) {
               if (!freelancer) {
-                return res.notFound({message: 'Could not find Freelancer, sorry.'});
+                return res.notFound({
+                  message: 'Could not find Freelancer, sorry.'
+                });
               } else {
                 req.headers.freelancer = freelancer;
                 if (req.body) {
@@ -31,11 +37,15 @@ module.exports = function (req, res, next) {
               return res.serverError(err);
             });
         } else {
-          return res.forbidden({message: 'This User Type not permitted to perform this action.'})
+          return res.forbidden({
+            message: 'This User Type not permitted to perform this action.'
+          })
         }
       }
     });
   } else {
-    return res.forbidden({message: forbiddenmessage});
+    return res.forbidden({
+      message: forbiddenmessage
+    });
   }
 };
