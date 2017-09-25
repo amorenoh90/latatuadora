@@ -3,7 +3,6 @@ module.exports = function (req, res, next) {
 
   // User is allowed, proceed to the next policy,
   // or if this is the last policy, the controller
-  var forbiddenmessage = 'You are not permitted to perform this action.';
   var token = req.headers["x-authorization"];
   if (token) {
     JWT.verifyToken(token, function (err, decoded) {
@@ -23,7 +22,7 @@ module.exports = function (req, res, next) {
             .then(function (freelancer) {
               if (!freelancer) {
                 return res.notFound({
-                  message: 'Could not find Freelancer, sorry.'
+                  message: constants.messages.NO_SUCH_USER
                 });
               } else {
                 req.headers.freelancer = freelancer;
@@ -45,7 +44,7 @@ module.exports = function (req, res, next) {
             .then(function (studio) {
               if (!studio) {
                 return res.notFound({
-                  message: 'Could not find Studio, sorry.'
+                  message: constants.messages.NO_SUCH_USER
                 });
               } else {
                 req.headers.studio = studio;
@@ -60,14 +59,14 @@ module.exports = function (req, res, next) {
             });
         } else {
           return res.forbidden({
-            message: 'This User Type not permitted to perform this action.'
+            message: constants.messages.ACCESS_FORBIDDEN
           })
         }
       }
     });
   } else {
     return res.forbidden({
-      message: forbiddenmessage
+      message: constants.messages.ACCESS_FORBIDDEN
     });
   }
 };
