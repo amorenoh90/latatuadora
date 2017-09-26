@@ -49,6 +49,8 @@ module.exports = {
   messages: {
     NO_SUCH_USER: "No existe tal usuario",
     NO_ITINERARIES: "No hay registros de itinerario",
+    NO_USERS: "No hay registros de usuario",
+    NO_USERS_UNDER_CRITERIA: "No hay registros de usuario bajo el criterio especificado",
     ADDED_ITINERARY: "Se agregó el itinerario",
     ACCESS_FORBIDDEN: "You are not permitted to perform this action."
   }
