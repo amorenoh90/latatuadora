@@ -10,7 +10,6 @@ describe('UserController', function () {
     password: "password",
     form: "user"
   };
-
   var mockitem = {
       itemType: 2,
       itemId: 2,
@@ -73,6 +72,16 @@ describe('UserController', function () {
     "telephone": 5562059246,
     "userType": 1
   };
+  var artistEdition = {
+    form: "artist",
+    id: 2,
+    name: "Another Artist",
+    bio: "Studied tattos someplace else",
+    responseTime: "Some other time",
+    studio: 2,
+    awards: ["Another Emmy", "Another Oscar", "Grammy"]
+  };
+
 
   it("should logup a normal User", function (done) {
     request(sails.hooks.http.app)
@@ -206,6 +215,17 @@ describe('UserController', function () {
       .send(mockfreelancerEdition)
       .expect(function (res) {
         mockstudio.token = res.body.token;
+        assert.notEqual(res.body, null);
+      })
+      .expect(200, done);
+  });
+
+  it("should edit an artist", function (done) {
+    request(sails.hooks.http.app)
+      .put('/edit')
+      .send(artistEdition)
+      .expect(function (res) {
+        artistEdition.token = res.body.token;
         assert.notEqual(res.body, null);
       })
       .expect(200, done);
