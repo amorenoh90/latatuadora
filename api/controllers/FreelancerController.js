@@ -4,7 +4,7 @@ module.exports = {
       id: req.query.id,
       rank: (req.query.rank || 0)
     };
-    
+
     var query = {
       id: values.id
     };
@@ -19,5 +19,23 @@ module.exports = {
     }).catch(function (err) {
       return res.serverError(err);
     });
+  },
+
+  getAll: function (req, res) {
+    FreelancerService
+      .getAll({
+        input: req.allParams()
+      }, function (err, result) {
+        if (err) {
+          res.serverError({
+            err: err,
+            message: result.messages.pop()
+          });
+        } else {
+          res.send({
+            freelancers: result.json_response.freelancers
+          });
+        }
+      });
   }
 };
