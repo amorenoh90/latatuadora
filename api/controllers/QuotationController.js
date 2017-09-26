@@ -20,7 +20,7 @@ module.exports = {
         }
         if (decoded.typ != constants.userType.user) {
           return res.forbidden({
-            message: 'This User Type not permitted to perform this action.'
+            message: constants.messages.ACCESS_FORBIDDEN
           });
         } else {
           User.findOne({
@@ -30,7 +30,7 @@ module.exports = {
               return res.serverError(err);
             }
             if (!user) {
-              return res.notFound('Could not find User, sorry.');
+              return res.notFound(constants.messages.NO_SUCH_USER);
             } else {
               req.body.newUser = user;
               req.body.file = req.file;
