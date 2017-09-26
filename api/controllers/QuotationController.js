@@ -4,7 +4,7 @@
 var constants = require('../Constants');
 
 module.exports = {
-  
+
   /**
    * (POST /quotation)
    */
@@ -14,17 +14,23 @@ module.exports = {
       var token = req.headers['x-authorization'];
       JWT.verifyToken(token, function (err, decoded) {
         if (err) {
-          return res.forbidden({message: err.message});
+          return res.forbidden({
+            message: err.message
+          });
         }
         if (decoded.typ != constants.userType.user) {
-          return res.forbidden({message: 'This User Type not permitted to perform this action.'});
+          return res.forbidden({
+            message: constants.messages.ACCESS_FORBIDDEN
+          });
         } else {
-          User.findOne({id: decoded.sub}).exec(function (err, user) {
+          User.findOne({
+            id: decoded.sub
+          }).exec(function (err, user) {
             if (err) {
               return res.serverError(err);
             }
             if (!user) {
-              return res.notFound('Could not find User, sorry.');
+              return res.notFound(constants.messages.NO_SUCH_USER);
             } else {
               req.body.newUser = user;
               req.body.file = req.file;
@@ -59,7 +65,9 @@ module.exports = {
   },
   findByStudio: function (req, res) {
     var studio = req.headers.studio.id;
-    Quotation.find({studioId: studio}).populate(['styleId', 'bodypartId', 'userId']).exec(function (err, quotations) {
+    Quotation.find({
+      studioId: studio
+    }).populate(['styleId', 'bodypartId', 'userId']).exec(function (err, quotations) {
       if (err) {
         return res.serverError(err);
       } else {
@@ -69,7 +77,9 @@ module.exports = {
   },
   findByFreelance: function (req, res) {
     var freelancerId = req.headers.freelancer.id;
-    Quotation.find({freelancerId: freelancerId}).populate(['styleId', 'bodypartId', 'userId']).exec(function (err, quotations) {
+    Quotation.find({
+      freelancerId: freelancerId
+    }).populate(['styleId', 'bodypartId', 'userId']).exec(function (err, quotations) {
       if (err) {
         return res.serverError(err);
       } else {
