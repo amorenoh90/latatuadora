@@ -77,5 +77,11 @@ module.exports.policies = {
     update: 'freelancerorStudioSessionAuth',
     find: true,
     notApproved: 'adminSessionAuth'
+  },
+  ItineraryController: {
+    getAllAsFreelancer: 'FreelancerSessionAuth',
+    getAllAsStudio: 'StudioSessionAuth',
+    getAllAsClient: 'UserSessionAuth',
+    getAllAsAdmin: 'AdminSessionAuth'
   }
 };

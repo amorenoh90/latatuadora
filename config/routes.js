@@ -115,5 +115,8 @@ module.exports.routes = {
 
   // Itinerary
   'post /itinerary/add': 'ItineraryController.add',
-
+  'get /itinerary/getAllAsFreelancer': 'ItineraryController.getAllAsFreelancer',
+  'get /itinerary/getAllAsStudio': 'ItineraryController.getAllAsStudio',
+  'get /itinerary/getAllAsClient': 'ItineraryController.getAllAsClient',
+  'get /itinerary/getAllAsAdmin': 'ItineraryController.getAllAsAdmin'
 };
