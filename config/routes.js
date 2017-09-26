@@ -13,6 +13,7 @@ module.exports.routes = {
   'put /edit': 'UserController.edit',
   'post /login': 'UserController.login',
   'get /user/findBy': 'UserController.findBy',
+  'get /user/get': 'UserController.get',
   //<User login
 
   //>Tattoo Routes
@@ -108,9 +109,11 @@ module.exports.routes = {
   //<style
   //>Studio
   'post /studio/rate': 'StudioController.rateStudio',
+  'get /studio': 'StudioController.getAll',
   //<Studio
   //>Freelancer
   'post /freelancer/rate': 'FreelancerController.rateFreelancer',
+  'get /freelancer': 'FreelancerController.getAll',
   //<Freelancer
 
   // Itinerary
