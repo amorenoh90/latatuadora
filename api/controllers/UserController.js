@@ -182,6 +182,60 @@ function editFreelancer(values, image, token) {
   });
 }
 
+function editArtist(values, image, token) {
+  var artistEditionProps = [
+    "name",
+    "avatarUrl",
+    "bio"
+  ];
+  var artistEdition = fillJSON(values, artistEditionProps);
+
+  Artist.update({
+    id: values.id
+  }, artistEdition, function (err, artist) {
+    if (err) {
+      return done(err);
+    } else {
+      if (!artist) {
+        return done(err);
+      } else {
+        artist = artist.pop();
+        if (values.awards) {
+          if (values.awards.length > 0) {
+            var destroyAwards = async() => {
+              await Awards.destroy({
+                artist: artist.id
+              });
+              return "done";
+            }
+
+            destroyAwards();
+
+            var awards = [];
+
+            for (var i = 0; i < values.awards.length; i++) {
+              var award = {};
+
+              award.artist = artist.id;
+              award.award = values.awards[i];
+              awards.push(award);
+            }
+
+            var addAwards = async() => {
+              await Awards.createEach(awards);
+              return "done";
+            }
+
+            addAwards();
+          }
+        }
+
+        return done(null, JWT.createToken(artist));
+      }
+    }
+  });
+}
+
 var constants = require('../Constants');
 var baseQuery = "select " +
   "User.name," +
@@ -212,6 +266,9 @@ module.exports = {
     }
     if (values.form == "freelancer") {
       editFreelancer(values, image, token);
+    }
+    if (values.form == "artist") {
+      editArtist(values, image, token);
     }
     if (!values.form) {
       done(null, "No form specified");
