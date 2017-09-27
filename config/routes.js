@@ -113,11 +113,14 @@ module.exports.routes = {
   'post /studio/rate': 'StudioController.rateStudio',
   'get /studio': 'StudioController.getAll',
   'get /studio/nearby': 'StudioController.getNearby',
+  'get /studio/paid': 'StudioController.getPaid',
   //<Studio
 
   //>Freelancer
   'post /freelancer/rate': 'FreelancerController.rateFreelancer',
   'get /freelancer': 'FreelancerController.getAll',
+  'get /freelancer/nearby': 'FreelancerController.getNearby',
+  'get /freelancer/paid': 'FreelancerController.getPaid',
   //<Freelancer
 
   // Itinerary

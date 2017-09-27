@@ -37,5 +37,46 @@ module.exports = {
           });
         }
       });
+  },
+
+  getNearby: function (req, res) {
+    FreelancerService
+      .getNearby({
+        input: req.allParams()
+      }, function (err, result) {
+        if (err) {
+          res.serverError({
+            err: err
+          });
+        } else {
+          res.send({
+            jobbers: result.json_response.jobbers
+          });
+        }
+      });
+  },
+
+  getPaid: function (req, res) {
+    FreelancerService
+      .getPaid({
+        input: req.allParams()
+      }, function (err, result) {
+        if (err) {
+          res.serverError({
+            err: err
+          });
+        } else {
+          if (result.json_response.paid_jobbers.length < 1) {
+            res.send({
+              message: result.messages.pop()
+            });
+          } else {
+            res.send({
+              paid_jobbers: result.json_response.paid_jobbers
+            });
+          }
+
+        }
+      });
   }
 };
