@@ -3,6 +3,18 @@ var constants = require('../Constants.js'),
 
 const radius = 0.5;
 
+function getPropertyArray(array, property) {
+  var result = [];
+
+  for (var i = 0; i < array.length; i++) {
+    var element = array[i];
+
+    result.push(element[property]);
+  }
+
+  return result;
+}
+
 function calculateDistance(x0, x, y0, y) {
   var distance = Math.pow(x - x0, 2) + Math.pow(y - y0, 2);
   distance = Math.sqrt(distance);
@@ -97,4 +109,63 @@ module.exports = {
         done(err, null);
       });
   },
+
+  getPaid: function (done) {
+    var result = {
+        messages: [],
+        json_response: {},
+        errors: []
+      },
+      first_date = new Date();
+
+    var doQuery = async() => {
+      try {
+        var jobbers = await Studio
+          .find()
+          .where({
+            membershipExp: {
+              '>': first_date
+            }
+          })
+          .sort('createdAt DESC');
+
+        if (jobbers.length < 1) {
+          result.messages.push(messages.NO_USERS_UNDER_CRITERIA);
+          result.json_response.paid_jobbers = [];
+        } else {
+          jobbers = getPropertyArray(jobbers, "userId");
+
+          var payments = await Payments
+            .find({
+              user: jobbers,
+              status: constants.payment.paid
+            });
+
+          if (payments.length < 1) {
+            result.messages.push(messages.NO_USERS_UNDER_CRITERIA);
+            result.json_response.paid_jobbers = [];
+          } else {
+            payments = getPropertyArray(payments, "user");
+
+            var paid_jobbers = await Studio
+              .find({
+                userId: payments
+              })
+              .populateAll()
+              .sort('createdAt ASC');
+
+            result.json_response.paid_jobbers = paid_jobbers;
+          }
+        }
+      } catch (error) {
+        result.messages = [];
+        console.log(error);
+        result.errors.push(err);
+      } finally {
+        done(result.errors.pop(), result);
+      }
+    };
+
+    doQuery();
+  }
 };
