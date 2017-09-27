@@ -57,5 +57,22 @@ module.exports = {
           });
         }
       });
+  },
+
+  getNearby: function (req, res) {
+    StudioService
+      .getNearby({
+        input: req.allParams()
+      }, function (err, result) {
+        if (err) {
+          res.serverError({
+            err: err
+          });
+        } else {
+          res.send({
+            studios: result.json_response.studios
+          });
+        }
+      });
   }
 };

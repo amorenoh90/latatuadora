@@ -104,13 +104,17 @@ module.exports.routes = {
   'get /address/suburbs': 'AddressController.suburbs',
   'get /address/towns': 'AddressController.towns',
   //<address
+
   //>styles
   'get /styles': 'StyleController.find',
   //<style
+
   //>Studio
   'post /studio/rate': 'StudioController.rateStudio',
   'get /studio': 'StudioController.getAll',
+  'get /studio/nearby': 'StudioController.getNearby',
   //<Studio
+
   //>Freelancer
   'post /freelancer/rate': 'FreelancerController.rateFreelancer',
   'get /freelancer': 'FreelancerController.getAll',
