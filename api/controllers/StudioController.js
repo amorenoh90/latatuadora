@@ -74,5 +74,29 @@ module.exports = {
           });
         }
       });
+  },
+
+  getPaid: function (req, res) {
+    StudioService
+      .getPaid({
+        input: req.allParams()
+      }, function (err, result) {
+        if (err) {
+          res.serverError({
+            err: err
+          });
+        } else {
+          if (result.json_response.paid_jobbers.length < 1) {
+            res.send({
+              message: result.messages.pop()
+            });
+          } else {
+            res.send({
+              paid_jobbers: result.json_response.paid_jobbers
+            });
+          }
+
+        }
+      });
   }
 };
