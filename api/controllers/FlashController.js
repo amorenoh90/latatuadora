@@ -13,11 +13,17 @@ module.exports = {
         return flash;
       })
       .then(function (flash) {
-        var element = FlashElement.create({element: req.body.elementId, flashId: flash.id})
+        var element = FlashElement.create({
+            element: req.body.elementId,
+            flashId: flash.id
+          })
           .then(function (flashelement) {
             return flashelement;
           });
-        var style = FlashStyle.create({style: req.body.styleId, flashId: flash.id})
+        var style = FlashStyle.create({
+            style: req.body.styleId,
+            flashId: flash.id
+          })
           .then(function (flashstyle) {
             return flashstyle;
           });
@@ -54,7 +60,12 @@ module.exports = {
       paginator = 0;
       if (req.query.skip) skiper = req.query.skip;
       if (req.query.page) paginator = req.query.page;
-      Flash.find({publicate: true}).paginate({page: paginator, limit: skiper}).exec(function (err, flash) {
+      Flash.find({
+        publicate: true
+      }).paginate({
+        page: paginator,
+        limit: skiper
+      }).exec(function (err, flash) {
         if (err) {
           return res.serverError(err);
         }
@@ -90,7 +101,7 @@ module.exports = {
         sql = sql + " FlashElement.element = ? ";
         values.push(parseInt(req.query.element));
       }
-      if(!used) {
+      if (!used) {
         sql = " WHERE publicate = true ";
       } else {
         sql = " AND publicate = true";
@@ -105,7 +116,7 @@ module.exports = {
           if (req.query.page) {
             var paginator = (req.query.page - 1) * req.query.skip;
             var skiper = parseInt(req.query.skip) + parseInt(paginator);
-            
+
             return res.send(flash.slice(paginator, skiper))
           } else {
             return res.send(flash);
@@ -115,7 +126,9 @@ module.exports = {
     }
   },
   notApproved: function (req, res) {
-    Flash.find({publicate: false}).exec(function (err, tattoos) {
+    Flash.find({
+      publicate: false
+    }).exec(function (err, tattoos) {
       if (err) {
         return res.serverError(err);
       } else {
@@ -125,11 +138,15 @@ module.exports = {
   },
   findByStudio: function (req, res) {
     var artistsIds = [];
-    Artist.find({studio: req.param('id')}).then(function (artists) {
+    Artist.find({
+      studio: req.param('id')
+    }).then(function (artists) {
       artists.forEach(function (artist) {
         artistsIds.push(artist.id)
       });
-      Flash.find().where({artist: artistsIds}).exec(function (err, flashes) {
+      Flash.find().where({
+        artist: artistsIds
+      }).exec(function (err, flashes) {
         if (err) {
           return res.serverError(err);
         } else {
@@ -142,7 +159,9 @@ module.exports = {
   },
   approve: function (req, res) {
     var values = req.body;
-    Flash.update({id: req.params.id}, values).exec(function afterwards(err, updated) {
+    Flash.update({
+      id: req.params.id
+    }, values).exec(function afterwards(err, updated) {
       if (err) {
         return res.negotiate(err);
       } else {
@@ -155,12 +174,37 @@ module.exports = {
     if (values.approve) {
       delete values.approve;
     }
-    Flash.update({id: req.params.id}, values).exec(function afterwards(err, updated) {
+    Flash.update({
+      id: req.params.id
+    }, values).exec(function afterwards(err, updated) {
       if (err) {
         return res.negotiate(err);
       } else {
         return res.send(updated[0]);
       }
     });
+  },
+
+  getAll: function (req, res) {
+    FlashService
+      .getAll({
+        input: req.allParams()
+      }, function (error, result) {
+        if (error) {
+          res.serverError({
+            error: error
+          });
+        } else {
+          if (result.json_response.flashes.length < 1) {
+            res.send({
+              message: result.messages.pop()
+            });
+          } else {
+            res.send({
+              flashes: result.json_response.flashes
+            });
+          }
+        }
+      });
   }
 };
