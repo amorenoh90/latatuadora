@@ -44,11 +44,11 @@ module.exports = {
     return send(values, done);
   },
   sendStudioWelcomeMail: function (values, done) {
-    values.template = 'welcome.ejs';
+    values.template = 'welcome-studio-freelance.ejs';
     return send(values, done);
   },
   sendAdminWelcomeMail: function (values, done) {
-    values.template = 'welcome.ejs';
+    values.template = 'welcome-admin.ejs';
     return send(values, done);
   },
   sendStudioQuotation: function (values, done) {

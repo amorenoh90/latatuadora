@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <body class="container">
-<header>
-  <%- include _header.ejs %>
-</header>
+  <header>
+    <%- include _header.ejs %>
+  </header>
 
-<main>
-  <div class="jumbotron">
-    <p><%= user.name %></p>
-    <p><%= JSON.stringify(user) %></p>
-  </div>
-</main>
+  <main>
+    <div class="jumbotron">
+      <% var user = model.user %>
+        <p>
+          <%= user.name %>
+        </p>
+        <p>
+          <%= JSON.stringify(user) %>
+        </p>
+    </div>
+  </main>
 
-<footer>
-  <% include _footer.ejs %>
-</footer>
+  <footer>
+    <% include _footer.ejs %>
+  </footer>
 
 </body>
+
 </html>
