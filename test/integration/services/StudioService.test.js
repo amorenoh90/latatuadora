@@ -120,7 +120,7 @@ describe('StudioService', function () {
 
     addPrerequisites(function () {
       StudioService
-        .getPaid(function (err, result) {
+        .getPaid({}, function (err, result) {
           if (err) {
             assert.equal(1, 2);
             done();
