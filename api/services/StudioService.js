@@ -110,7 +110,7 @@ module.exports = {
       });
   },
 
-  getPaid: function (done) {
+  getPaid: function (options, done) {
     var result = {
         messages: [],
         json_response: {},
