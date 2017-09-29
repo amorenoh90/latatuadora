@@ -4,23 +4,36 @@ module.exports = {
   get: function (options, done) {
     var values = options.input || {};
 
-    User
-      .find({
-        email: values.email
-      })
-      .then(function (user) {
-        user = user[0];
+    var doQuery = async() => {
+      try {
+        var user = (await User
+            .find({
+              email: values.email
+            })
+            .populateAll())[0],
+          errors = null;
 
         if (!user) {
           user = messages.NO_SUCH_USER;
         } else {
-          user = user;
+          user.studio = (await Studio
+              .find({
+                userId: user.id
+              })
+              .populateAll())[0] || null,
+            user.freelancer = (await Freelancer
+              .find({
+                user: user.id
+              })
+              .populateAll())[0] || null;
         }
+      } catch (error) {
+        errors = error;
+      } finally {
+        done(errors, user);
+      }
+    };
 
-        done(null, user);
-      })
-      .catch(function (err) {
-        done(err, null);
-      });
+    doQuery();
   }
 };
