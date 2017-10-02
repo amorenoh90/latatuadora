@@ -33,6 +33,9 @@ module.exports.routes = {
   'delete /tattoofav': 'FavoriteTattoo.remove',
   //<TattooFavorites
 
+  //>Email Routes
+  'post /email': 'EmailController.send',
+
   //>Flash Routes
   'post /flash': 'FlashController.add',
   'get /flash': 'FlashController.find',
