@@ -2,7 +2,8 @@ var send = function (values, done) {
   // var api_key = 'key-5de07e0e2df132f47cfade8f2e52b89a';
   // var domain = 'sandbox066fdbbdf16943069d9b0c3f92882717.mailgun.org';
   var api_key = 'key-5de07e0e2df132f47cfade8f2e52b89a';
-  var domain = 'https://api.mailgun.net/v3/mg.neopraxis.mx';
+  //var domain = 'https://api.mailgun.net/v3/mg.neopraxis.mx';
+  var domain = 'sandbox066fdbbdf16943069d9b0c3f92882717.mailgun.org';
   var mailgun = require('mailgun-js')({
     apiKey: api_key,
     domain: domain
@@ -38,6 +39,11 @@ var send = function (values, done) {
 };
 
 module.exports = {
+  send: function (values, done) {
+    values.template = 'template.ejs';
+    if (!values.model) values.model = "";
+    return send(values, done);
+  },
   sendUserWelcomeMail: function (values, done) {
     values.template = 'welcome-user.ejs';
     values.subject = "Bienvenido a la tatuadora";
