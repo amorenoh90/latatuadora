@@ -1,6 +1,6 @@
 var request = require('request');
-//var comprapagotoken = 'sk_test_4327294905c54c2065';
-var comprapagotoken = 'sk_test_5c967347043342cef8';
+var comprapagotoken = 'sk_test_4327294905c54c2065';
+//var comprapagotoken = 'sk_test_5c967347043342cef8';
 var constants = require('../Constants');
 var moment = require('moment');
 module.exports = {
