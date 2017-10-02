@@ -206,6 +206,29 @@ module.exports = {
       });
   },
 
+  getSold: function (req, res) {
+    FlashService
+      .getSold({
+        input: req.allParams()
+      }, function (error, result) {
+        if (error) {
+          res.serverError({
+            error: error
+          });
+        } else {
+          if (result.json_response.flashes.length < 1) {
+            res.send({
+              message: result.messages.pop()
+            });
+          } else {
+            res.send({
+              flashes: result.json_response.flashes
+            });
+          }
+        }
+      });
+  },
+
   delete: function (req, res) {
     FlashService
       .delete({
