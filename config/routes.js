@@ -39,7 +39,7 @@ module.exports.routes = {
   'get /flash/filter': 'FlashController.getAll',
   'get /flash/studio/:id': 'FlashController.findByStudio',
   'put /flash/approve/:id': 'FlashController.approve',
-  'put /flash/:id': 'FlashController.update',
+  'put /flash': 'FlashController.update',
   'get /flash/notApproved': 'FlashController.notApproved',
   'delete /flash': 'FlashController.delete',
   'post /flash/publish': 'FlashController.publish',
