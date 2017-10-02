@@ -1,5 +1,6 @@
 var request = require('request');
-var comprapagotoken = 'sk_test_4327294905c54c2065';
+//var comprapagotoken = 'sk_test_4327294905c54c2065';
+var comprapagotoken = 'sk_test_5c967347043342cef8';
 var constants = require('../Constants');
 var moment = require('moment');
 module.exports = {
@@ -8,7 +9,16 @@ module.exports = {
       'Accept': 'application/compropago',
       'Content-type': 'application/json'
     };
-    var dataString = '{"order_id": "' + values.item.id + '","order_price": ' + values.item.amount + ',"order_name": "' + values.item.name + '","customer_name": "' + auth.name + '","customer_email": "' + auth.email + '","payment_type":"' + values.payment_type + '","currency": "MXN"}';
+    var dataString = {
+      order_id: values.item.id,
+      order_price: values.item.amount,
+      order_name: values.item.name,
+      customer_name: auth.name,
+      customer_email: auth.email,
+      payment_type: values.payment_type,
+      currency: "MXN"
+    };
+    dataString = JSON.stringify(dataString);
     var options = {
       url: 'https://api.compropago.com/v1/charges',
       headers: headers,
@@ -18,7 +28,7 @@ module.exports = {
         'pass': ''
       }
     };
-    
+
     function callback(err, response, body) {
       var resp = JSON.parse(body);
       if (err) {
@@ -51,7 +61,7 @@ module.exports = {
         done(response.body.message);
       }
     }
-    
+
     try {
       request.post(options, callback);
     }
