@@ -140,5 +140,36 @@ module.exports = {
     ;
 
     doQuery(done);
+  },
+
+  getSold: function (options, done) {
+    var input = options.input || {},
+      result = {
+        messages: [],
+        json_response: {},
+        errors: []
+      };
+
+    var doQuery = async (cb) => {
+        try {
+          var flashes = await
+            Flash
+              .find({
+                sell: true
+              });
+
+          if (flashes.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
+
+          result.json_response.flashes = flashes;
+        } catch (error) {
+          result.messages = [];
+          result.errors.push(error);
+        } finally {
+          cb(result.errors.pop(), result);
+        }
+      }
+    ;
+
+    doQuery(done);
   }
 };
