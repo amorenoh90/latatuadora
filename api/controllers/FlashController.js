@@ -14,16 +14,16 @@ module.exports = {
       })
       .then(function (flash) {
         var element = FlashElement.create({
-            element: req.body.elementId,
-            flashId: flash.id
-          })
+          element: req.body.elementId,
+          flashId: flash.id
+        })
           .then(function (flashelement) {
             return flashelement;
           });
         var style = FlashStyle.create({
-            style: req.body.styleId,
-            flashId: flash.id
-          })
+          style: req.body.styleId,
+          flashId: flash.id
+        })
           .then(function (flashstyle) {
             return flashstyle;
           });
@@ -171,11 +171,9 @@ module.exports = {
   },
   update: function (req, res) {
     var values = req.body;
-    if (values.approve) {
-      delete values.approve;
-    }
+    delete values.approve;
     Flash.update({
-      id: req.params.id
+      id: values.id
     }, values).exec(function afterwards(err, updated) {
       if (err) {
         return res.negotiate(err);
