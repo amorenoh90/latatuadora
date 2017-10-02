@@ -23,7 +23,9 @@ module.exports = {
     var auth = req.headers.user;
     var values = req.body;
     var collection = constants.itemType[values.itemType];
-    User.findOne({id: auth.id})
+    User.findOne({
+      id: auth.id
+    })
       .then(function (user) {
         if (!user) {
           return res.notFound('Could not find User, sorry.');
@@ -42,7 +44,9 @@ module.exports = {
             });
             break;
           case 'StudioMembership':
-            Studio.findOne({userId: auth.id})
+            Studio.findOne({
+              userId: auth.id
+            })
               .then(function (studio) {
                 if (!studio) {
                   return res.notFound('Could not find Studio, sorry.');
@@ -58,7 +62,9 @@ module.exports = {
                   } else {
                     if (membership.status == 'active') {
                       var exp = moment().add(1, 'y').format();
-                      Studio.update({userId: auth.id}, {
+                      Studio.update({
+                        userId: auth.id
+                      }, {
                         status: constants.membershipStatus.active,
                         membershipExp: exp
                       }).exec(function afterwards(err, updated) {
@@ -76,7 +82,9 @@ module.exports = {
               });
             break;
           case 'FreelanceMembership':
-            Freelancer.findOne({user: auth.id})
+            Freelancer.findOne({
+              user: auth.id
+            })
               .then(function (freelancer) {
                 if (!freelancer) {
                   return res.notFound('Could not find Freelancer, sorry.');
@@ -92,7 +100,9 @@ module.exports = {
                   } else {
                     if (membership.status == 'active') {
                       var exp = moment().add(1, 'y').format();
-                      Freelancer.update({user: auth.id}, {
+                      Freelancer.update({
+                        user: auth.id
+                      }, {
                         status: constants.membershipStatus.active,
                         membershipExp: exp
                       }).exec(function afterwards(err, updated) {
@@ -110,7 +120,9 @@ module.exports = {
               });
             break;
           default:
-            return res.badRequest({message: 'Unknown function'});
+            return res.badRequest({
+              message: 'Unknown function'
+            });
         }
       })
       .catch(function (err) {
@@ -121,7 +133,9 @@ module.exports = {
     var auth = req.headers.user;
     var values = req.body;
     var collection = constants.itemType[values.itemType];
-    User.findOne({id: auth.id})
+    User.findOne({
+      id: auth.id
+    })
       .then(function (user) {
         if (!user) {
           return res.notFound('Could not find User, sorry.');
@@ -137,7 +151,9 @@ module.exports = {
             });
             break;
           case 'StudioMembership':
-            Studio.findOne({userId: auth.id})
+            Studio.findOne({
+              userId: auth.id
+            })
               .then(function (studio) {
                 if (!studio) {
                   return res.notFound('Could not find Studio, sorry.');
@@ -160,7 +176,9 @@ module.exports = {
               });
             break;
           case 'FreelanceMembership':
-            Freelancer.findOne({userId: auth.id})
+            Freelancer.findOne({
+              userId: auth.id
+            })
               .then(function (freelance) {
                 if (!freelance) {
                   return res.notFound('Could not find Freelance, sorry.');
@@ -183,7 +201,9 @@ module.exports = {
               });
             break;
           default:
-            return res.badRequest({message: 'Unknown function'});
+            return res.badRequest({
+              message: 'Unknown function'
+            });
         }
       })
       .catch(function (err) {
@@ -194,7 +214,9 @@ module.exports = {
     var paypal = {};
     paypal.paymentId = req.session.paymentId;
     var payerId = req.param('PayerID');
-    paypal.details = {"payer_id": payerId};
+    paypal.details = {
+      "payer_id": payerId
+    };
     PayPalService.execute(paypal, function (err, payment) {
       if (err) {
         return res.serverError(err);
@@ -204,7 +226,9 @@ module.exports = {
     });
   },
   paypalCancel: function (req, res) {
-    res.send({message: "The payment got canceled"});
+    res.send({
+      message: "The payment got canceled"
+    });
   },
   paypalAceptPlan: function (req, res) {
     var token = req.query.token;
@@ -217,7 +241,11 @@ module.exports = {
   },
   paypalCancelPlan: function (req, res) {
     var token = req.query.token;
-    Payments.update({purchaseId: token}, {status: constants.payment.canceled}).exec(function afterwards(err, updated) {
+    Payments.update({
+      purchaseId: token
+    }, {
+      status: constants.payment.canceled
+    }).exec(function afterwards(err, updated) {
       if (err) {
         return res.negotiate(err);
       }
@@ -239,25 +267,34 @@ module.exports = {
         'pass': ''
       }
     };
-    
+
     function callback(err, response, body) {
       if (err) {
         res.serverError(err);
       }
       if (!err && response.statusCode == 200) {
-        res.send({points: body});
+        res.send({
+          points: body
+        });
       } else {
-        res.send({message: body});
+        res.send({
+          message: body
+        });
       }
     }
-    
+
     request.get(options, callback);
   },
   compropagoCharge: function (req, res) {
     var values = req.body;
     var auth = req.headers.user;
     var collection = constants.itemType[values.itemType];
-    User.findOne({id: auth.id}).exec(function (err, user) {
+    auth = {
+      id: 1
+    }
+    User.findOne({
+      id: auth.id
+    }).exec(function (err, user) {
       if (err) {
         return res.serverError(err);
       }
@@ -268,7 +305,9 @@ module.exports = {
     });
     switch (collection) {
       case 'Flash':
-        Flash.findOne({id: values.itemId}).exec(function (err, flash) {
+        Flash.findOne({
+          id: values.itemId
+        }).exec(function (err, flash) {
           if (err) {
             return res.serverError(err);
           }
@@ -277,6 +316,7 @@ module.exports = {
           } else {
             flash.name = 'flash-' + flash.id;
             values.item = flash;
+
             ComproPagoService.order(values, auth, function (err, order) {
               if (err) {
                 return res.serverError(err);
@@ -288,7 +328,9 @@ module.exports = {
         });
         break;
       case 'StudioMembership':
-        Studio.findOne({userId: auth.id})
+        Studio.findOne({
+          userId: auth.id
+        })
           .then(function (studio) {
             if (!studio) {
               return res.notFound('Could not find Studio, sorry.');
@@ -296,7 +338,9 @@ module.exports = {
             return studio.membership;
           })
           .then(function (StudioMembership) {
-            Memberships.findOne({id: StudioMembership}).exec(function (err, membership) {
+            Memberships.findOne({
+              id: StudioMembership
+            }).exec(function (err, membership) {
               if (err) {
                 return res.serverError(err);
               }
@@ -319,7 +363,9 @@ module.exports = {
           });
         break;
       case 'FreelanceMembership':
-        Freelancer.findOne({userId: auth.id})
+        Freelancer.findOne({
+          userId: auth.id
+        })
           .then(function (freelance) {
             if (!freelance) {
               return res.notFound('Could not find Freelancer, sorry.');
@@ -327,7 +373,9 @@ module.exports = {
             return freelance.membership;
           })
           .then(function (FreelancerMembership) {
-            Memberships.findOne({id: FreelancerMembership}).exec(function (err, membership) {
+            Memberships.findOne({
+              id: FreelancerMembership
+            }).exec(function (err, membership) {
               if (err) {
                 return res.serverError(err);
               }
