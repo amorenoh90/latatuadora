@@ -41,6 +41,8 @@ module.exports.routes = {
   'put /flash/approve/:id': 'FlashController.approve',
   'put /flash/:id': 'FlashController.update',
   'get /flash/notApproved': 'FlashController.notApproved',
+  'delete /flash': 'FlashController.delete',
+  'post /flash/publish': 'FlashController.publish',
   //<Flash Routes
 
   //>FlashFavorites

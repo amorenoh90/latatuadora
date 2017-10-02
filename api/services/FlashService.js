@@ -68,5 +68,67 @@ module.exports = {
     };
 
     doQuery(done);
+  },
+
+  delete: function (options, done) {
+    var input = options.input || {},
+      result = {
+        messages: [],
+        json_response: {},
+        errors: []
+      };
+
+    var doQuery = async(cb) => {
+      try {
+        var flashes = await Flash
+          .destroy({
+            publicate: true,
+            id: input.flash
+          });
+
+        if (flashes.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
+
+        result.json_response.flashes = flashes;
+      } catch (error) {
+        result.messages = [];
+        result.errors.push(error);
+      } finally {
+        cb(result.errors.pop(), result);
+      }
+    };
+
+    doQuery(done);
+  },
+
+  publish: function (options, done) {
+    var input = options.input || {},
+      result = {
+        messages: [],
+        json_response: {},
+        errors: []
+      };
+
+    var doQuery = async(cb) => {
+      try {
+        var flashes = await Flash
+          .update({
+            publicate: false,
+            id: input.flash
+          }, {
+            publicate: true
+          });
+
+        if (flashes.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
+
+        result.json_response.flashes = flashes;
+      } catch (error) {
+        result.messages = [];
+        result.errors.push(error);
+      } finally {
+        cb(result.errors.pop(), result);
+      }
+    };
+
+    doQuery(done);
   }
 };

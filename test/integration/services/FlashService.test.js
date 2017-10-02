@@ -68,3 +68,89 @@ mocha_repeat('FlashService', expected_values, function (expected_value) {
     test();
   });
 });
+
+describe('FlashService', function () {
+  it("should check deleting flashes", function (done) {
+    var test = async() => {
+      try {
+        var flashes_before_deletion = await Flash
+          .find();
+
+        setTimeout(function () {
+          FlashService
+            .delete({
+              input: {
+                flash: 1
+              }
+            }, function (err, result) {
+              assert.equal(err, undefined);
+              var doQuery = async() => {
+                try {
+                  var flashes_after_deletion = await Flash
+                    .find();
+
+                  assert.equal(flashes_after_deletion.length + result.json_response.flashes.length, flashes_before_deletion.length);
+                } catch (exception) {
+                  console.log(exception);
+                  assert.equal(1, 2);
+                } finally {
+                  done();
+                }
+              };
+
+              doQuery();
+            });
+        }, 10000);
+      } catch (exception) {
+        console.log(exception);
+        assert.equal(1, 2);
+        done();
+      }
+    };
+
+    test();
+  });
+
+  it("should check publishing flashes", function (done) {
+    var test = async() => {
+      try {
+        var flashes_before_publication = await Flash
+          .find({
+            publicate: true
+          });
+
+        FlashService
+          .publish({
+            input: {
+              flash: 1
+            }
+          }, function (err, result) {
+            assert.equal(err, undefined);
+            var doQuery = async() => {
+              try {
+                var flashes_after_publication = await Flash
+                  .find({
+                    publicate: true
+                  });
+
+                assert.notEqual(flashes_after_publication.length + result.json_response.flashes.length, flashes_before_publication.length);
+              } catch (exception) {
+                console.log(exception);
+                assert.equal(1, 2);
+              } finally {
+                done();
+              }
+            };
+
+            doQuery();
+          });
+      } catch (exception) {
+        console.log(exception);
+        assert.equal(1, 2);
+        done();
+      }
+    };
+
+    test();
+  });
+});
