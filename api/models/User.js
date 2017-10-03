@@ -1,10 +1,3 @@
-/**
- * User.js
- *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
- */
-
 var bcrypt = require('bcryptjs');
 
 module.exports = {
@@ -47,6 +40,14 @@ module.exports = {
     },
     conekta: {
       type: 'string'
+    },
+    lead_credits: {
+      type: 'int',
+      defaultsTo: 0
+    },
+    leads: {
+      collection: "Lead",
+      via: "jobber"
     },
     toJSON: function () {
       var obj = this.toObject();
