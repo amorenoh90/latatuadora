@@ -101,8 +101,8 @@ function editStudio(values, image, token) {
                 for (i in values.schedule) {
                   values.schedule[i].studioId = studio.id;
                   Schedule.update({
-                      id: studioUser.schedule
-                    }, values.schedule[i])
+                    id: studioUser.schedule
+                  }, values.schedule[i])
                     .exec(function (err, shedule) {
                       if (err) {
                         return done(err);
@@ -111,8 +111,8 @@ function editStudio(values, image, token) {
                   for (i in values.styles) {
                     values.styles[i].studioId = studio.id;
                     StudioStyle.update({
-                        id: studioUser.stu
-                      }, values.styles[i])
+                      id: studioUser.stu
+                    }, values.styles[i])
                       .exec(function (err) {
                         if (err) {
                           return done(err);
@@ -202,7 +202,7 @@ function editArtist(values, image, token) {
         artist = artist.pop();
         if (values.awards) {
           if (values.awards.length > 0) {
-            var destroyAwards = async() => {
+            var destroyAwards = async () => {
               await Awards.destroy({
                 artist: artist.id
               });
@@ -221,7 +221,7 @@ function editArtist(values, image, token) {
               awards.push(award);
             }
 
-            var addAwards = async() => {
+            var addAwards = async () => {
               await Awards.createEach(awards);
               return "done";
             }
