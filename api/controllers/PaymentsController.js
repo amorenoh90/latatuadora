@@ -35,11 +35,11 @@ module.exports = {
       .then(function (user) {
         switch (collection) {
           case 'Flash':
-            ConektaService.buyFlash(values, user, function (err, flashbuyed) {
+            ConektaService.buyFlash(values, user, function (err, flashbought) {
               if (err) {
                 return res.serverError(err);
               } else {
-                return res.send(flashbuyed);
+                return res.send(flashbought);
               }
             });
             break;
@@ -119,6 +119,15 @@ module.exports = {
                 return res.serverError(err);
               });
             break;
+          case 'LeadsCredits':
+            ConektaService.purchaseLeadCredits(values, user, function (err, order) {
+              if (err) {
+                return res.serverError(err);
+              } else {
+                return res.send(order);
+              }
+            });
+            break;
           default:
             return res.badRequest({
               message: 'Unknown function'
@@ -132,6 +141,7 @@ module.exports = {
   paypal: function (req, res) {
     var auth = req.headers.user;
     var values = req.body;
+    var params = values;
     var collection = constants.itemType[values.itemType];
     User.findOne({
       id: auth.id
@@ -199,6 +209,22 @@ module.exports = {
               .catch(function (err) {
                 return res.serverError(err);
               });
+            break;
+          case 'LeadsCredits':
+            PayPalService.purchaseLeadCredits(values, user, function (err, response) {
+              LeadService.purchaseCredits(
+                {
+                  input: {
+                    user: auth.id,
+                    lead_amount: params.itemId
+                  }
+                },
+                function (err, result) {
+                  req.session.paymentId = response.payment.id;
+                  res.redirect(response.redirectUrl);
+                }
+              );
+            });
             break;
           default:
             return res.badRequest({
@@ -289,9 +315,6 @@ module.exports = {
     var values = req.body;
     var auth = req.headers.user;
     var collection = constants.itemType[values.itemType];
-    auth = {
-      id: 1
-    }
     User.findOne({
       id: auth.id
     }).exec(function (err, user) {
@@ -396,6 +419,21 @@ module.exports = {
           .catch(function (err) {
             return res.serverError(err);
           });
+        break;
+      case 'LeadsCredits':
+        var leads = {};
+        leads.id = values.itemType;
+        leads.name = 'leads-' + values.itemType;
+        leads.amount = constants.lead_price[values.itemId];
+        values.item = leads;
+
+        ComproPagoService.order(values, auth, function (err, order) {
+          if (err) {
+            return res.serverError(err);
+          } else {
+            return res.send(order);
+          }
+        });
         break;
       default:
         res.send('Unknown function');

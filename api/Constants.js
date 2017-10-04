@@ -24,7 +24,7 @@ module.exports = {
     1: "Flash",
     2: "StudioMembership",
     3: "FreelanceMembership",
-    4: "Leads"
+    4: "LeadsCredits"
   },
   memberships: {
     studio: 1,
@@ -40,6 +40,16 @@ module.exports = {
     publicate: 2,
     block: 3,
   },
+  lead_amount: [
+    20,
+    50,
+    100,
+  ],
+  lead_price: [
+    200,
+    500,
+    1000
+  ],
   email: {
     quotation: {
       subject: "Haz recibido una nueva cotizacion",
@@ -54,6 +64,7 @@ module.exports = {
     NO_FLASHES_UNDER_CRITERIA: "No hay registros de Flash bajo el criterio especificado",
     ADDED_ITINERARY: "Se agregó el itinerario",
     ACCESS_FORBIDDEN: "You are not permitted to perform this action.",
-    EMAIL_SENT: "El Email fue enviado exitosamente."
+    EMAIL_SENT: "El Email fue enviado exitosamente.",
+    SUCCESS: "Éxito"
   }
 };

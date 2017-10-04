@@ -65,6 +65,7 @@ module.exports.routes = {
   },
   'post /conekta': 'PaymentsController.conekta',
   //<Routes Conekta
+
   //Routes PayPal
   'get /paypal': {
     view: 'pagopaypal'

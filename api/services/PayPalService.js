@@ -75,6 +75,64 @@ module.exports = {
         }
       });
   },
+  purchaseLeadCredits: function (values, auth, done) {
+    values.amount = constants.lead_price[values.itemId];
+    var payment = {
+      intent: "sale",
+      payer: {
+        payment_method: "paypal"
+      },
+      redirect_urls: {
+        return_url: "http://localhost:1337/paypalexecute",
+        cancel_url: "http://localhost:1337/paypalcancel"
+      },
+      transactions: [{
+        item_list: {
+          items: [{
+            name: "leads-" + values.itemType,
+            sku: "leads-" + values.itemType,
+            price: values.amount,
+            currency: "MXN",
+            quantity: 1,
+            description: "Lead credits"
+          }]
+        },
+        amount: {
+          currency: "MXN",
+          total: values.amount
+        }
+      }]
+    };
+    paypal.payment.create(payment, function (err, payment) {
+      if (err) {
+        done(err);
+      } else {
+        var res = {};
+        if (payment.payer.payment_method === 'paypal') {
+          res.payment = payment;
+          var redirectUrl;
+          Payments.create({
+            user: auth.id,
+            purchaseId: payment.id,
+            status: constants.payment.pending,
+            itemType: values.itemType,
+            reference: values.itemId
+          }).exec(function (err, payment) {
+            if (err) {
+              return done(err);
+            }
+          });
+          for (var i = 0; i < payment.links.length; i++) {
+            var link = payment.links[i];
+            if (link.method === 'REDIRECT') {
+              res.redirectUrl = link.href;
+            }
+          }
+          done(null, res);
+        }
+      }
+    });
+  },
   buyMembership: function (values, auth, done) {
     Memberships.findOne({id: auth.member.membership})
       .then(function (membsership) {
