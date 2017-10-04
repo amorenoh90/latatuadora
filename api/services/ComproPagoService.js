@@ -30,7 +30,7 @@ module.exports = {
     };
 
     function callback(err, response, body) {
-      var resp = JSON.parse(body);
+      var resp = JSON.parse(body) || {};
       if (err) {
         return done(err);
       }
@@ -136,6 +136,23 @@ module.exports = {
             return done(null, freelancer);
           }
         });
+        break;
+      case 'LeadsCredits':
+        LeadService.purchaseCredits(
+          {
+            input: {
+              user: values.user,
+              lead_amount: values.itemId
+            }
+          },
+          function (err, result) {
+            if (err) {
+              return done(err);
+            } else {
+              done(null, result.json_response.user);
+            }
+          }
+        );
         break;
       default:
         done('Unknow Item Type');
