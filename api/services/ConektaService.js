@@ -61,6 +61,31 @@ module.exports = {
       });
     }
   },
+  purchaseLeadCredits: function (values, auth, done) {
+    if (auth.conekta === null) {
+      ConektaService.createCostumer(values, auth, function (err, customer) {
+        if (err) {
+          return done(err);
+        } else {
+          ConektaService.orderLeads(customer, values, function (err, order) {
+            if (err) {
+              return done(err);
+            } else {
+              return done(null, order);
+            }
+          });
+        }
+      });
+    } else {
+      ConektaService.orderLeads(values, auth, function (err, order) {
+        if (err) {
+          return done(err);
+        } else {
+          return done(null, order);
+        }
+      });
+    }
+  },
   order: function (values, user, done) {
     Flash.findOne({id: values.itemId})
       .then(function (flash) {
@@ -128,6 +153,67 @@ module.exports = {
       .catch(function (err) {
         return done(err);
       });
+  },
+  orderLeads: function (values, user, done) {
+    var leads = {};
+    leads.amount = constants.lead_price[values.itemId];
+
+    conekta.Order.create({
+      currency: "MXN",
+      customer_info: {
+        customer_id: user.conekta
+      },
+      line_items: [{
+        name: 'leads-' + values.lead_amount,
+        unit_price: leads.amount * 100,
+        quantity: 1
+      }],
+      charges: [{
+        payment_method: {
+          type: "default"
+        }
+      }]
+    }, function (err, order) {
+      if (err) {
+        return done(err);
+      }
+      var pay = order.toObject();
+      Payments.create({
+        user: user.id,
+        purchaseId: pay.id,
+        status: constants.payment[pay.payment_status],
+        itemType: values.itemType,
+        reference: values.itemId
+      }).exec(function (err, payment) {
+        if (err) {
+          return done(err);
+        } else {
+          var response = {
+            payment_status: pay.payment_status,
+            amount: pay.amount / 100,
+            currency: pay.currency,
+            customer_info: pay.customer_info,
+            purchaseId: pay.id
+          };
+          if (response.payment_status == 'paid') {
+            LeadService.purchaseCredits({
+              input: {
+                user: user.id,
+                lead_amount: parseInt(values.itemId) - 1
+              }
+            }, function (err) {
+              if (err) {
+                return done(err);
+              } else {
+                return done(null, response);
+              }
+            });
+          } else {
+            return done(null, response);
+          }
+        }
+      });
+    });
   },
   createCostumer: function (values, user, done) {
     conekta.Customer.create({
