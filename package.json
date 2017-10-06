@@ -36,8 +36,8 @@
   },
   "scripts": {
     "debug": "LOG_QUERIES=true node --inspect app.js",
-    "start": "LOG_QUERIES=true node app.js",
-    "test": "NODE_ENV=test node ./node_modules/mocha/bin/mocha --no-timeouts test/bootstrap.test.js test/*/**/*.test.js"
+    "start": "LOG_QUERIES=true node $NODE_DEBUG_OPTION app.js",
+    "test": "NODE_ENV=test node $NODE_DEBUG_OPTION ./node_modules/mocha/bin/mocha --no-timeouts test/bootstrap.test.js test/*/**/*.test.js"
   },
   "main": "app.js",
   "repository": {

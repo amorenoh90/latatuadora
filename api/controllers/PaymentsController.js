@@ -187,7 +187,7 @@ module.exports = {
             break;
           case 'FreelanceMembership':
             Freelancer.findOne({
-              userId: auth.id
+              user: auth.id
             })
               .then(function (freelance) {
                 if (!freelance) {
@@ -387,7 +387,7 @@ module.exports = {
         break;
       case 'FreelanceMembership':
         Freelancer.findOne({
-          userId: auth.id
+          user: auth.id
         })
           .then(function (freelance) {
             if (!freelance) {
