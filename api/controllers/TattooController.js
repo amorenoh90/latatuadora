@@ -32,7 +32,7 @@ var find = function find(req, res) {
     Tattoo.find({publicate: true}).paginate({
       page: paginator,
       limit: skiper
-    }).populate('styles').populate('elements').exec(function (err, tattos) {
+    }).populateAll().exec(function (err, tattos) {
       if (err) {
         return res.serverError(err);
       }
@@ -113,7 +113,7 @@ var find = function find(req, res) {
   }
 };
 var notApproved = function notApproved(req, res) {
-  Tattoo.find({publicate: false}).populate('styles').populate('elements').exec(function (err, tattoos) {
+  Tattoo.find({publicate: false}).populateAll().exec(function (err, tattoos) {
     if (err) {
       return res.serverError(err);
     } else {
