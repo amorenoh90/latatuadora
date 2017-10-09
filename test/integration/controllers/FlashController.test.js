@@ -2,7 +2,7 @@ var request = require('supertest'),
   assert = require('assert');
 
 describe('FlashController', function () {
-  
+
   var mockflash = {
       amount: 300.00,
       dimensionsX: 1,
@@ -109,6 +109,8 @@ describe('FlashController', function () {
         assert.notEqual(res.body.id, null);
         assert.equal(res.body.amount, mockflash.amount);
         assert.equal(res.body.sizeId, mockflash.sizeId);
+        assert.equal(res.body.dimensionsY, mockflash.dimensionsY);
+        assert.equal(res.body.dimensionsX, mockflash.dimensionsX);
         assert.equal(res.body.significant, mockflash.significant);
         assert.equal(res.body.copyrigth, mockflash.copyrigth);
         assert.notEqual(res.body.studio, null);
@@ -133,6 +135,8 @@ describe('FlashController', function () {
         assert.notEqual(res.body.id, null);
         assert.equal(res.body.amount, mockflash2.amount);
         assert.equal(res.body.sizeId, mockflash2.sizeId);
+        assert.equal(res.body.dimensionsY, mockflash2.dimensionsY);
+        assert.equal(res.body.dimensionsX, mockflash2.dimensionsX);
         assert.equal(res.body.significant, mockflash2.significant);
         assert.equal(res.body.copyrigth, mockflash2.copyrigth);
         assert.notEqual(res.body.studio, null);
@@ -147,6 +151,8 @@ describe('FlashController', function () {
         assert.notEqual(res.body[0].id, null);
         assert.equal(res.body[0].amount, mockflash.amount);
         assert.equal(res.body[0].sizeId, mockflash.sizeId);
+        assert.equal(res.body[0].dimensionsY, mockflash.dimensionsY);
+        assert.equal(res.body[0].dimensionsX, mockflash.dimensionsX);
         assert.equal(res.body[0].significant, mockflash.significant);
         assert.equal(res.body[0].copyrigth, mockflash.copyrigth);
         assert.notEqual(res.body[0].studio, null);
@@ -222,6 +228,8 @@ describe('FlashController', function () {
         assert.notEqual(res.body.id, null);
         assert.equal(res.body.amount, mockflash.amount);
         assert.equal(res.body.sizeId, mockflash.sizeId);
+        assert.equal(res.body.dimensionsY, mockflash.dimensionsY);
+        assert.equal(res.body.dimensionsX, mockflash.dimensionsX);
         assert.equal(res.body.significant, mockflash.significant);
         assert.equal(res.body.copyrigth, mockflash.copyrigth);
         assert.notEqual(res.body.studio, null);
