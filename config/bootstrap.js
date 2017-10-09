@@ -35,7 +35,8 @@ const bodyparts = [
 module.exports.bootstrap = function (cb) {
 
   var doQuery = async () => {
-    await BodyPart.createEach(bodyparts);
+    var bodyparts_before_adding = await BodyPart.find().populateAll();
+    if (bodyparts_before_adding.length < 6) await BodyPart.createEach(bodyparts);
 
     cb();
   };
