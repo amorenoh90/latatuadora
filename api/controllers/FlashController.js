@@ -65,12 +65,14 @@ module.exports = {
       }).paginate({
         page: paginator,
         limit: skiper
-      }).exec(function (err, flash) {
-        if (err) {
-          return res.serverError(err);
-        }
-        return res.send(flash);
-      });
+      })
+        .populateAll()
+        .exec(function (err, flash) {
+          if (err) {
+            return res.serverError(err);
+          }
+          return res.send(flash);
+        });
     } else {
       sql = 'select *, Flash.id from Flash ';
       if (req.query.style) {
@@ -128,13 +130,15 @@ module.exports = {
   notApproved: function (req, res) {
     Flash.find({
       publicate: false
-    }).exec(function (err, tattoos) {
-      if (err) {
-        return res.serverError(err);
-      } else {
-        return res.send(tattoos);
-      }
-    });
+    })
+      .populateAll()
+      .exec(function (err, tattoos) {
+        if (err) {
+          return res.serverError(err);
+        } else {
+          return res.send(tattoos);
+        }
+      });
   },
   findByStudio: function (req, res) {
     var artistsIds = [];
@@ -144,9 +148,11 @@ module.exports = {
       artists.forEach(function (artist) {
         artistsIds.push(artist.id)
       });
-      Flash.find().where({
-        artist: artistsIds
-      }).exec(function (err, flashes) {
+      Flash.find()
+        .populateAll()
+        .where({
+          artist: artistsIds
+        }).exec(function (err, flashes) {
         if (err) {
           return res.serverError(err);
         } else {
