@@ -9,8 +9,8 @@ var add = function add(req, res) {
   var values = req.body;
   delete req.body.image;
   values.file = req.file;
-  values.elements = JSON.parse(values.elements);
-  values.styles = JSON.parse(values.styles);
+  if ((typeof values.elements) != "object") values.elements = JSON.parse(values.elements);
+  if ((typeof values.styles) != "object") values.styles = JSON.parse(values.styles);
   Tattoo.create(values).exec(function (err, tattoo) {
     if (err) {
       return res.serverError(err);
