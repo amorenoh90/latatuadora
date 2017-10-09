@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-  
+
   attributes: {
     realImageUrl: {
       type: "string"
@@ -55,6 +55,15 @@ module.exports = {
     publicate: {
       type: 'boolean',
       defaultsTo: false
+    },
+    recommended_price: {
+      type: 'float'
+    },
+    final_price: {
+      type: 'float'
+    },
+    price_with_jobber: {
+      type: 'float'
     }
   },
   tableName: 'Flash',
