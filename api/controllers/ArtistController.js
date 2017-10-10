@@ -35,13 +35,11 @@ module.exports = {
       if (err) {
         return res.negotiate(err);
       } else {
-        console.log(updated);
         var doQuery = async () => {
           if (tattoos) await Tattoo.update({id: tattoos}, {artist: updated.id});
 
           updated = await Artist.find({id: updated.id}).populateAll();
           updated = updated[0];
-          console.log(updated);
           return res.send(updated);
         };
 
