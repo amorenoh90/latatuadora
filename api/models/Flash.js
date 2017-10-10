@@ -56,9 +56,6 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
-    recommended_price: {
-      type: 'float'
-    },
     final_price: {
       type: 'float'
     },
