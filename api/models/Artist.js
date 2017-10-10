@@ -53,6 +53,33 @@ module.exports = {
     }
   },
   tableName: 'Artist',
+  beforeCreate: function (values, cb) {
+    if (values.totalSum && values.count) {
+      values.rank = values.totalSum / values.count;
+    }
+
+    if (!values.file) {
+      cb();
+    } else {
+      var dirName = require('path').resolve(sails.config.appPath, 'assets/Artist/images');
+      values.file('image').upload({
+        maxBytes: 10000000,
+        dirname: dirName
+      }, function (err, uploadedFiles) {
+        if (err)
+          cb(err);
+        else {
+          if (uploadedFiles.length === 0) {
+            return cb();
+          }
+          else {
+            values.avatarUrl = uploadedFiles[0].fd;
+            cb();
+          }
+        }
+      });
+    }
+  },
   beforeUpdate: function (values, cb) {
     if (values.totalSum && values.count) {
       values.rank = values.totalSum / values.count;

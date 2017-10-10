@@ -63,7 +63,7 @@ describe('ArtistController', function () {
         assert.equal(res.body.bio, mockartist.bio);
         mockartist.id = res.body.id;
       })
-      .expect(201, done);
+      .expect(200, done);
   });
   it('should update avatar', function (done) {
     request(sails.hooks.http.app)

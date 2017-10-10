@@ -12,6 +12,7 @@ module.exports.routes = {
   'get /address/towns': 'AddressController.towns',
 
   // Artist
+  'post /artist': 'ArtistController.new',
   'put /artist': 'ArtistController.update',
   'post /artist/rate': 'ArtistController.rateArtist',
 
