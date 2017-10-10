@@ -6,21 +6,20 @@
  */
 
 var add = function add(req, res) {
-  Tattoo.create(req.body).exec(function (err, tattoo) {
+  var values = req.body;
+  delete req.body.image;
+  values.file = req.file;
+  if ((typeof values.elements) != "object") values.elements = JSON.parse(values.elements);
+  if ((typeof values.styles) != "object") values.styles = JSON.parse(values.styles);
+  Tattoo.create(values).exec(function (err, tattoo) {
     if (err) {
       return res.serverError(err);
     } else {
-      Tattoo.addImg(req.file, tattoo.id, function (err, done) {
-        if (err) {
-          res.badRequest(err);
-        } else {
-          if (done === null) {
-            return res.send([tattoo])
-          } else {
-            return res.send(done)
-          }
-        }
-      })
+      if (err) {
+        return res.badRequest(err);
+      } else {
+        return res.send(tattoo);
+      }
     }
   });
 };
@@ -30,7 +29,10 @@ var find = function find(req, res) {
     paginator = 0;
     if (req.query.skip) skiper = req.query.skip;
     if (req.query.page) paginator = req.query.page;
-    Tattoo.find({publicate: true}).paginate({page: paginator, limit: skiper}).populate('styles').populate('elements').exec(function (err, tattos) {
+    Tattoo.find({publicate: true}).paginate({
+      page: paginator,
+      limit: skiper
+    }).populate('styles').populate('elements').exec(function (err, tattos) {
       if (err) {
         return res.serverError(err);
       }
@@ -82,7 +84,7 @@ var find = function find(req, res) {
       sql = sql + " AND ";
     }
     sql = sql + " tattoo.publicate = true";
-    
+
     sql += " GROUP BY tattoo.id";
     Tattoo.query(sql, values, function (err, tattooIds) {
       if (err) {
@@ -100,7 +102,7 @@ var find = function find(req, res) {
           if (req.query.page) {
             var paginator = (req.query.page - 1) * req.query.skip;
             var skiper = parseInt(req.query.skip) + parseInt(paginator);
-            
+
             return res.send(tattoos.slice(paginator, skiper))
           } else {
             return res.send(tattoos);
@@ -144,11 +146,12 @@ var update = function update(req, res) {
 };
 var findByStudio = function findByStudio(req, res) {
   var artistsIds = [];
-  Artist.find({studio: req.param('id')}).then(function (artists) {
+  var studio = req.param('id');
+  Artist.find({studio: studio}).then(function (artists) {
     artists.forEach(function (artist) {
       artistsIds.push(artist.id)
     });
-    Tattoo.find().where({artist: artistsIds}).populate('styles').populate('elements').exec(function (err, tattoos) {
+    Tattoo.find().where({artist: artistsIds}).populateAll().exec(function (err, tattoos) {
       if (err) {
         return res.serverError(err);
       } else {
@@ -158,8 +161,8 @@ var findByStudio = function findByStudio(req, res) {
   }).catch(function (err) {
     return res.serverError(err);
   });
-  
-};
+}
+
 module.exports = {
   add: add,
   find: find,

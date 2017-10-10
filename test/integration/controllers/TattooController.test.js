@@ -2,7 +2,7 @@ var request = require('supertest'),
   assert = require('assert');
 
 describe('TattooController', function () {
-  
+
   var mockTattoo = {
       dimensionsX: 3,
       dimensionsY: 4,
@@ -85,19 +85,19 @@ describe('TattooController', function () {
       })
       .expect(200, done);
   });
-  
+
   it("should create a new Tattoo", function (done) {
     request(sails.hooks.http.app)
       .post('/tattoo')
       .set('X-Authorization', mockStudio.token)
       .send(mockTattoo)
       .expect(function (res) {
-        assert.notEqual(res.body[0].id, null);
-        assert.equal(res.body[0].dimensionsY, mockTattoo.dimensionsY);
-        assert.equal(res.body[0].dimensionsX, mockTattoo.dimensionsX);
-        assert.equal(res.body[0].name, mockTattoo.name);
-        assert.equal(res.body[0].partbody, mockTattoo.partbody);
-        mockTattoo.id = res.body[0].id;
+        assert.notEqual(res.body.id, null);
+        assert.equal(res.body.dimensionsY, mockTattoo.dimensionsY);
+        assert.equal(res.body.dimensionsX, mockTattoo.dimensionsX);
+        assert.equal(res.body.name, mockTattoo.name);
+        assert.equal(res.body.partbody, mockTattoo.partbody);
+        mockTattoo.id = res.body.id;
       })
       .expect(200, done);
   });
@@ -114,11 +114,11 @@ describe('TattooController', function () {
       .set('X-Authorization', mockStudio.token)
       .send(mockTattoo2)
       .expect(function (res) {
-        assert.equal(res.body[0].dimensionsY, mockTattoo2.dimensionsY);
-        assert.equal(res.body[0].dimensionsX, mockTattoo2.dimensionsX);
-        assert.equal(res.body[0].name, mockTattoo2.name);
-        assert.equal(res.body[0].partbody, mockTattoo2.partbody);
-        mockTattoo2.id = res.body[0].id;
+        assert.equal(res.body.dimensionsY, mockTattoo2.dimensionsY);
+        assert.equal(res.body.dimensionsX, mockTattoo2.dimensionsX);
+        assert.equal(res.body.name, mockTattoo2.name);
+        assert.equal(res.body.partbody, mockTattoo2.partbody);
+        mockTattoo2.id = res.body.id;
       })
       .expect(200, done);
   });
@@ -131,7 +131,7 @@ describe('TattooController', function () {
         assert.equal(res.body[0].name, mockTattoo2.name);
         assert.equal(res.body[0].elements.length, mockTattoo2.elements.length);
         assert.equal(res.body[0].styles.length, mockTattoo2.styles.length);
-        assert.equal(res.body[0].partbody, mockTattoo2.partbody);
+        assert.equal(res.body[0].partbody.id, mockTattoo2.partbody);
         assert.notEqual(res.body[0].studio, null);
       })
       .expect(200, done);
