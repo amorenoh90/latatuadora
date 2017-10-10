@@ -177,7 +177,7 @@ describe('TattooController', function () {
         assert.equal(res.body[0].name, mockTattoo.name);
         assert.equal(res.body[0].elements.length, mockTattoo.elements.length);
         assert.equal(res.body[0].styles.length, mockTattoo.styles.length);
-        assert.equal(res.body[0].partbody, mockTattoo.partbody);
+        assert.equal(res.body[0].partbody.id, mockTattoo.partbody);
       })
       .expect(200, done);
   });
@@ -192,7 +192,7 @@ describe('TattooController', function () {
         assert.equal(res.body[tattoolength].name, mockTattoo2.name);
         assert.equal(res.body[tattoolength].elements.length, mockTattoo2.elements.length);
         assert.equal(res.body[tattoolength].styles.length, mockTattoo2.styles.length);
-        assert.equal(res.body[tattoolength].partbody, mockTattoo2.partbody);
+        assert.equal(res.body[tattoolength].partbody.id, mockTattoo2.partbody);
       })
       .expect(200, done);
   });
