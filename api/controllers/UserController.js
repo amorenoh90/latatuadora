@@ -90,7 +90,7 @@ function editStudio(values, image, token) {
           if (!studioUser) {
             return done(err);
           } else {
-            studioEdition.userId = studioUser.id;
+            studioEdition.userId = studioUser[0].id;
             studioEdition.addressId = newaddressId;
             Studio.update({
               id: values.studio
