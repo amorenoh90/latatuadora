@@ -1,13 +1,13 @@
-function getAll(values, done) {
-  var error = null;
-
+function getByStudio(values, done) {
+  var studio = values.studio || 0,
+    error = null;
   var doQuery = async () => {
     try {
-      var elements = await Element.find().populateAll();
-    } catch (err) {
-      error = err;
+      var carrousel = await Carrousel.find({studio: studio});
+    } catch (exception) {
+      error = exception;
     } finally {
-      done(error, elements);
+      done(error, carrousel);
     }
   };
 
@@ -15,5 +15,5 @@ function getAll(values, done) {
 }
 
 module.exports = {
-  getAll: getAll
+  getByStudio: getByStudio
 };
