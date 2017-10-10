@@ -144,6 +144,16 @@ var update = function update(req, res) {
     }
   });
 };
+var deleteTattoo = function update(req, res) {
+  var values = req.allParams();
+  Tattoo.destroy({id: values.id}).exec(function (err, deleted) {
+    if (err) {
+      return res.negotiate(err);
+    } else {
+      return res.send(deleted[0]);
+    }
+  });
+};
 var findByStudio = function findByStudio(req, res) {
   var artistsIds = [];
   var studio = req.param('id');
@@ -169,5 +179,6 @@ module.exports = {
   notApproved: notApproved,
   approve: approve,
   update: update,
+  deleteTattoo: deleteTattoo,
   findByStudio: findByStudio
 };
