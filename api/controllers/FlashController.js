@@ -189,6 +189,29 @@ module.exports = {
     });
   },
 
+  get: function (req, res) {
+    FlashService
+      .get({
+        input: req.allParams()
+      }, function (error, result) {
+        if (error) {
+          res.serverError({
+            error: error
+          });
+        } else {
+          if (!result.json_response.flash) {
+            res.send({
+              message: result.messages.pop()
+            });
+          } else {
+            res.send({
+              flash: result.json_response.flash
+            });
+          }
+        }
+      });
+  },
+
   getAll: function (req, res) {
     FlashService
       .getAll({
