@@ -48,7 +48,7 @@ module.exports = {
     });
   },
   update: function (req, res) {
-    var values = req.body;
+    var values = req.allParams();
     if (req.file) {
       values.file = req.file;
     }
@@ -57,6 +57,19 @@ module.exports = {
         return res.negotiate(err);
       } else {
         return res.send(updated);
+      }
+    });
+  },
+  delete: function (req, res) {
+    var values = req.body;
+    if (req.file) {
+      values.file = req.file;
+    }
+    Artist.destroy({id: values.id}).exec(function afterwards(err, deleted) {
+      if (err) {
+        return res.negotiate(err);
+      } else {
+        return res.send(deleted);
       }
     });
   },
