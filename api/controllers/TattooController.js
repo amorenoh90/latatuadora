@@ -112,6 +112,28 @@ var find = function find(req, res) {
     });
   }
 };
+var get = function (req, res) {
+  TattooService
+    .get({
+      input: req.allParams()
+    }, function (error, result) {
+      if (error) {
+        res.serverError({
+          error: error
+        });
+      } else {
+        if (!result.json_response.tattoo) {
+          res.send({
+            message: result.messages.pop()
+          });
+        } else {
+          res.send({
+            tattoo: result.json_response.tattoo
+          });
+        }
+      }
+    });
+};
 var notApproved = function notApproved(req, res) {
   Tattoo.find({publicate: false}).populateAll().exec(function (err, tattoos) {
     if (err) {
@@ -176,6 +198,7 @@ var findByStudio = function findByStudio(req, res) {
 module.exports = {
   add: add,
   find: find,
+  get: get,
   notApproved: notApproved,
   approve: approve,
   update: update,
