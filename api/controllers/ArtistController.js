@@ -47,6 +47,21 @@ module.exports = {
       }
     });
   },
+  get: function (req, res) {
+    var values = req.allParams();
+
+    var doQuery = async () => {
+      var artist = await Artist
+        .find({
+          id: values.id
+        })
+        .populateAll();
+
+      return res.send(artist);
+    };
+
+    doQuery();
+  },
   update: function (req, res) {
     var values = req.allParams();
     if (req.file) {
