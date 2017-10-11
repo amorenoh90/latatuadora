@@ -13,6 +13,7 @@ module.exports.routes = {
 
   // Artist
   'post /artist': 'ArtistController.new',
+  'get /artist/:id': 'ArtistController.get',
   'put /artist': 'ArtistController.update',
   'post /artist/rate': 'ArtistController.rateArtist',
   'delete /artist': 'ArtistController.delete',
@@ -47,6 +48,7 @@ module.exports.routes = {
   // Flash
   'post /flash': 'FlashController.add',
   'get /flash': 'FlashController.find',
+  'get /flash/get': 'FlashController.get',
   'get /flash/filter': 'FlashController.getAll',
   'get /flash/sold': 'FlashController.getSold',
   'get /flash/studio/:id': 'FlashController.findByStudio',
@@ -114,6 +116,7 @@ module.exports.routes = {
   'post /tattoo': 'TattooController.add',
   'delete /tattoo': 'TattooController.deleteTattoo',
   'get /tattoo': 'TattooController.find',
+  'get /tattoo/get': 'TattooController.get',
   'put /tattoo/approve/:id': 'TattooController.approve',
   'put /tattoo/:id': 'TattooController.update',
   'get /tattoo/notApproved': 'TattooController.notApproved',
