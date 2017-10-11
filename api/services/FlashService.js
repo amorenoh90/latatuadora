@@ -24,6 +24,38 @@ function getPropertyArray(array, property) {
 }
 
 module.exports = {
+  get: function (values, done) {
+    var input = values.input || {},
+      result = {
+        messages: [],
+        json_response: {},
+        errors: []
+      };
+
+    var doQuery = async (cb) => {
+      try {
+        var flash = await Flash
+          .find({
+            id: input.flash
+          })
+          .sort('id ASC')
+          .populateAll();
+
+        if (flash.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
+
+        result.json_response.flash = flash[0];
+      } catch (error) {
+        result.messages = [];
+        result.errors.push(error);
+      }
+      finally {
+        cb(result.errors.pop(), result);
+      }
+    };
+
+    doQuery(done);
+  },
+
   getAll: function (options, done) {
     var input = options.input || {},
       result = {
