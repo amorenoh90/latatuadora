@@ -10,24 +10,33 @@ module.exports = {
     var sellimg;
     var values = req.allParams();
 
-    if ((typeof values.elements) != "object") values.elements = JSON.parse(values.elements);
-    if ((typeof values.styles) != "object") values.styles = JSON.parse(values.styles);
+    if ((typeof values.elementId) != "object") values.elementId = JSON.parse(values.elementId);
+    if ((typeof values.styleId) != "object") values.styleId = JSON.parse(values.styleId);
     Flash.create(values)
       .then(function (flash) {
         return flash;
       })
       .then(function (flash) {
-        var element = FlashElement.create({
-          element: req.body.elementId,
-          flashId: flash.id
-        })
+        var elements = [];
+        for (var i = 0; i < values.elementId.length; i++) {
+          elements.push({
+            element: values.elementId[i],
+            flashId: flash.id
+          });
+        }
+        var styles = [];
+        for (var i = 0; i < values.styleId.length; i++) {
+          styles.push({
+            style: values.styleId[i],
+            flashId: flash.id
+          });
+        }
+
+        FlashElement.createEach(elements)
           .then(function (flashelement) {
             return flashelement;
           });
-        var style = FlashStyle.create({
-          style: req.body.styleId,
-          flashId: flash.id
-        })
+        var style = FlashStyle.createEach(styles)
           .then(function (flashstyle) {
             return flashstyle;
           });
