@@ -43,7 +43,28 @@ module.exports = {
 
         if (flash.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
 
-        result.json_response.flash = flash[0];
+        flash = flash[0];
+
+        flash.styles = [];
+        flash.elements = [];
+
+        for (var i = 0; i < flash.styleId.length; i++) {
+          flash.styles[i] = (await Style
+            .find({
+              id: flash.styleId[i].style
+            })
+            .populateAll())[0];
+        }
+
+        for (var i = 0; i < flash.elementId.length; i++) {
+          flash.elements[i] = (await Element
+            .find({
+              id: flash.elementId[i].element
+            })
+            .populateAll())[0];
+        }
+
+        result.json_response.flash = flash;
       } catch (error) {
         result.messages = [];
         result.errors.push(error);
