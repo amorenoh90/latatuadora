@@ -15,6 +15,7 @@ module.exports.routes = {
   'post /artist': 'ArtistController.new',
   'put /artist': 'ArtistController.update',
   'post /artist/rate': 'ArtistController.rateArtist',
+  'delete /artist': 'ArtistController.delete',
 
   // Carrousel
   'post /carrousel': 'CarrouselController.create',
