@@ -89,7 +89,6 @@ module.exports = {
           var flashes = await
             Flash
               .destroy({
-                publicate: true,
                 id: input.flash
               });
 
