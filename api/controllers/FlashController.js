@@ -8,7 +8,11 @@
 module.exports = {
   add: function (req, res) {
     var sellimg;
-    Flash.create(req.body)
+    var values = req.allParams();
+
+    if ((typeof values.elements) != "object") values.elements = JSON.parse(values.elements);
+    if ((typeof values.styles) != "object") values.styles = JSON.parse(values.styles);
+    Flash.create(values)
       .then(function (flash) {
         return flash;
       })
