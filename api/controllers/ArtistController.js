@@ -67,6 +67,12 @@ module.exports = {
     if (req.file) {
       values.file = req.file;
     }
+
+    if ((typeof values.awards) != "object") values.awards = JSON.parse(values.awards);
+    values.tattoos = values.tattoos.split(",");
+    if ((typeof values.styles) != "object") values.styles = JSON.parse(values.styles);
+
+
     Artist.update({id: values.id}, values).exec(function afterwards(err, updated) {
       if (err) {
         return res.negotiate(err);
