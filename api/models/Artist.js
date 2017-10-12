@@ -84,31 +84,28 @@ module.exports = {
     if (values.totalSum && values.count) {
       values.rank = values.totalSum / values.count;
     }
-    if (values.file) {
-      Artist.uploadAvatar(values, function (avatar) {
-        cb();
-      })
-    } else {
+
+    if (!values.file) {
       cb();
-    }
-  },
-  uploadAvatar: function (values, cb) {
-    values.file('avatar').upload({
-      maxBytes: 10000000,
-      dirname: require('path').resolve(sails.config.appPath, 'assets/Artist/images')
-    }, function (err, uploadedFiles) {
-      if (err)
-        cb(err);
-      else {
-        if (uploadedFiles.length === 0) {
-          return cb();
-        }
+    } else {
+      var dirName = require('path').resolve(sails.config.appPath, 'assets/Artist/images');
+      values.file('image').upload({
+        maxBytes: 10000000,
+        dirname: dirName
+      }, function (err, uploadedFiles) {
+        if (err)
+          cb(err);
         else {
-          values.avatarUrl = uploadedFiles[0].fd;
-          cb();
+          if (uploadedFiles.length === 0) {
+            return cb();
+          }
+          else {
+            values.avatarUrl = uploadedFiles[0].fd;
+            cb();
+          }
         }
-      }
-    });
+      });
+    }
   }
 };
 

@@ -70,7 +70,7 @@ describe('ArtistController', function () {
       .put('/artist')
       .set('X-Authorization', mockStudio.token)
       .field("id", mockartist.id)
-      .attach('avatar', sails.config.appPath + "/test/resources/test.jpg")
+      .attach('image', sails.config.appPath + "/test/resources/test.jpg")
       .expect(function (res) {
         assert.notEqual(res.body[0].avatarUrl, null);
       })
