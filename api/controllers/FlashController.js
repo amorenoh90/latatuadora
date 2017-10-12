@@ -67,6 +67,7 @@ module.exports = {
         return res.serverError(err);
       });
   },
+
   find: function (req, res) {
     if (!req.query.style && !req.query.element && !req.query.bodypart) {
       skiper = 6;
@@ -140,6 +141,7 @@ module.exports = {
       });
     }
   },
+
   notApproved: function (req, res) {
     Flash.find({
       publicate: false
@@ -153,6 +155,7 @@ module.exports = {
         }
       });
   },
+
   findByStudio: function (req, res) {
     var artistsIds = [];
     Artist.find({
@@ -176,6 +179,7 @@ module.exports = {
       return res.serverError(err);
     });
   },
+
   approve: function (req, res) {
     var values = req.body;
     Flash.update({
@@ -188,6 +192,7 @@ module.exports = {
       }
     });
   },
+
   update: function (req, res) {
     var values = req.body;
     delete values.approve;
