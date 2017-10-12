@@ -187,7 +187,27 @@ var findByStudio = function findByStudio(req, res) {
       if (err) {
         return res.serverError(err);
       } else {
-        return res.send(tattoos);
+        var doQuery = async () => {
+          for (var i = 0; i < tattoos.length; i++) {
+            for (var j = 0; j < tattoos[i].styles.length; j++) {
+              tattoos[i].styles[j] = (await Style
+                .find({
+                  id: tattoos[i].styles[j].styleId
+                }))[0];
+            }
+
+            for (var j = 0; j < tattoos[i].elements.length; j++) {
+              tattoos[i].elements[j] = (await Style
+                .find({
+                  id: tattoos[i].elements[j].elementId
+                }))[0];
+            }
+          }
+
+          return res.send(tattoos);
+        };
+
+        doQuery();
       }
     });
   }).catch(function (err) {

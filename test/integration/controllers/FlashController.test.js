@@ -12,8 +12,8 @@ describe('FlashController', function () {
       copyrigth: true,
       final_price: 1500,
       price_with_jobber: 1000,
-      styles: [{styleId: 1}, {styleId: 2}, {styleId: 3}],
-      elements: [{elementId: 1}, {elementId: 2}, {elementId: 3}],
+      styleId: [1, 2, 3],
+      elementId: [1, 2, 3],
     },
     mockflash2 = {
       amount: 560.00,
@@ -24,8 +24,8 @@ describe('FlashController', function () {
       copyrigth: true,
       final_price: 2500,
       price_with_jobber: 1800,
-      styles: [{styleId: 1}, {styleId: 2}, {styleId: 3}],
-      elements: [{elementId: 1}, {elementId: 2}, {elementId: 3}],
+      styleId: [1, 2, 3],
+      elementId: [1, 2, 3],
     },
     flashlength = 0,
     mockStudio = {

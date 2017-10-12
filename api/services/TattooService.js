@@ -18,7 +18,25 @@ module.exports = {
 
         if (tattoo.length < 1) result.messages.push(messages.NO_TATTOOS_UNDER_CRITERIA);
 
-        result.json_response.tattoo = tattoo[0];
+        tattoo = tattoo[0];
+
+        for (var i = 0; i < tattoo.styles.length; i++) {
+          tattoo.styles[i] = (await Style
+            .find({
+              id: tattoo.styles[i].styleId
+            })
+            .populateAll())[0];
+        }
+
+        for (var i = 0; i < tattoo.elements.length; i++) {
+          tattoo.elements[i] = (await Element
+            .find({
+              id: tattoo.elements[i].elementId
+            })
+            .populateAll())[0];
+        }
+
+        result.json_response.tattoo = tattoo;
       } catch
         (error) {
         result.messages = [];
