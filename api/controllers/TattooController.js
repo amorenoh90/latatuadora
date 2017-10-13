@@ -158,13 +158,45 @@ var update = function update(req, res) {
   if (values.approve) {
     delete values.approve;
   }
-  Tattoo.update({id: req.params.id}, values).exec(function afterwards(err, updated) {
-    if (err) {
-      return res.negotiate(err);
-    } else {
-      return res.send(updated[0]);
+  values.file = req.file;
+  if ((typeof values.elements) != "object") values.elements = JSON.parse(values.elements);
+  if ((typeof values.styles) != "object") values.styles = JSON.parse(values.styles);
+
+  var doQuery = async () => {
+    await TattooStyle.destroy({tattooId: req.params.id});
+    await TattooElement.destroy({tattooId: req.params.id});
+
+    var elements = [];
+
+    for (var i = 0; i < values.elements.length; i++) {
+      elements.push({
+        elementId: values.elements[i].elementId,
+        tattooId: values.id
+      });
     }
-  });
+
+    var styles = [];
+
+    for (var i = 0; i < values.styles.length; i++) {
+      styles.push({
+        styleId: values.styles[i].styleId,
+        flashId: values.id
+      });
+    }
+
+    await TattooElement.createEach(elements);
+    await TattooStyle.createEach(styles);
+
+    Tattoo.update({id: req.params.id}, values).exec(function afterwards(err, updated) {
+      if (err) {
+        return res.negotiate(err);
+      } else {
+        return res.send(updated[0]);
+      }
+    });
+  }
+
+  doQuery();
 };
 var deleteTattoo = function update(req, res) {
   var values = req.allParams();
