@@ -196,15 +196,52 @@ module.exports = {
   update: function (req, res) {
     var values = req.body;
     delete values.approve;
-    Flash.update({
-      id: values.id
-    }, values).exec(function afterwards(err, updated) {
-      if (err) {
-        return res.negotiate(err);
-      } else {
-        return res.send(updated[0]);
+    if ((typeof values.elements) != "object") values.elements = JSON.parse(values.elements);
+    if ((typeof values.styles) != "object") values.styles = JSON.parse(values.styles);
+
+    var doQuery = async () => {
+      try {
+        await FlashElement.destroy({flashId: values.id});
+        await FlashStyle.destroy({flashId: values.id});
+
+        var elements = [];
+
+        for (var i = 0; i < values.elements.length; i++) {
+          elements.push({
+            element: values.elements[i].elementId,
+            flashId: values.id
+          });
+        }
+
+        var styles = [];
+
+        for (var i = 0; i < values.styles.length; i++) {
+          styles.push({
+            style: values.styles[i].styleId,
+            flashId: values.id
+          });
+        }
+
+        await FlashElement.createEach(elements);
+        await FlashStyle.createEach(styles);
+
+        Flash.update({
+          id: values.id
+        }, values).exec(function afterwards(err, updated) {
+          if (err) {
+            return res.negotiate(err);
+          } else {
+            return res.send(updated[0]);
+          }
+        });
+      } catch (exception) {
+        console.log(exception);
+
+        res.serverError(exception);
       }
-    });
+    };
+
+    doQuery();
   },
 
   get: function (req, res) {
