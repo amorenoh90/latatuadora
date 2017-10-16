@@ -57,6 +57,32 @@ module.exports = {
         })
         .populateAll();
 
+      artist = artist.pop();
+
+      for (var i = 0; i < artist.styles.length; i++) {
+        artist.styles[i] = (await Style
+          .find({
+            id: artist.styles[i].styleId
+          })
+          .populateAll()).pop();
+      }
+
+      for (var i = 0; i < artist.tattoos.length; i++) {
+        artist.tattoos[i] = (await Tattoo
+          .find({
+            id: artist.tattoos[i].id
+          })
+          .populateAll()).pop();
+      }
+
+      for (var i = 0; i < artist.Flashes.length; i++) {
+        artist.Flashes[i] = (await Flash
+          .find({
+            id: artist.Flashes[i].id
+          })
+          .populateAll()).pop();
+      }
+
       return res.send(artist);
     };
 
