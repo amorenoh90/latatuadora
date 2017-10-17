@@ -67,7 +67,7 @@ describe('AwardsController', function () {
         mockartist.id = res.body.id;
         mockAward.artist = res.body.id;
       })
-      .expect(201, done);
+      .expect(200, done);
   });
   it('should add new Award', function (done) {
     request(sails.hooks.http.app)

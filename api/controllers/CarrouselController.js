@@ -20,5 +20,15 @@ module.exports = {
     } else {
       res.badRequest("Image Required");
     }
+  },
+
+  getByStudio: function (req, res) {
+    CarrouselService.getByStudio(req.allParams(), function (err, carrousel) {
+      if (err) {
+        return res.serverError(err);
+      } else {
+        return res.send(carrousel);
+      }
+    });
   }
 };

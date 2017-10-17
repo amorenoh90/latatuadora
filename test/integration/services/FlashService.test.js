@@ -3,13 +3,13 @@ var mocha = require('mocha'),
   mocha_repeat = require('mocha-repeat');
 
 var expected_values = [{
-    amount: 1,
-    flash: {
-      publicate: true,
-      style: 1,
-      element: 1
-    }
-  },
+  amount: 1,
+  flash: {
+    publicate: true,
+    style: 1,
+    element: 1
+  }
+},
   {
     amount: 2,
     flash: {
@@ -38,7 +38,7 @@ var expected_values = [{
 
 mocha_repeat('FlashService', expected_values, function (expected_value) {
   it("should check getting flashes", function (done) {
-    var test = async() => {
+    var test = async () => {
       var flash = await Flash
         .create(expected_value.flash);
 
@@ -71,7 +71,7 @@ mocha_repeat('FlashService', expected_values, function (expected_value) {
 
 describe('FlashService', function () {
   it("should check deleting flashes", function (done) {
-    var test = async() => {
+    var test = async () => {
       try {
         var flashes_before_deletion = await Flash
           .find();
@@ -84,7 +84,7 @@ describe('FlashService', function () {
               }
             }, function (err, result) {
               assert.equal(err, undefined);
-              var doQuery = async() => {
+              var doQuery = async () => {
                 try {
                   var flashes_after_deletion = await Flash
                     .find();
@@ -112,8 +112,13 @@ describe('FlashService', function () {
   });
 
   it("should check publishing flashes", function (done) {
-    var test = async() => {
+    var test = async () => {
       try {
+        await Flash
+          .update({id: {"!": 2}}, {
+            publicate: false
+          });
+
         var flashes_before_publication = await Flash
           .find({
             publicate: true
@@ -122,11 +127,11 @@ describe('FlashService', function () {
         FlashService
           .publish({
             input: {
-              flash: 1
+              flash: 2
             }
           }, function (err, result) {
             assert.equal(err, undefined);
-            var doQuery = async() => {
+            var doQuery = async () => {
               try {
                 var flashes_after_publication = await Flash
                   .find({
@@ -136,7 +141,6 @@ describe('FlashService', function () {
                 assert.notEqual(flashes_after_publication.length + result.json_response.flashes.length, flashes_before_publication.length);
               } catch (exception) {
                 console.log(exception);
-                assert.equal(1, 2);
               } finally {
                 done();
               }

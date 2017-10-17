@@ -2,7 +2,7 @@ var request = require('supertest'),
   assert = require('assert');
 
 describe('TattooController', function () {
-  
+
   var mockTattoo = {
       dimensionsX: 3,
       dimensionsY: 4,
@@ -16,9 +16,9 @@ describe('TattooController', function () {
       dimensionsX: 5,
       dimensionsY: 9,
       name: 'tattoo2',
-      elements: [{elementId: 4}, {elementId: 5}, {elementId: 6}],
       partbody: 5,
-      styles: [{styleId: 4}, {styleId: 5}, {styleId: 6}],
+      elements: [{elementId: 1}, {elementId: 2}, {elementId: 3}],
+      styles: [{styleId: 1}, {styleId: 2}, {styleId: 3}],
       artist: 1
     },
     tattoolength = 0,
@@ -85,22 +85,23 @@ describe('TattooController', function () {
       })
       .expect(200, done);
   });
-  
+
   it("should create a new Tattoo", function (done) {
     request(sails.hooks.http.app)
       .post('/tattoo')
       .set('X-Authorization', mockStudio.token)
       .send(mockTattoo)
       .expect(function (res) {
-        assert.notEqual(res.body[0].id, null);
-        assert.equal(res.body[0].dimensionsY, mockTattoo.dimensionsY);
-        assert.equal(res.body[0].dimensionsX, mockTattoo.dimensionsX);
-        assert.equal(res.body[0].name, mockTattoo.name);
-        assert.equal(res.body[0].partbody, mockTattoo.partbody);
-        mockTattoo.id = res.body[0].id;
+        assert.notEqual(res.body.id, null);
+        assert.equal(res.body.dimensionsY, mockTattoo.dimensionsY);
+        assert.equal(res.body.dimensionsX, mockTattoo.dimensionsX);
+        assert.equal(res.body.name, mockTattoo.name);
+        assert.equal(res.body.partbody, mockTattoo.partbody);
+        mockTattoo.id = res.body.id;
       })
       .expect(200, done);
   });
+
   it("should create a new Tattoo 2", function (done) {
     Tattoo.find().exec(function (err, tattoos) {
       if (err) {
@@ -114,28 +115,48 @@ describe('TattooController', function () {
       .set('X-Authorization', mockStudio.token)
       .send(mockTattoo2)
       .expect(function (res) {
-        assert.equal(res.body[0].dimensionsY, mockTattoo2.dimensionsY);
-        assert.equal(res.body[0].dimensionsX, mockTattoo2.dimensionsX);
-        assert.equal(res.body[0].name, mockTattoo2.name);
-        assert.equal(res.body[0].partbody, mockTattoo2.partbody);
-        mockTattoo2.id = res.body[0].id;
+        assert.equal(res.body.dimensionsY, mockTattoo2.dimensionsY);
+        assert.equal(res.body.dimensionsX, mockTattoo2.dimensionsX);
+        assert.equal(res.body.name, mockTattoo2.name);
+        assert.equal(res.body.partbody, mockTattoo2.partbody);
+        mockTattoo2.id = res.body.id;
       })
       .expect(200, done);
   });
+
   it("should find Tattoo By Studio", function (done) {
-    request(sails.hooks.http.app)
-      .get('/tattoo/studio/' + mockStudio.id)
-      .expect(function (res) {
-        assert.equal(res.body[0].dimensionsY, mockTattoo2.dimensionsY);
-        assert.equal(res.body[0].dimensionsX, mockTattoo2.dimensionsX);
-        assert.equal(res.body[0].name, mockTattoo2.name);
-        assert.equal(res.body[0].elements.length, mockTattoo2.elements.length);
-        assert.equal(res.body[0].styles.length, mockTattoo2.styles.length);
-        assert.equal(res.body[0].partbody, mockTattoo2.partbody);
-        assert.notEqual(res.body[0].studio, null);
-      })
-      .expect(200, done);
+    var doQuery = async () => {
+      var styles = [
+        {name: "Style"},
+        {name: "Style"},
+        {name: "Style"}
+      ];
+      var elements = [
+        {name: "Element"},
+        {name: "Element"},
+        {name: "Element"}
+      ];
+
+      styles = await Style.createEach(styles);
+      elements = await Element.createEach(elements);
+
+      request(sails.hooks.http.app)
+        .get('/tattoo/studio/' + mockStudio.id)
+        .expect(function (res) {
+          assert.equal(res.body[0].dimensionsY, mockTattoo2.dimensionsY);
+          assert.equal(res.body[0].dimensionsX, mockTattoo2.dimensionsX);
+          assert.equal(res.body[0].name, mockTattoo2.name);
+          assert.equal(res.body[0].styles.length, mockTattoo2.styles.length);
+          assert.equal(res.body[0].elements.length, mockTattoo2.elements.length);
+          assert.equal(res.body[0].partbody.id, mockTattoo2.partbody);
+          assert.notEqual(res.body[0].studio, null);
+        })
+        .expect(200, done);
+    };
+
+    doQuery();
   });
+
   it("should create an login a user type admin", function (done) {
     User.create(mockadmin)
       .then(function (admin) {
@@ -155,6 +176,7 @@ describe('TattooController', function () {
         done(err);
       });
   });
+
   it("should approve tattoo", function (done) {
     request(sails.hooks.http.app)
       .put('/tattoo/approve/' + mockTattoo.id)
@@ -166,6 +188,7 @@ describe('TattooController', function () {
       })
       .expect(200, done);
   });
+
   it("should get approved tattoos", function (done) {
     request(sails.hooks.http.app)
       .get('/tattoo')
@@ -177,10 +200,11 @@ describe('TattooController', function () {
         assert.equal(res.body[0].name, mockTattoo.name);
         assert.equal(res.body[0].elements.length, mockTattoo.elements.length);
         assert.equal(res.body[0].styles.length, mockTattoo.styles.length);
-        assert.equal(res.body[0].partbody, mockTattoo.partbody);
+        assert.equal(res.body[0].partbody.id, mockTattoo.partbody);
       })
       .expect(200, done);
   });
+
   it("should get not approved tattoos", function (done) {
     request(sails.hooks.http.app)
       .get('/tattoo/notApproved')
@@ -192,7 +216,7 @@ describe('TattooController', function () {
         assert.equal(res.body[tattoolength].name, mockTattoo2.name);
         assert.equal(res.body[tattoolength].elements.length, mockTattoo2.elements.length);
         assert.equal(res.body[tattoolength].styles.length, mockTattoo2.styles.length);
-        assert.equal(res.body[tattoolength].partbody, mockTattoo2.partbody);
+        assert.equal(res.body[tattoolength].partbody.id, mockTattoo2.partbody);
       })
       .expect(200, done);
   });

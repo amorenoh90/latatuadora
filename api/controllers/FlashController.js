@@ -8,22 +8,35 @@
 module.exports = {
   add: function (req, res) {
     var sellimg;
-    Flash.create(req.body)
+    var values = req.allParams();
+
+    if ((typeof values.elementId) != "object") values.elementId = JSON.parse(values.elementId);
+    if ((typeof values.styleId) != "object") values.styleId = JSON.parse(values.styleId);
+    Flash.create(values)
       .then(function (flash) {
         return flash;
       })
       .then(function (flash) {
-        var element = FlashElement.create({
-          element: req.body.elementId,
-          flashId: flash.id
-        })
+        var elements = [];
+        for (var i = 0; i < values.elementId.length; i++) {
+          elements.push({
+            element: values.elementId[i],
+            flashId: flash.id
+          });
+        }
+        var styles = [];
+        for (var i = 0; i < values.styleId.length; i++) {
+          styles.push({
+            style: values.styleId[i],
+            flashId: flash.id
+          });
+        }
+
+        FlashElement.createEach(elements)
           .then(function (flashelement) {
             return flashelement;
           });
-        var style = FlashStyle.create({
-          style: req.body.styleId,
-          flashId: flash.id
-        })
+        var style = FlashStyle.createEach(styles)
           .then(function (flashstyle) {
             return flashstyle;
           });
@@ -54,6 +67,7 @@ module.exports = {
         return res.serverError(err);
       });
   },
+
   find: function (req, res) {
     if (!req.query.style && !req.query.element && !req.query.bodypart) {
       skiper = 6;
@@ -65,12 +79,14 @@ module.exports = {
       }).paginate({
         page: paginator,
         limit: skiper
-      }).exec(function (err, flash) {
-        if (err) {
-          return res.serverError(err);
-        }
-        return res.send(flash);
-      });
+      })
+        .populateAll()
+        .exec(function (err, flash) {
+          if (err) {
+            return res.serverError(err);
+          }
+          return res.send(flash);
+        });
     } else {
       sql = 'select *, Flash.id from Flash ';
       if (req.query.style) {
@@ -125,17 +141,21 @@ module.exports = {
       });
     }
   },
+
   notApproved: function (req, res) {
     Flash.find({
       publicate: false
-    }).exec(function (err, tattoos) {
-      if (err) {
-        return res.serverError(err);
-      } else {
-        return res.send(tattoos);
-      }
-    });
+    })
+      .populateAll()
+      .exec(function (err, tattoos) {
+        if (err) {
+          return res.serverError(err);
+        } else {
+          return res.send(tattoos);
+        }
+      });
   },
+
   findByStudio: function (req, res) {
     var artistsIds = [];
     Artist.find({
@@ -144,9 +164,11 @@ module.exports = {
       artists.forEach(function (artist) {
         artistsIds.push(artist.id)
       });
-      Flash.find().where({
-        artist: artistsIds
-      }).exec(function (err, flashes) {
+      Flash.find()
+        .populateAll()
+        .where({
+          artist: artistsIds
+        }).exec(function (err, flashes) {
         if (err) {
           return res.serverError(err);
         } else {
@@ -157,6 +179,7 @@ module.exports = {
       return res.serverError(err);
     });
   },
+
   approve: function (req, res) {
     var values = req.body;
     Flash.update({
@@ -169,18 +192,79 @@ module.exports = {
       }
     });
   },
+
   update: function (req, res) {
     var values = req.body;
     delete values.approve;
-    Flash.update({
-      id: values.id
-    }, values).exec(function afterwards(err, updated) {
-      if (err) {
-        return res.negotiate(err);
-      } else {
-        return res.send(updated[0]);
+    if ((typeof values.elements) != "object") values.elements = JSON.parse(values.elements);
+    if ((typeof values.styles) != "object") values.styles = JSON.parse(values.styles);
+
+    var doQuery = async () => {
+      try {
+        await FlashElement.destroy({flashId: values.id});
+        await FlashStyle.destroy({flashId: values.id});
+
+        var elements = [];
+
+        for (var i = 0; i < values.elements.length; i++) {
+          elements.push({
+            element: values.elements[i].elementId,
+            flashId: values.id
+          });
+        }
+
+        var styles = [];
+
+        for (var i = 0; i < values.styles.length; i++) {
+          styles.push({
+            style: values.styles[i].styleId,
+            flashId: values.id
+          });
+        }
+
+        await FlashElement.createEach(elements);
+        await FlashStyle.createEach(styles);
+
+        Flash.update({
+          id: values.id
+        }, values).exec(function afterwards(err, updated) {
+          if (err) {
+            return res.negotiate(err);
+          } else {
+            return res.send(updated[0]);
+          }
+        });
+      } catch (exception) {
+        console.log(exception);
+
+        res.serverError(exception);
       }
-    });
+    };
+
+    doQuery();
+  },
+
+  get: function (req, res) {
+    FlashService
+      .get({
+        input: req.allParams()
+      }, function (error, result) {
+        if (error) {
+          res.serverError({
+            error: error
+          });
+        } else {
+          if (!result.json_response.flash) {
+            res.send({
+              message: result.messages.pop()
+            });
+          } else {
+            res.send({
+              flash: result.json_response.flash
+            });
+          }
+        }
+      });
   },
 
   getAll: function (req, res) {
