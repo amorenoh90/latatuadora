@@ -4,8 +4,8 @@
 var request = require('supertest'),
   assert = require('assert');
 
-describe('PaymentsControllerTest', function () {
-  
+describe('PaymentsControllerTest', function ()  {
+
   var mock = {
       payment_type: "OXXO",
       itemType: 1

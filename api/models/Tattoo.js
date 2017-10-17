@@ -57,10 +57,35 @@ module.exports = {
     }
   },
   tableName: 'Tattoo',
+  beforeCreate: function (values, cb) {
+    if (!values.file) {
+      cb();
+    } else {
+      var dirName = require('path').resolve(sails.config.appPath, 'assets/Tattoo/images');
+      values.file('image').upload({
+        maxBytes: 10000000,
+        dirname: dirName
+      }, function (err, uploadedFiles) {
+        if (err)
+          cb(err);
+        else {
+          if (uploadedFiles.length === 0) {
+            return cb();
+          }
+          else {
+            values.image = uploadedFiles[0].fd;
+            cb();
+          }
+        }
+      });
+    }
+  },
   addImg: function (image, tattoo, cb) {
-    image('image').upload({
+    var dirName = require('path').resolve(sails.config.appPath, 'assets/Tattoo/images');
+    var imageFile = image('image');
+    imageFile.upload({
       maxBytes: 10000000,
-      dirname: require('path').resolve(sails.config.appPath, 'assets/Tattoo/images')
+      dirname: dirName
     }, function (err, uploadedFiles) {
       if (err)
         return cb(err);

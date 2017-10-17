@@ -90,7 +90,7 @@ function editStudio(values, image, token) {
           if (!studioUser) {
             return done(err);
           } else {
-            studioEdition.userId = studioUser.id;
+            studioEdition.userId = studioUser[0].id;
             studioEdition.addressId = newaddressId;
             Studio.update({
               id: values.studio
@@ -157,27 +157,31 @@ function editFreelancer(values, image, token) {
     if (err) {
       return done(err);
     } else {
-      freelanceruser = freelanceruser[0];
-      newfreelancer.user = freelanceruser.id;
-      Freelancer.update({
-        user: newfreelancer.user
-      }, newfreelancer).exec(function (err, freelancer) {
-        if (err) {
-          return done(err);
-        } else {
-          for (i in values.zones) {
-            values.zones[i].freelancerId = freelancer.id;
-            Zone.create(values.zones[i]).exec(function (err) {
-              if (err) {
-                return done(err);
-              }
+      if (freelanceruser.length < 1) {
+        return done(null, constants.messages.NO_SUCH_USER);
+      } else {
+        freelanceruser = freelanceruser[0];
+        newfreelancer.user = freelanceruser.id;
+        Freelancer.update({
+          user: newfreelancer.user
+        }, newfreelancer).exec(function (err, freelancer) {
+          if (err) {
+            return done(err);
+          } else {
+            for (i in values.zones) {
+              values.zones[i].freelancerId = freelancer.id;
+              Zone.create(values.zones[i]).exec(function (err) {
+                if (err) {
+                  return done(err);
+                }
+              });
+            }
+            Freelancer.addProfileImg(image, freelancer.id, function (cb) {
+              return done(null, JWT.createToken(freelanceruser));
             });
           }
-          Freelancer.addProfileImg(image, freelancer.id, function (cb) {
-            return done(null, JWT.createToken(freelanceruser));
-          });
-        }
-      });
+        });
+      }
     }
   });
 }
@@ -283,6 +287,27 @@ module.exports = {
 
     UserService
       .get(args, function (err, result) {
+        if (err) {
+          res.serverError({
+            err: err,
+            result: result
+          });
+        } else {
+          res.send({
+            result: result
+          });
+        }
+      });
+  },
+  getById: function (req, res) {
+    var args = {
+        req: req,
+        input: req.allParams()
+      },
+      result = {};
+
+    UserService
+      .getById(args, function (err, result) {
         if (err) {
           res.serverError({
             err: err,

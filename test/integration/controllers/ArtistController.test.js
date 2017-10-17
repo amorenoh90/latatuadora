@@ -2,7 +2,7 @@ var request = require('supertest'),
   assert = require('assert');
 
 describe('ArtistController', function () {
-  
+
   var mockartist = {
       name: 'The Artist',
       bio: 'I Am Artist, The Artist'
@@ -41,7 +41,7 @@ describe('ArtistController', function () {
       suburb: "Roma",
       town: "Cuahutemoc"
     };
-  
+
   it("should create a new Studio (prerequisites)", function (done) {
     request(sails.hooks.http.app)
       .post('/logup')
@@ -63,19 +63,19 @@ describe('ArtistController', function () {
         assert.equal(res.body.bio, mockartist.bio);
         mockartist.id = res.body.id;
       })
-      .expect(201, done);
+      .expect(200, done);
   });
   it('should update avatar', function (done) {
     request(sails.hooks.http.app)
       .put('/artist')
       .set('X-Authorization', mockStudio.token)
       .field("id", mockartist.id)
-      .attach('avatar', sails.config.appPath + "/test/resources/test.jpg")
+      .attach('image', sails.config.appPath + "/test/resources/test.jpg")
       .expect(function (res) {
         assert.notEqual(res.body[0].avatarUrl, null);
       })
       .expect(200, done);
-    
+
   });
   it('should remove artist', function (done) {
     var url = '/artist/' + mockartist.id;
@@ -88,7 +88,7 @@ describe('ArtistController', function () {
         assert.equal(res.body.bio, mockartist.bio);
       })
       .expect(200, done);
-    
+
   });
-  
+
 });

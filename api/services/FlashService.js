@@ -24,6 +24,59 @@ function getPropertyArray(array, property) {
 }
 
 module.exports = {
+  get: function (values, done) {
+    var input = values.input || {},
+      result = {
+        messages: [],
+        json_response: {},
+        errors: []
+      };
+
+    var doQuery = async (cb) => {
+      try {
+        var flash = await Flash
+          .find({
+            id: input.flash
+          })
+          .sort('id ASC')
+          .populateAll();
+
+        if (flash.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
+
+        flash = flash[0];
+
+        flash.styles = [];
+        flash.elements = [];
+
+        for (var i = 0; i < flash.styleId.length; i++) {
+          flash.styles[i] = (await Style
+            .find({
+              id: flash.styleId[i].style
+            })
+            .populateAll())[0];
+        }
+
+        for (var i = 0; i < flash.elementId.length; i++) {
+          flash.elements[i] = (await Element
+            .find({
+              id: flash.elementId[i].element
+            })
+            .populateAll())[0];
+        }
+
+        result.json_response.flash = flash;
+      } catch (error) {
+        result.messages = [];
+        result.errors.push(error);
+      }
+      finally {
+        cb(result.errors.pop(), result);
+      }
+    };
+
+    doQuery(done);
+  },
+
   getAll: function (options, done) {
     var input = options.input || {},
       result = {
@@ -35,43 +88,63 @@ module.exports = {
       input.style = input.style || 0;
 
     var doQuery = async (cb) => {
-        try {
-          var flash_elements = await
-              FlashElement
-                .find({
-                  element: input.element
-                }),
-            flash_styles = await
-              FlashStyle
-                .find({
-                  style: input.style
-                });
-
-          var flashes = flash_elements.concat(flash_styles);
-          flashes = getPropertyArray(flashes, "flashId");
-
-          flashes = await
-            Flash
+      try {
+        var flash_elements = await
+            FlashElement
               .find({
-                publicate: true,
-                id: flashes
+                element: input.element
+              }),
+          flash_styles = await
+            FlashStyle
+              .find({
+                style: input.style
+              });
+
+        var flashes = flash_elements.concat(flash_styles);
+        flashes = getPropertyArray(flashes, "flashId");
+
+        flashes = await
+          Flash
+            .find({
+              publicate: true,
+              id: flashes
+            })
+            .sort('createdAt DESC')
+            .populateAll();
+
+        if (flashes.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
+
+        for (var j = 0; j < flashes.length; j++) {
+          flashes[j].styles = [];
+          flashes[j].elements = [];
+
+          for (var i = 0; i < flashes[j].styleId.length; i++) {
+            flashes[j].styles[i] = (await Style
+              .find({
+                id: flashes[j].styleId[i].style
               })
-              .sort('createdAt DESC')
-              .populateAll();
+              .populateAll())[0];
+          }
 
-          if (flashes.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
+          for (var i = 0; i < flashes[j].elementId.length; i++) {
+            flashes[j].elements[i] = (await Element
+              .find({
+                id: flashes[j].elementId[i].element
+              })
+              .populateAll())[0];
+          }
+        }
 
-          result.json_response.flashes = flashes;
-        } catch
-          (error) {
-          result.messages = [];
-          result.errors.push(error);
-        }
-        finally {
-          cb(result.errors.pop(), result);
-        }
+        result.json_response.flashes = flashes;
+      } catch
+        (error) {
+        result.messages = [];
+        result.errors.push(error);
       }
-    ;
+      finally {
+        cb(result.errors.pop(), result);
+      }
+    };
 
     doQuery(done);
   },
@@ -89,7 +162,6 @@ module.exports = {
           var flashes = await
             Flash
               .destroy({
-                publicate: true,
                 id: input.flash
               });
 
@@ -117,27 +189,24 @@ module.exports = {
       };
 
     var doQuery = async (cb) => {
-        try {
-          var flashes = await
-            Flash
-              .update({
-                publicate: false,
-                id: input.flash
-              }, {
-                publicate: true
-              });
+      try {
+        var flashes = await Flash
+          .update({
+            id: input.flash
+          }, {
+            publicate: true
+          });
 
-          if (flashes.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
+        if (flashes.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
 
-          result.json_response.flashes = flashes;
-        } catch (error) {
-          result.messages = [];
-          result.errors.push(error);
-        } finally {
-          cb(result.errors.pop(), result);
-        }
+        result.json_response.flashes = flashes;
+      } catch (error) {
+        result.messages = [];
+        result.errors.push(error);
+      } finally {
+        cb(result.errors.pop(), result);
       }
-    ;
+    };
 
     doQuery(done);
   },
@@ -156,9 +225,31 @@ module.exports = {
             Flash
               .find({
                 sell: true
-              });
+              })
+              .populateAll();
 
           if (flashes.length < 1) result.messages.push(messages.NO_FLASHES_UNDER_CRITERIA);
+
+          for (var j = 0; j < flashes.length; j++) {
+            flashes[j].styles = [];
+            flashes[j].elements = [];
+
+            for (var i = 0; i < flashes[j].styleId.length; i++) {
+              flashes[j].styles[i] = (await Style
+                .find({
+                  id: flashes[j].styleId[i].style
+                })
+                .populateAll())[0];
+            }
+
+            for (var i = 0; i < flashes[j].elementId.length; i++) {
+              flashes[j].elements[i] = (await Element
+                .find({
+                  id: flashes[j].elementId[i].element
+                })
+                .populateAll())[0];
+            }
+          }
 
           result.json_response.flashes = flashes;
         } catch (error) {

@@ -9,7 +9,7 @@ describe('CalculatorController', function () {
     minAmount: 800,
     maxAmount: 1000,
     styleId: 1,
-    bodypartId: 1,
+    bodypartId: 7,
     minRange: 20,
     maxRange: 25
   };
@@ -17,7 +17,7 @@ describe('CalculatorController', function () {
     minAmount: 1000,
     maxAmount: 1200,
     styleId: 1,
-    bodypartId: 1,
+    bodypartId: 7,
     minRange: 20,
     maxRange: 25
   };
@@ -25,7 +25,7 @@ describe('CalculatorController', function () {
     minAmount: 600,
     maxAmount: 800,
     styleId: 1,
-    bodypartId: 1,
+    bodypartId: 7,
     minRange: 15,
     maxRange: 20
   };
@@ -34,22 +34,22 @@ describe('CalculatorController', function () {
     calcValue2,
     calcValue3
   ];
-  
+
   before(function () {
     Style.findOrCreate({name: 'Religioso'}).exec(function (err, style) {
       BodyPart.findOrCreate({name: 'Brazo'}).exec(function (err, bodyPart) {
         calcValue1.bodypartId = bodyPart.id;
         calcValue1.styleId = style.id;
-        
+
         calcValue2.bodypartId = bodyPart.id;
         calcValue2.styleId = style.id;
-        
+
         calcValue3.bodypartId = bodyPart.id;
         calcValue3.styleId = style.id;
       });
     });
   });
-  
+
   it("should add new Calculator", function (done) {
     request(sails.hooks.http.app)
       .post('/calculator')
