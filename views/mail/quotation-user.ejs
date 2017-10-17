@@ -33,14 +33,17 @@
                 <p>Comentarios:
                   <%= quotation.comments %>
                 </p>
+                <% if(quotation.styleId.name){%> 
                 <p>Estilo:
-                  <%= quotation.styleId.name %>
+                   <%= quotation.styleId.name %>
                 </p>
+                <% } %>
+                <% if(quotation.bodypartId.name){%> 
                 <p>Parte del cuerpo:
                   <%= quotation.bodypartId.name %>
                 </p>
+                <% } %>
                 <br>
-
                 <% if(quotation.minAmount && quotation.maxAmount){ %>
                   Tu tatuaje tiene un rango de precio estimado a
                   <%= quotation.minAmount %> -
