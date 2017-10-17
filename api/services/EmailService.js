@@ -15,29 +15,33 @@ var send = function (values, done) {
   //var toRecipients = ['latatuadora@latatuadora.com', (values.to || '')].join(",");
   //var toRecipients = ['alberto@blick.mx', (values.to || '')].join(",");
   var toRecipients = ['dyll240719@gmail.com', (values.to || '')].join(",");
-
-  if (values.template) {
-    contentHtml = TemplateService.retrieveContent(values.template, values.model);
-  }
-
-  var data = {
-    from: 'latatuadora@latatuadora.com',
-    to: toRecipients,
-    subject: values.subject,
-    html: contentHtml ? contentHtml : values.text
-  };
-  mailgun.messages().send(data, function (err, body) {
-    if (done) {
-      if (err) {
-        done(err, null)
-      } else {
-        var message = {
-          "message": "email sended"
-        };
-        done(null, message);
-      }
+  try {
+    if (values.template) {
+      contentHtml = TemplateService.retrieveContent(values.template, values.model);
     }
-  });
+
+    var data = {
+      from: 'latatuadora@latatuadora.com',
+      to: toRecipients,
+      subject: values.subject,
+      html: contentHtml ? contentHtml : values.text
+    };
+    mailgun.messages().send(data, function (err, body) {
+      if (done) {
+        if (err) {
+          done(err, null)
+        } else {
+          var message = {
+            "message": "email sended"
+          };
+          done(null, message);
+        }
+      }
+    });
+  } catch(e) {
+    console.error(e);
+    done(null, e);
+  }
 };
 
 module.exports = {
