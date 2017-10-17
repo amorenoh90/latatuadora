@@ -21,12 +21,18 @@
           <p>Comentarios:
             <%= quotation.comments %>
           </p>
+          
+          <% if(quotation.styleId.name){%> 
           <p>Estilo:
-            <%= quotation.styleId.name %>
+             <%= quotation.styleId.name %>
           </p>
+          <% } %>
+
+          <% if(quotation.bodypartId.name){%> 
           <p>Parte del cuerpo:
             <%= quotation.bodypartId.name %>
           </p>
+          <% } %>
 
           Datos del cliente :
 
