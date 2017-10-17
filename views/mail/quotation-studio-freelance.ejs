@@ -22,13 +22,12 @@
             <%= quotation.comments %>
           </p>
           
-          <% if(quotation.styleId.name){%> 
+          <% if(quotation.styleId !== undefined && quotation.styleId.name !== undefined){%> 
           <p>Estilo:
              <%= quotation.styleId.name %>
           </p>
           <% } %>
-
-          <% if(quotation.bodypartId.name){%> 
+          <% if(quotation.bodypartId !== undefined && quotation.bodypartId.name !== undefined){%> 
           <p>Parte del cuerpo:
             <%= quotation.bodypartId.name %>
           </p>
