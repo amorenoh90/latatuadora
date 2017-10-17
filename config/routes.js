@@ -135,4 +135,5 @@ module.exports.routes = {
   'post /login': 'UserController.login',
   'get /user/findBy': 'UserController.findBy',
   'get /user/get': 'UserController.get',
+  'get /user/getById': 'UserController.getById',
 };
