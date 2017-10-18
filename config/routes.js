@@ -101,6 +101,7 @@ module.exports.routes = {
   // Quotation
   'post /quotation': 'QuotationController.quotation',
   'get /quotation/studio': 'QuotationController.findByStudio',
+  'get /quotation/freelancer': 'QuotationController.findByFreelance',
   'get /quotation': 'QuotationController.find',
 
   // Studio
