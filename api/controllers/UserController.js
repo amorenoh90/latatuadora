@@ -299,6 +299,26 @@ module.exports = {
         }
       });
   },
+  getAll: function (req, res) {
+    var args = {
+        req: req,
+        input: req.allParams()
+      };
+
+    UserService
+      .getAll(args, function (err, result) {
+        if (err) {
+          res.serverError({
+            err: err,
+            result: result
+          });
+        } else {
+          res.send({
+            result: result
+          });
+        }
+      });
+  },
   getById: function (req, res) {
     var args = {
         req: req,
