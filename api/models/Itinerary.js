@@ -9,6 +9,9 @@ module.exports = {
     },
     datetime: {
       type: "datetime"
+    },
+    comment: {
+      type: "string"
     }
   }
 };
