@@ -67,7 +67,7 @@ module.exports = {
     var studio = req.headers.studio.id;
     Quotation.find({
       studioId: studio
-    }).populate(['styleId', 'bodypartId', 'userId']).exec(function (err, quotations) {
+    }).populate(['styleId', 'bodypartId', 'userId', 'references']).exec(function (err, quotations) {
       if (err) {
         return res.serverError(err);
       } else {
@@ -79,7 +79,7 @@ module.exports = {
     var freelancerId = req.headers.freelancer.id;
     Quotation.find({
       freelancerId: freelancerId
-    }).populate(['styleId', 'bodypartId', 'userId']).exec(function (err, quotations) {
+    }).populate(['styleId', 'bodypartId', 'userId', 'references']).exec(function (err, quotations) {
       if (err) {
         return res.serverError(err);
       } else {
