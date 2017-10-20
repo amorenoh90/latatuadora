@@ -134,6 +134,28 @@ var get = function (req, res) {
       }
     });
 };
+var all = function (req, res) {
+  TattooService
+    .all({
+      input: req.allParams()
+    }, function (error, result) {
+      if (error) {
+        res.serverError({
+          error: error
+        });
+      } else {
+        if (!result.json_response.tattoos) {
+          res.send({
+            message: result.messages.pop()
+          });
+        } else {
+          res.send({
+            tattoos: result.json_response.tattoos
+          });
+        }
+      }
+    });
+};
 var notApproved = function notApproved(req, res) {
   Tattoo.find({publicate: false}).populateAll().exec(function (err, tattoos) {
     if (err) {
@@ -159,8 +181,8 @@ var update = function update(req, res) {
     delete values.approve;
   }
   values.file = req.file;
-  if ((typeof values.elements) != "object") values.elements = JSON.parse(values.elements);
-  if ((typeof values.styles) != "object") values.styles = JSON.parse(values.styles);
+  if (values.elements) if ((typeof values.elements) != "object" && (typeof values.elements) != "undefined") values.elements = JSON.parse(values.elements);
+  if (values.styles) if ((typeof values.styles) != "object" && (typeof values.styles) != "undefined") values.styles = JSON.parse(values.styles);
 
   var doQuery = async () => {
     await TattooStyle.destroy({tattooId: req.params.id});
@@ -251,6 +273,7 @@ module.exports = {
   add: add,
   find: find,
   get: get,
+  all: all,
   notApproved: notApproved,
   approve: approve,
   update: update,

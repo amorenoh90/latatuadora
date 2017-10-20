@@ -49,4 +49,35 @@ module.exports = {
 
     doQuery(done);
   },
+  all: function (values, done) {
+    var input = values.input || {},
+      result = {
+        messages: [],
+        json_response: {},
+        errors: []
+      };
+
+    var doQuery = async (cb) => {
+      try {
+        var tattoos = await Tattoo
+          .find()
+          .sort('id ASC')
+          //.limit(10)
+          .populateAll();
+
+        if (tattoos.length < 1) result.messages.push(messages.NO_TATTOOS_UNDER_CRITERIA);
+
+        result.json_response.tattoos = tattoos;
+      } catch
+        (error) {
+        result.messages = [];
+        result.errors.push(error);
+      }
+      finally {
+        cb(result.errors.pop(), result);
+      }
+    };
+
+    doQuery(done);
+  },
 };
