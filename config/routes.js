@@ -118,6 +118,7 @@ module.exports.routes = {
   'post /tattoo': 'TattooController.add',
   'delete /tattoo': 'TattooController.deleteTattoo',
   'get /tattoo': 'TattooController.find',
+  'get /tattoo/all': 'TattooController.all',
   'get /tattoo/get': 'TattooController.get',
   'put /tattoo/approve/:id': 'TattooController.approve',
   'put /tattoo/:id': 'TattooController.update',
