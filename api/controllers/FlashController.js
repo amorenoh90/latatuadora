@@ -10,8 +10,8 @@ module.exports = {
     var sellimg;
     var values = req.allParams();
 
-    if ((typeof values.elementId) != "object") values.elementId = JSON.parse(values.elementId);
-    if ((typeof values.styleId) != "object") values.styleId = JSON.parse(values.styleId);
+    if (values.elementId) if ((typeof values.elementId) != "object") values.elementId = JSON.parse(values.elementId);
+    if (values.styleId) if ((typeof values.styleId) != "object") values.styleId = JSON.parse(values.styleId);
     Flash.create(values)
       .then(function (flash) {
         return flash;
@@ -43,25 +43,7 @@ module.exports = {
         return flash;
       })
       .then(function (flash) {
-        Flash.addRealImg(req.file, flash.id, function (err, real) {
-          if (err) {
-            return res.serverError(err);
-          }
-          if (real) {
-            flash.realImageUrl = real[0].realImageUrl;
-          }
-          Flash.addSellImg(req.file, flash.id, function (err, sell) {
-            if (err) {
-              res.serverError(err);
-            }
-            if (sell === null) {
-              return res.send(flash);
-            } else {
-              flash.sellImageUrl = sell[0].sellImageUrl;
-              return res.send(flash);
-            }
-          });
-        });
+        return res.send(flash);
       })
       .catch(function (err) {
         return res.serverError(err);
