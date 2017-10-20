@@ -141,34 +141,39 @@ module.exports = {
           json_response: {},
           errors: []
         },
-        query = {
-          userType: values.userType
-        },
-        freelancers = await
-          FreelanceStyle
-            .find({styleId: values.style})
-            .populateAll(),
-        studios = await
-          StudioStyle
-            .find({styleId: values.style})
-            .populateAll();
+        query = {},
+        freelancers,
+        studios,
+        towns;
 
-      freelancers = getPropertyArray(freelancers, "freelanceId", "user"),
-        studios = getPropertyArray(studios, "studioId", "userId");
+      if (values.neighborhood == "undefined") delete values.neighborhood;
+      if (values.style == "undefined") delete values.style;
+      if (values.userType == "undefined") delete values.userType;
 
       values.userType = values.userType || 6;
       values.userType = parseInt(values.userType);
 
       switch (values.userType) {
         case 6:
+          freelancers = await
+            FreelanceStyle
+              .find({styleId: values.style})
+              .populateAll(),
+            studios = await
+              StudioStyle
+                .find({styleId: values.style})
+                .populateAll();
+
+          freelancers = getPropertyArray(freelancers, "freelanceId", "user"),
+            studios = getPropertyArray(studios, "studioId", "userId");
+
           delete query.userType;
 
-          query.or = [
-            {id: studios},
-            {id: freelancers}
-          ];
+          query.id = studios.concat(freelancers);
 
           if (!values.style) {
+            delete query.id;
+
             query.or = [
               {userType: constants.userType.studio},
               {userType: constants.userType.freelance}];
@@ -178,12 +183,17 @@ module.exports = {
         case 3:
           delete query.userType;
 
-          query.or = [
-            {id: studios}
-          ];
+          studios = await
+            StudioStyle
+              .find({styleId: values.style})
+              .populateAll();
+
+          studios = getPropertyArray(studios, "studioId", "userId");
+
+          query.id = studios;
 
           if (!values.style) {
-            delete query.or;
+            delete query.id;
             query.userType = constants.userType.studio;
           }
           break;
@@ -191,12 +201,17 @@ module.exports = {
         case 4:
           delete query.userType;
 
-          query.or = [
-            {id: freelancers}
-          ];
+          freelancers = await
+            FreelanceStyle
+              .find({styleId: values.style})
+              .populateAll();
+
+          freelancers = getPropertyArray(freelancers, "freelanceId", "user");
+
+          query.id = freelancers;
 
           if (!values.style) {
-            delete query.or;
+            delete query.id;
             query.userType = constants.userType.freelance;
           }
           break;
@@ -205,10 +220,26 @@ module.exports = {
           break;
       }
 
+      if (values.neighborhood) {
+        towns = await
+          Town
+            .find({
+              name: {
+                contains: values.neighborhood
+              }
+            });
+
+        towns = _.pluck(towns, "id");
+
+        towns = await Address
+          .find({townId: towns});
+
+        query.addressId = _.pluck(towns, "id");
+      }
+
       var users = await
         User
-          .find()
-          .where(query)
+          .find(query)
           .sort('createdAt DESC');
 
       if (users.length < 1) result.messages.push(messages.NO_USERS_UNDER_CRITERIA);
