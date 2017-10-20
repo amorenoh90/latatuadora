@@ -118,7 +118,7 @@ module.exports = {
       },
       first_date = new Date();
 
-    var doQuery = async() => {
+    var doQuery = async () => {
       try {
         var jobbers = await Studio
           .find()
@@ -167,5 +167,48 @@ module.exports = {
     };
 
     doQuery();
+  },
+
+  getArtists: async function (options, done) {
+    try {
+      var input = options.input || {},
+        result = {
+          messages: [],
+          json_response: {},
+          errors: []
+        };
+
+      var artists = await
+        Artist
+          .find({
+            studio: input.id
+          })
+          .sort('createdAt DESC')
+          .populateAll();
+
+      if (artists.length < 1) {
+        result.messages.push(messages.NO_USERS_UNDER_CRITERIA);
+        result.json_response.artists = [];
+      } else {
+
+        for (var i in artists) {
+          artists[i].styles = _.pluck(artists[i].styles, "styleId");
+
+          artists[i].styles = await
+            Style
+              .find({
+                id: artists[i].styles
+              });
+        }
+
+        result.json_response.artists = artists;
+      }
+    } catch (error) {
+      result.messages = [];
+      console.log(error);
+      result.errors.push(err);
+    } finally {
+      done(result.errors.pop(), result);
+    }
   }
 };

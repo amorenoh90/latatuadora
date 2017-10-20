@@ -109,6 +109,7 @@ module.exports.routes = {
   'get /studio': 'StudioController.getAll',
   'get /studio/nearby': 'StudioController.getNearby',
   'get /studio/paid': 'StudioController.getPaid',
+  'get /studio/getArtists/:id': 'StudioController.getArtists',
 
   // Styles
   'get /styles': 'StyleController.find',
