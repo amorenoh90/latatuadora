@@ -175,32 +175,33 @@ module.exports = {
           }
           break;
 
+        case 3:
+          delete query.userType;
+
+          query.or = [
+            {id: studios}
+          ];
+
+          if (!values.style) {
+            delete query.or;
+            query.userType = constants.userType.studio;
+          }
+          break;
+
+        case 4:
+          delete query.userType;
+
+          query.or = [
+            {id: freelancers}
+          ];
+
+          if (!values.style) {
+            delete query.or;
+            query.userType = constants.userType.freelance;
+          }
+          break;
+
         default:
-          if (query.userType == 3) {
-            delete query.userType;
-
-            query.or = [
-              {id: studios}
-            ];
-
-            if (!values.style) {
-              delete query.or;
-              query.userType = constants.userType.studio;
-            }
-          }
-
-          if (query.userType == 4) {
-            delete query.userType;
-
-            query.or = [
-              {id: freelancers}
-            ];
-
-            if (!values.style) {
-              delete query.or;
-              query.userType = constants.userType.freelance;
-            }
-          }
           break;
       }
 
@@ -236,5 +237,4 @@ module.exports = {
       return done(exception, result);
     }
   }
-}
-;
+};
