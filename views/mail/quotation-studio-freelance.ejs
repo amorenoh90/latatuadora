@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body class="container">
+  <header>
+    <% include _header.ejs %>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+      <% var quotation = model.quotation %>
+        Hola
+        <%= quotation.freelancer ? quotation.freelancer.name : quotation.studio.name %>, Acabas de recibir la solicitud de cotización siguiente : Datos del pedido del cliente :
+
+          <p>Ancho:
+            <%= quotation.dimensionsY %>
+          </p>
+          <p>Largo:
+            <%= quotation.dimensionsX %>
+          </p>
+          <p>Comentarios:
+            <%= quotation.comments %>
+          </p>
+          
+          <% if(quotation.styleId !== undefined){%> 
+          <p>Estilo:
+             <%= quotation.styleId.name || '' %>
+          </p>
+          <% } %>
+          <% if(quotation.bodypartId !== undefined){%> 
+          <p>Parte del cuerpo:
+            <%= quotation.bodypartId.name || ''%>
+          </p>
+          <% } %>
+
+          Datos del cliente :
+
+          <p>Nombre:
+            <%= quotation.user.name %>
+              <%= quotation.user.lastname %>
+          </p>
+          <p>Teléfono:
+            <%= quotation.user.telephone %>
+          </p>
+          <p>Email:
+            <%= quotation.user.email %>
+          </p>
+
+          Te recomendamos contactar el cliente via mail y whatsapp para un trato mas directo con éste y aumentar tu posibilidad de
+          cerrar la cita. Nos puedes contactar por teléfono o whatsapp al 55 43 36 53 03 si tienees algunas dudas o por mail
+          a contacto@latatuadora.com de lunes a viernes de 9 a 18.
+    </div>
+  </main>
+
+  <footer>
+    <% include _footer.ejs %>
+  </footer>
+
+</body>
+
+</html>

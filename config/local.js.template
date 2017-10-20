@@ -1,0 +1,18 @@
+module.exports.connections = {
+
+  latatuadoraMysqlServer: {
+    adapter: 'sails-mysql',
+    host: 'HOST',
+    user: 'USER',
+    password: 'PASSWORD',
+    database: 'DB_NAME'
+  },
+
+  testInMemoryDatabase: {
+    adapter: 'sails-mysql',
+    host: 'HOST',
+    user: 'USER',
+    password: 'PASSWORD',
+    database: 'DB_NAME'
+  }
+};

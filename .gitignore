@@ -40,7 +40,7 @@
 ################################################
 
 config/local.js
-
+assets/**
 
 
 
@@ -116,3 +116,4 @@ npm-debug.log
 nbproject
 .idea
 .node_history
+.vscode

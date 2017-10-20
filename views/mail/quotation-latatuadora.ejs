@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body class="container">
+  <header>
+    <% include _header.ejs %>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+      <% var quotation = model.quotation %>
+        Datos del pedido del cliente :
+
+        <p>Ancho:
+          <%= quotation.dimensionsY %>
+        </p>
+        <p>Largo:
+          <%= quotation.dimensionsX %>
+        </p>
+        <p>Comentarios:
+          <%= quotation.comments %>
+        </p>
+        <% if(quotation.styleId !== undefined){%> 
+        <p>Estilo:
+           <%= quotation.styleId.name || '' %>
+        </p>
+        <% } %>
+        <% if(quotation.bodypartId !== undefined){%> 
+        <p>Parte del cuerpo:
+          <%= quotation.bodypartId.name || '' %>
+        </p>
+        <% } %>
+
+        Datos del cliente :
+
+        <p>Nombre:
+          <%= quotation.user.name %>
+            <%= quotation.user.lastname %>
+        </p>
+        <p>Teléfono:
+          <%= quotation.user.telephone %>
+        </p>
+        <p>Email:
+          <%= quotation.user.email %>
+        </p>
+
+    </div>
+  </main>
+
+  <footer>
+    <% include _footer.ejs %>
+  </footer>
+
+</body>
+
+</html>
