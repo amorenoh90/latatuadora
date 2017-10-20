@@ -49,87 +49,93 @@ function editUser(values, token) {
 }
 
 function editStudio(values, image, token) {
+  try {
+    var studioUserEditionProps = [
+        "name",
+        "email",
+        "password",
+        "telephone",
+      ],
+      studioEditionProps = [
+        "name",
+        "certCofepris",
+        "about",
+      ],
+      addressStudioProps = [
+        "street",
+        "numInt",
+        "numExt",
+        "lat",
+        "long",
+        "zc",
+        "state",
+        "town",
+        "suburb"
+      ],
+      studioId,
+      studioUserEdition = fillJSON(values, studioUserEditionProps),
+      studioEdition = fillJSON(values, studioEditionProps),
+      addressStudio = fillJSON(values, addressStudioProps);
+    studioUserEdition.userType = constants.userType.studio;
+    AddressService.add(addressStudio, async function (err, newaddressId) {
+      var studioUser = await
+        User
+          .update({
+            id: values.user
+          }, studioUserEdition);
 
-  var studioUserEditionProps = [
-      "name",
-      "email",
-      "password",
-      "telephone",
-    ],
-    studioEditionProps = [
-      "name",
-      "certCofepris",
-      "about",
-    ],
-    addressStudioProps = [
-      "street",
-      "numInt",
-      "numExt",
-      "lat",
-      "long",
-      "zc",
-      "state",
-      "town",
-      "suburb"
-    ],
-    studioId,
-    studioUserEdition = fillJSON(values, studioUserEditionProps),
-    studioEdition = fillJSON(values, studioEditionProps),
-    addressStudio = fillJSON(values, addressStudioProps);
-  studioUserEdition.userType = constants.userType.studio;
-  AddressService.add(addressStudio, function (err, newaddressId) {
-    if (err) {
-      return done(err);
-    } else {
-      User.update({
-        id: values.user
-      }, studioUserEdition, function (err, studioUser) {
-        if (err) {
-          return done(err);
-        } else {
-          if (!studioUser) {
-            return done(err);
-          } else {
-            studioEdition.userId = studioUser[0].id;
-            studioEdition.addressId = newaddressId;
-            Studio.update({
+      if (!studioUser) {
+        return done(err);
+      } else {
+        studioEdition.userId = studioUser[0].id;
+        studioEdition.addressId = newaddressId;
+
+        var studio = (await
+          Studio
+            .update({
               id: values.studio
-            }, studioEdition).exec(function (err, studio) {
-              if (err) {
-                return done(err);
-              } else {
-                for (i in values.schedule) {
-                  values.schedule[i].studioId = studio.id;
-                  Schedule.update({
-                    id: studioUser.schedule
-                  }, values.schedule[i])
-                    .exec(function (err, shedule) {
-                      if (err) {
-                        return done(err);
-                      }
-                    });
-                  for (i in values.styles) {
-                    values.styles[i].studioId = studio.id;
-                    StudioStyle.update({
-                      id: studioUser.stu
-                    }, values.styles[i])
-                      .exec(function (err) {
-                        if (err) {
-                          return done(err);
-                        }
-                      });
-                  }
-                }
-                Studio.addProfileImg(image, studio.id, function (cb) {
-                  done(null, JWT.createToken(studioUser));
-                });
-              }
-            });
+            }, studioEdition))[0];
+
+        if (values.schedule) {
+          if (values.schedule.length > 0) {
+            await Schedule
+              .destroy({
+                studioId: studio.id
+              });
+
+            for (i in values.schedule) {
+              values.schedule[i].studioId = studio.id;
+
+              await Schedule
+                .create(values.schedule[i]);
+            }
           }
         }
-      });
-    }
-  });
+
+        if (values.styles) {
+          if (values.styles.length > 0) {
+            await StudioStyle
+              .destroy({
+                studioId: studio.id
+              });
+
+            for (i in values.styles) {
+              values.styles[i].studioId = studio.id;
+
+              await StudioStyle
+                .create(values.styles[i]);
+            }
+          }
+        }
+
+        Studio.addProfileImg(image, studio.id, function (cb) {
+          done(null, JWT.createToken(studioUser));
+        });
+      }
+    });
+  } catch (exception) {
+    return done(exception);
+  }
 }
 
 function editFreelancer(values, image, token) {
@@ -301,9 +307,9 @@ module.exports = {
   },
   getAll: function (req, res) {
     var args = {
-        req: req,
-        input: req.allParams()
-      };
+      req: req,
+      input: req.allParams()
+    };
 
     UserService
       .getAll(args, function (err, result) {
