@@ -98,5 +98,28 @@ module.exports = {
 
         }
       });
+  },
+
+  getArtists: function (req, res) {
+    StudioService
+      .getArtists({
+        input: req.allParams()
+      }, function (err, result) {
+        if (err) {
+          res.serverError({
+            err: err
+          });
+        } else {
+          if (result.json_response.artists.length < 1) {
+            res.send({
+              message: result.messages.pop()
+            });
+          } else {
+            res.send({
+              artists: result.json_response.artists
+            });
+          }
+        }
+      });
   }
 };
