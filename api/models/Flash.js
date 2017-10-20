@@ -64,8 +64,46 @@ module.exports = {
     }
   },
   tableName: 'Flash',
+  beforeCreate: function (values, cb) {
+    if (!values.file) {
+      cb();
+    } else {
+      var dirName = require('path').resolve(sails.config.appPath, 'assets/Flash/images');
+      image('sellImage').upload({
+        maxBytes: 10000000,
+        dirname: dirName
+      }, function (err, uploadedFiles) {
+        if (err)
+          return cb(err);
+        else {
+          if (uploadedFiles.length === 0) {
+            return cb(null, null);
+          }
+          else {
+            image('realImage').upload({
+              maxBytes: 10000000,
+              dirname: dirName
+            }, function (err, uploadedFiles2) {
+              if (err)
+                return cb(err);
+              else {
+                if (uploadedFiles2.length === 0) {
+                  return cb(null, null);
+                }
+                else {
+                  values.sellImage = uploadedFiles[0].fd;
+                  values.realImage = uploadedFiles2[0].fd;
+                }
+              }
+            });
+          }
+        }
+      });
+    }
+  },
   addSellImg: function (image, flash, cb) {
     image('sellImage').upload({
+      maxTimeToBuffer: 60000,
       maxBytes: 10000000,
       dirname: require('path').resolve(sails.config.appPath, 'assets/Flash/images')
     }, function (err, uploadedFiles) {
@@ -90,29 +128,34 @@ module.exports = {
     });
   },
   addRealImg: function (image, flash, cb) {
-    image('realImage').upload({
-      maxBytes: 10000000,
-      dirname: require('path').resolve(sails.config.appPath, 'assets/Flash/images')
-    }, function (err, uploadedFiles) {
-      if (err)
-        return cb(err);
-      else {
-        if (uploadedFiles.length === 0) {
-          return cb(null, null);
-        }
+    if (image) {
+      image('realImage').upload({
+        maxTimeToBuffer: 60000,
+        maxBytes: 10000000,
+        dirname: require('path').resolve(sails.config.appPath, 'assets/Flash/images')
+      }, function (err, uploadedFiles) {
+        if (err)
+          return cb(err);
         else {
-          Flash.update({id: flash}, {realImageUrl: uploadedFiles[0].fd})
-            .exec(function (err, updated) {
-              if (err) {
-                return cb(err);
-              }
-              else {
-                return cb(null, updated);
-              }
-            });
+          if (uploadedFiles.length === 0) {
+            return cb(null, null);
+          }
+          else {
+            Flash.update({id: flash}, {realImageUrl: uploadedFiles[0].fd})
+              .exec(function (err, updated) {
+                if (err) {
+                  return cb(err);
+                }
+                else {
+                  return cb(null, updated);
+                }
+              });
+          }
         }
-      }
-    });
+      });
+    } else {
+      cb()
+    }
   }
 };
 
